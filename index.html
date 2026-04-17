@@ -2,17 +2,17 @@
 <html lang=en data-theme=dark>
 <meta charset=UTF-8>
 <meta name=viewport content="width=device-width,initial-scale=1.0">
-<title>PDFCraft — Free PDF Converter &amp; Editor App</title>
-<link rel="icon" href="/DailyPDFTasks/favicon.ico">
+<title>DailyPDFTask — Free PDF Converter &amp; Editor App</title>
+<link rel="icon" href="favicon.ico">
 <meta name="description"
   content="Free online PDF converter. Convert images and Word to PDF, merge, compress and edit PDFs in your browser. No upload, 100% private.">
 
 <meta name="keywords" content="pdf converter, image to pdf, word to pdf, merge pdf, compress pdf, free pdf tool">
 
-<meta property="og:title" content="Free PDF Converter - PDFCraft">
+<meta property="og:title" content="Free PDF Converter - DailyPDFTask">
 <meta property="og:description" content="Convert and edit PDFs directly in your browser.">
 <meta property="og:type" content="website">
-  <meta name="google-adsense-account" content="ca-pub-4966813336861621">
+<meta name="google-adsense-account" content="ca-pub-4966813336861621">
 <link rel=preconnect href=https://fonts.googleapis.com>
 <link
   href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&amp;display=swap"
@@ -20,34 +20,34 @@
 <script src=https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js></script>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js></script>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js></script>
-  <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0Q9XL4KQ31"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag() { dataLayer.push(arguments); }
   gtag('js', new Date());
 
   gtag('config', 'G-0Q9XL4KQ31');
 </script>
 <style>
   :root {
-    --v: #6c63ff;
-    --vl: #8b85ff;
-    --vd: #5048d4;
-    --r: #ff6584;
+    --v: #0071e3;
+    --vl: #47a1ff;
+    --vd: #0058b0;
+    --r: #47a1ff;
     --rl: #ff85a0;
     --tl: #43c6ac;
     --am: #f7971e;
-    --gn: #56cf8a;
-    --rd: #ff5252;
-    --grad: linear-gradient(135deg, #6c63ff 0%, #ff6584 100%);
-    --grad2: linear-gradient(135deg, #43c6ac 0%, #6c63ff 100%);
-    --font-d: "Syne", sans-serif;
-    --font-b: "DM Sans", sans-serif;
+    --gn: #34c759;
+    --rd: #ff3b30;
+    --grad: #0071e3;
+    --grad2: #0071e3;
+    --font-d: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-b: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --r-sm: 6px;
-    --r-md: 10px;
-    --r-lg: 16px;
-    --r-xl: 20px;
+    --r-md: 8px;
+    --r-lg: 14px;
+    --r-xl: 18px;
     --r-full: 999px;
     --t1: .12s ease;
     --t2: .22s ease;
@@ -56,41 +56,47 @@
   }
 
   [data-theme=dark] {
-    --bg: #0d0d12;
-    --bg2: #11111a;
-    --sf: #181824;
-    --sf2: #1e1e2e;
-    --sf3: #252538;
-    --bd: #ffffff12;
-    --bd2: #ffffff21;
-    --t1c: #f0efff;
-    --t2c: #a8a6c8;
-    --t3c: #6b698a;
-    --shsm: 0 1px 4px #00000080;
-    --shmd: 0 4px 18px #00000073;
-    --shlg: 0 14px 44px #0000008c;
-    --gl: #161622c2;
-    --glb: #ffffff14;
-    --glow: 0 0 0 1px #6c63ff4d, 0 4px 24px #6c63ff2e
+    --bg: #000000;
+    --bg2: #1d1d1f;
+    --sf: #111111;
+    --sf2: #1c1c1e;
+    --sf3: #2c2c2e;
+    --bd: #38383a;
+    --bd2: #424245;
+    --t1c: #f5f5f7;
+    --t2c: #86868b;
+    --t3c: #6e6e73;
+    --shsm: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --shmd: 0 4px 18px rgba(0, 0, 0, 0.5);
+    --shlg: 0 14px 44px rgba(0, 0, 0, 0.6);
+    --gl: rgba(0, 0, 0, 0.72);
+    --glb: rgba(255, 255, 255, 0.1);
+    --glow: none;
+    --v: #2997ff;
+    --grad: #2997ff;
+    --grad2: #2997ff;
   }
 
   [data-theme=light] {
-    --bg: #f3f2ff;
-    --bg2: #eceafc;
-    --sf: #fff;
-    --sf2: #f8f7fe;
-    --sf3: #eceafc;
-    --bd: #00000012;
-    --bd2: #00000021;
-    --t1c: #1a1830;
-    --t2c: #4a4868;
-    --t3c: #8d8baa;
-    --shsm: 0 1px 4px #6c63ff14;
-    --shmd: 0 4px 18px #6c63ff1f;
-    --shlg: 0 14px 44px #6c63ff29;
-    --gl: #ffffffc7;
-    --glb: #6c63ff1a;
-    --glow: 0 0 0 1px #6c63ff40, 0 4px 24px #6c63ff24
+    --bg: #f5f5f7;
+    --bg2: #ffffff;
+    --sf: #ffffff;
+    --sf2: #f5f5f7;
+    --sf3: #e8e8ed;
+    --bd: #d2d2d7;
+    --bd2: #c6c6c8;
+    --t1c: #1d1d1f;
+    --t2c: #86868b;
+    --t3c: #6e6e73;
+    --shsm: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shmd: 0 4px 18px rgba(0, 0, 0, 0.06);
+    --shlg: 0 14px 44px rgba(0, 0, 0, 0.08);
+    --gl: rgba(255, 255, 255, 0.72);
+    --glb: rgba(0, 0, 0, 0.1);
+    --glow: none;
+    --v: #0071e3;
+    --grad: #0071e3;
+    --grad2: #0071e3;
   }
 
   *,
@@ -255,7 +261,7 @@
 
   .nav-btn.active {
     color: var(--v);
-    background: #6c63ff1f
+    background: #0071e31f
   }
 
   .nav__actions {
@@ -287,7 +293,7 @@
   }
 
   [data-theme=dark] .tt__track {
-    background: #6c63ff4d
+    background: #0071e34d
   }
 
   .tt__thumb {
@@ -342,12 +348,12 @@
   .btn-primary {
     background: var(--grad);
     color: #fff;
-    box-shadow: 0 2px 14px #6c63ff59
+    box-shadow: 0 1px 3px rgba(0, 113, 227, 0.4)
   }
 
   .btn-primary:hover {
     filter: brightness(1.08);
-    box-shadow: 0 4px 22px #6c63ff80
+    box-shadow: 0 2px 6px rgba(0, 113, 227, 0.5)
   }
 
   .btn-secondary {
@@ -368,7 +374,7 @@
   }
 
   .btn-outline:hover {
-    background: #6c63ff1a
+    background: #0071e31a
   }
 
   .btn-ghost {
@@ -421,8 +427,8 @@
 
   .hero__badge {
     color: var(--vl);
-    background: #6c63ff1f;
-    border: 1px solid #6c63ff40;
+    background: #0071e31f;
+    border: 1px solid #0071e340;
     border-radius: 99px;
     align-items: center;
     gap: 8px;
@@ -600,7 +606,7 @@
     font-size: 1.5rem;
     font-weight: 800;
     display: flex;
-    box-shadow: 0 4px 20px #6c63ff59
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08)
   }
 
   .step h3 {
@@ -760,7 +766,7 @@
     width: 72px;
     height: 72px;
     transition: transform var(--t2);
-    background: #6c63ff1a;
+    background: #0071e31a;
     border-radius: 20px;
     justify-content: center;
     align-items: center;
@@ -861,7 +867,7 @@
 
   .fi.over {
     border-color: var(--v);
-    background: #6c63ff0f
+    background: #0071e30f
   }
 
   .fi.dragging {
@@ -1008,7 +1014,7 @@
     width: 48px;
     height: 56px;
     color: var(--v);
-    background: #6c63ff1a;
+    background: #0071e31a;
     flex-shrink: 0;
     justify-content: center;
     align-items: center;
@@ -1172,7 +1178,7 @@
 
   .tb.active {
     color: var(--v);
-    background: #6c63ff1f
+    background: #0071e31f
   }
 
   .zoom-val {
@@ -1198,7 +1204,7 @@
     border-radius: 50%;
     width: 14px;
     height: 14px;
-    box-shadow: 0 0 0 3px #6c63ff40
+    box-shadow: 0 0 0 3px #0071e340
   }
 
   .ie-viewport {
@@ -1532,12 +1538,12 @@
 
   .b-img {
     color: var(--vl);
-    background: #6c63ff26
+    background: #0071e326
   }
 
   .b-doc {
     color: var(--rl);
-    background: #ff658426
+    background: #47a1ff26
   }
 
   .b-pdf {
@@ -1967,8 +1973,8 @@
 
   .terms-gate {
     border-radius: var(--r-lg);
-    background: #6c63ff0f;
-    border: 1.5px solid #6c63ff29;
+    background: #0071e30f;
+    border: 1.5px solid #0071e329;
     align-items: flex-start;
     gap: 10px;
     margin-bottom: 14px;
@@ -2034,7 +2040,7 @@
 
   <header class=nav role=banner>
     <div class=nav__inner>
-      <a href=# class=brand id=brandHome aria-label="PDFCraft home">
+      <a href=# class=brand id=brandHome aria-label="DailyPDFTask home">
         <svg width=26 height=26 fill=none aria-hidden=true viewBox="0 0 26 26">
           <rect width=26 height=26 fill=url(#ng) rx=7 />
           <path fill=#fff d="M6 7h8l5 5v7H6Z" opacity=.9 />
@@ -2043,12 +2049,12 @@
           <line x1=9 x2=16 y1=16 y2=16 stroke=#43c6ac stroke-linecap=round stroke-width=1.5 />
           <defs>
             <linearGradient id=ng x1=0 x2=26 y1=0 y2=26>
-              <stop stop-color=#6c63ff />
-              <stop offset=1 stop-color=#ff6584 />
+              <stop stop-color=#0071e3 />
+              <stop offset=1 stop-color=#47a1ff />
             </linearGradient>
           </defs>
         </svg>
-        <span class=brand-name>PDFCraft</span>
+        <span class=brand-name>DailyPDFTask</span>
       </a>
 
       <div class=nav__spacer></div>
@@ -2121,14 +2127,14 @@
 
     <section class=features aria-labelledby=featTitle>
       <div class=features__grid>
-        <div class=feat-card style=--c:#6c63ff>
-          <div class=feat-icon style=--c:#6c63ff>🖼</div>
+        <div class=feat-card style=--c:#0071e3>
+          <div class=feat-icon style=--c:#0071e3>🖼</div>
           <h3>Images to PDF</h3>
           <p>PNG, JPG, JPEG, WEBP — all supported. Preserves quality with perfect page scaling for A4 or Letter format.
           </p>
         </div>
-        <div class=feat-card style=--c:#ff6584>
-          <div class=feat-icon style=--c:#ff6584>📄</div>
+        <div class=feat-card style=--c:#47a1ff>
+          <div class=feat-icon style=--c:#47a1ff>📄</div>
           <h3>Word to PDF</h3>
           <p>Convert DOC and DOCX files without installing Microsoft Office. Fast, clean, and client-side.</p>
         </div>
@@ -2226,8 +2232,8 @@
             <path stroke=url(#dzg) stroke-linecap=round stroke-width=2 d="M6 30h24" opacity=.5 />
             <defs>
               <linearGradient id=dzg x1=0 x2=36 y1=0 y2=36>
-                <stop stop-color=#6c63ff />
-                <stop offset=1 stop-color=#ff6584 />
+                <stop stop-color=#0071e3 />
+                <stop offset=1 stop-color=#47a1ff />
               </linearGradient>
             </defs>
           </svg>
@@ -2367,13 +2373,13 @@
       </div>
 
       <div class=stats-g>
-        <div class=sc style=--c:#6c63ff>
+        <div class=sc style=--c:#0071e3>
           <div class=sc__icon>📄</div>
           <span class=sc__val data-count=142>0</span>
           <span class=sc__lbl>Files Converted</span>
           <span class="sc__tr up">↑ 12% this week</span>
         </div>
-        <div class=sc style=--c:#ff6584>
+        <div class=sc style=--c:#47a1ff>
           <div class=sc__icon>📑</div>
           <span class=sc__val data-count=38>0</span>
           <span class=sc__lbl>PDFs Created</span>
@@ -2411,16 +2417,16 @@
           <div class=donut-wrap>
             <svg width=130 height=130 aria-hidden=true viewBox="0 0 100 100">
               <circle cx=50 cy=50 r=36 fill=none stroke=var(--sf2) stroke-width=16 />
-              <circle cx=50 cy=50 r=36 fill=none stroke=#6c63ff stroke-dasharray="84 142" stroke-width=16
+              <circle cx=50 cy=50 r=36 fill=none stroke=#0071e3 stroke-dasharray="84 142" stroke-width=16
                 transform="rotate(-90 50 50)" />
-              <circle cx=50 cy=50 r=36 fill=none stroke=#ff6584 stroke-dasharray="50 142" stroke-dashoffset=-84
+              <circle cx=50 cy=50 r=36 fill=none stroke=#47a1ff stroke-dasharray="50 142" stroke-dashoffset=-84
                 stroke-width=16 transform="rotate(-90 50 50)" />
               <circle cx=50 cy=50 r=36 fill=none stroke=#43c6ac stroke-dasharray="28 142" stroke-dashoffset=-134
                 stroke-width=16 transform="rotate(-90 50 50)" />
             </svg>
             <div class=donut-leg>
-              <div class=dl-item><span class=dl-dot style=background:#6c63ff></span>PNG/JPG — 59%</div>
-              <div class=dl-item><span class=dl-dot style=background:#ff6584></span>DOCX — 35%</div>
+              <div class=dl-item><span class=dl-dot style=background:#0071e3></span>PNG/JPG — 59%</div>
+              <div class=dl-item><span class=dl-dot style=background:#47a1ff></span>DOCX — 35%</div>
               <div class=dl-item><span class=dl-dot style=background:#43c6ac></span>Other — 6%</div>
             </div>
           </div>
@@ -2431,12 +2437,12 @@
         <div class=card>
           <div class=card-title>Recent Activity</div>
           <ul class=timeline role=list>
-            <li><span class=tl-dot style=background:#6c63ff></span>
+            <li><span class=tl-dot style=background:#0071e3></span>
               <div>
                 <div class=tl-name>design_mockup.png → PDF</div><time class=tl-time>2 min ago</time>
               </div>
             </li>
-            <li><span class=tl-dot style=background:#ff6584></span>
+            <li><span class=tl-dot style=background:#47a1ff></span>
               <div>
                 <div class=tl-name>report_q4.docx → PDF</div><time class=tl-time>14 min ago</time>
               </div>
@@ -2532,9 +2538,9 @@ Size: ${fmtBytes(e.size)}
       let r = document.getElementById("results"), o = document.createElement("div"); o.className = "rc", o.innerHTML = `
     <div class="rc__icon" aria-hidden="true">
       <svg width="26" height="32" viewBox="0 0 26 32" fill="none">
-        <path d="M3 1h13l8 8v22H3V1z" fill="rgba(108,99,255,.12)" stroke="#6C63FF" stroke-width="1.5"/>
-        <path d="M16 1v8h8" stroke="#6C63FF" stroke-width="1.5"/>
-        <text x="6" y="23" fill="#6C63FF" font-size="6.5" font-weight="bold" font-family="sans-serif">PDF</text>
+        <path d="M3 1h13l8 8v22H3V1z" fill="rgba(108,99,255,.12)" stroke="#0071e3" stroke-width="1.5"/>
+        <path d="M16 1v8h8" stroke="#0071e3" stroke-width="1.5"/>
+        <text x="6" y="23" fill="#0071e3" font-size="6.5" font-weight="bold" font-family="sans-serif">PDF</text>
       </svg>
     </div>
     <div class="rc__info">
@@ -2555,35 +2561,24 @@ Size: ${fmtBytes(e.size)}
   <footer class=site-footer role=contentinfo>
     <div class=footer-inner>
       <div class=footer-brand>
-        <span class=footer-brand-name-f>PDFCraft</span>
+        <span class=footer-brand-name-f>DailyPDFTask</span>
         <p class=footer-tagline>Free PDF conversion and editing — 100% in your browser. Nothing uploaded, nothing
           stored.</p>
 
         <div class=footer-social>
-          <a href=https://twitter.com/pdfcraft class=social-link target=_blank rel=noopener aria-label="Twitter / X">
-            <svg width=16 height=16 fill=currentColor viewBox="0 0 24 24">
-              <path
-                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117Z" />
-            </svg>
-          </a>
-          <a href=https://instagram.com/pdfcraft class=social-link target=_blank rel=noopener aria-label=Instagram>
+          <a href=https://instagram.com/dailypdftask class=social-link target=_blank rel=noopener aria-label=Instagram>
             <svg width=16 height=16 fill=currentColor viewBox="0 0 24 24">
               <path
                 d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849s-.012 3.584-.069 4.849c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069M12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12s.014 3.668.072 4.948c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24s3.668-.014 4.948-.072c4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0m0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324M12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8m6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881" />
             </svg>
           </a>
-          <a href=https://youtube.com/@pdfcraft class=social-link target=_blank rel=noopener aria-label=YouTube>
+          <a href=https://youtube.com/@dailypdftask class=social-link target=_blank rel=noopener aria-label=YouTube>
             <svg width=16 height=16 fill=currentColor viewBox="0 0 24 24">
               <path
                 d="M23.498 6.186a3.02 3.02 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.02 3.02 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.02 3.02 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.02 3.02 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814M9.545 15.568V8.432L15.818 12Z" />
             </svg>
           </a>
-          <a href=https://wa.me/1234567890 class=social-link target=_blank rel=noopener aria-label=WhatsApp>
-            <svg width=16 height=16 fill=currentColor viewBox="0 0 24 24">
-              <path
-                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52s.198-.298.298-.497c.099-.198.05-.371-.025-.52s-.669-1.612-.916-2.207c-.242-.579-.487-.5-.669-.51a13 13 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074s2.096 3.2 5.077 4.487c.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413s.248-1.289.173-1.413c-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.82 11.82 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.9 11.9 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413" />
-            </svg>
-          </a>
+
         </div>
       </div>
       <div class=footer-links-group>
@@ -2609,15 +2604,13 @@ Size: ${fmtBytes(e.size)}
           <h4>Contact</h4>
           <ul>
             <li><a href=/legal/contact.html>Support Form</a></li>
-            <li><a href=mailto:hello@pdfcraft.app>hello@pdfcraft.app</a></li>
-            <li><a href=https://wa.me/1234567890 target=_blank rel=noopener>WhatsApp Chat</a></li>
-            <li><a href=https://twitter.com/pdfcraft target=_blank rel=noopener>@pdfcraft</a></li>
+            <li><a href=mailto:jsupport1.tool@gmail.com>jsupport1.tool@gmail.com</a></li>
           </ul>
         </div>
       </div>
     </div>
     <div class=footer-bottom>
-      <p class=footer-copy>© <span id=footerYear></span> <span class=footer-copy-brand>PDFCraft</span>. All rights
+      <p class=footer-copy>© <span id=footerYear></span> <span class=footer-copy-brand>DailyPDFTask</span>. All rights
         reserved.</p>
       <nav class=footer-legal-links aria-label="Legal links">
         <a href=/legal/terms.html>Terms</a>
