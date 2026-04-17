@@ -1,0 +1,2641 @@
+<!DOCTYPE html>
+<html lang=en data-theme=dark>
+<meta charset=UTF-8>
+<meta name=viewport content="width=device-width,initial-scale=1.0">
+<title>PDFCraft — Free PDF Converter &amp; Editor App</title>
+<link rel="icon" href="/DailyPDFTasks/favicon.ico">
+<meta name="description"
+  content="Free online PDF converter. Convert images and Word to PDF, merge, compress and edit PDFs in your browser. No upload, 100% private.">
+
+<meta name="keywords" content="pdf converter, image to pdf, word to pdf, merge pdf, compress pdf, free pdf tool">
+
+<meta property="og:title" content="Free PDF Converter - PDFCraft">
+<meta property="og:description" content="Convert and edit PDFs directly in your browser.">
+<meta property="og:type" content="website">
+  <meta name="google-adsense-account" content="ca-pub-4966813336861621">
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link
+  href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&amp;display=swap"
+  rel=stylesheet>
+<script src=https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js></script>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0Q9XL4KQ31"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-0Q9XL4KQ31');
+</script>
+<style>
+  :root {
+    --v: #6c63ff;
+    --vl: #8b85ff;
+    --vd: #5048d4;
+    --r: #ff6584;
+    --rl: #ff85a0;
+    --tl: #43c6ac;
+    --am: #f7971e;
+    --gn: #56cf8a;
+    --rd: #ff5252;
+    --grad: linear-gradient(135deg, #6c63ff 0%, #ff6584 100%);
+    --grad2: linear-gradient(135deg, #43c6ac 0%, #6c63ff 100%);
+    --font-d: "Syne", sans-serif;
+    --font-b: "DM Sans", sans-serif;
+    --r-sm: 6px;
+    --r-md: 10px;
+    --r-lg: 16px;
+    --r-xl: 20px;
+    --r-full: 999px;
+    --t1: .12s ease;
+    --t2: .22s ease;
+    --t3: .38s cubic-bezier(.16, 1, .3, 1);
+    --t4: .5s cubic-bezier(.34, 1.56, .64, 1)
+  }
+
+  [data-theme=dark] {
+    --bg: #0d0d12;
+    --bg2: #11111a;
+    --sf: #181824;
+    --sf2: #1e1e2e;
+    --sf3: #252538;
+    --bd: #ffffff12;
+    --bd2: #ffffff21;
+    --t1c: #f0efff;
+    --t2c: #a8a6c8;
+    --t3c: #6b698a;
+    --shsm: 0 1px 4px #00000080;
+    --shmd: 0 4px 18px #00000073;
+    --shlg: 0 14px 44px #0000008c;
+    --gl: #161622c2;
+    --glb: #ffffff14;
+    --glow: 0 0 0 1px #6c63ff4d, 0 4px 24px #6c63ff2e
+  }
+
+  [data-theme=light] {
+    --bg: #f3f2ff;
+    --bg2: #eceafc;
+    --sf: #fff;
+    --sf2: #f8f7fe;
+    --sf3: #eceafc;
+    --bd: #00000012;
+    --bd2: #00000021;
+    --t1c: #1a1830;
+    --t2c: #4a4868;
+    --t3c: #8d8baa;
+    --shsm: 0 1px 4px #6c63ff14;
+    --shmd: 0 4px 18px #6c63ff1f;
+    --shlg: 0 14px 44px #6c63ff29;
+    --gl: #ffffffc7;
+    --glb: #6c63ff1a;
+    --glow: 0 0 0 1px #6c63ff40, 0 4px 24px #6c63ff24
+  }
+
+  *,
+  :before,
+  :after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px
+  }
+
+  body {
+    font-family: var(--font-b);
+    color: var(--t1c);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100dvh;
+    font-size: .95rem;
+    line-height: 1.6;
+    transition: background .35s, color .35s
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-d);
+    color: var(--t1c);
+    font-weight: 700;
+    line-height: 1.15
+  }
+
+  a {
+    color: var(--v);
+    text-decoration: none
+  }
+
+  img,
+  svg {
+    display: block
+  }
+
+  ul {
+    list-style: none
+  }
+
+  button {
+    font-family: var(--font-b);
+    cursor: pointer;
+    color: inherit;
+    background: 0 0;
+    border: none
+  }
+
+  input,
+  select {
+    font-family: var(--font-b);
+    color: var(--t1c)
+  }
+
+  .sr-only {
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    position: absolute;
+    overflow: hidden
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--v);
+    outline-offset: 3px;
+    border-radius: 4px
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px
+  }
+
+  ::-webkit-scrollbar-track {
+    background: 0 0
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--sf3);
+    border-radius: 99px
+  }
+
+  .nav {
+    z-index: 100;
+    background: var(--gl);
+    -webkit-backdrop-filter: blur(20px)saturate(1.4);
+    border-bottom: 1px solid var(--glb);
+    height: 58px;
+    transition: background .35s;
+    position: sticky;
+    top: 0
+  }
+
+  .nav__inner {
+    align-items: center;
+    gap: 12px;
+    max-width: 1280px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex
+  }
+
+  .brand {
+    flex-shrink: 0;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    display: flex
+  }
+
+  .brand-name {
+    font-family: var(--font-d);
+    background: var(--grad);
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -.02em;
+    background-clip: text;
+    font-size: 1.1rem;
+    font-weight: 800
+  }
+
+  .nav__spacer {
+    flex: 1
+  }
+
+  .nav__links {
+    align-items: center;
+    gap: 4px;
+    display: flex
+  }
+
+  .nav-btn {
+    border-radius: var(--r-md);
+    color: var(--t2c);
+    transition: color var(--t2), background var(--t2);
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font-size: .85rem;
+    font-weight: 500;
+    display: flex
+  }
+
+  .nav-btn:hover {
+    color: var(--t1c);
+    background: var(--sf3)
+  }
+
+  .nav-btn.active {
+    color: var(--v);
+    background: #6c63ff1f
+  }
+
+  .nav__actions {
+    flex-shrink: 0;
+    align-items: center;
+    gap: 10px;
+    display: flex
+  }
+
+  .tt {
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    border-radius: 99px;
+    align-items: center;
+    gap: 6px;
+    padding: 4px;
+    display: flex
+  }
+
+  .tt__track {
+    background: var(--sf3);
+    border: 1px solid var(--bd2);
+    width: 38px;
+    height: 20px;
+    transition: background var(--t2);
+    border-radius: 99px;
+    position: relative
+  }
+
+  [data-theme=dark] .tt__track {
+    background: #6c63ff4d
+  }
+
+  .tt__thumb {
+    background: var(--t3c);
+    width: 14px;
+    height: 14px;
+    transition: transform var(--t4), background var(--t2);
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px
+  }
+
+  [data-theme=dark] .tt__thumb {
+    background: var(--v);
+    transform: translate(18px)
+  }
+
+  .tt__icon {
+    color: var(--t3c);
+    font-size: 11px
+  }
+
+  .btn {
+    border-radius: var(--r-md);
+    height: 40px;
+    transition: all var(--t2);
+    white-space: nowrap;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    align-items: center;
+    gap: 8px;
+    padding: 0 20px;
+    font-size: .85rem;
+    font-weight: 500;
+    display: inline-flex;
+    position: relative;
+    overflow: hidden
+  }
+
+  .btn:active {
+    transform: scale(.97)
+  }
+
+  .btn:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+    pointer-events: none
+  }
+
+  .btn-primary {
+    background: var(--grad);
+    color: #fff;
+    box-shadow: 0 2px 14px #6c63ff59
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.08);
+    box-shadow: 0 4px 22px #6c63ff80
+  }
+
+  .btn-secondary {
+    background: var(--sf3);
+    color: var(--t1c);
+    border: 1px solid var(--bd2)
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--v);
+    color: var(--v)
+  }
+
+  .btn-outline {
+    color: var(--v);
+    border: 1.5px solid var(--v);
+    background: 0 0
+  }
+
+  .btn-outline:hover {
+    background: #6c63ff1a
+  }
+
+  .btn-ghost {
+    color: var(--t2c);
+    background: 0 0
+  }
+
+  .btn-ghost:hover {
+    background: var(--sf2);
+    color: var(--t1c)
+  }
+
+  .btn-danger {
+    color: var(--rd);
+    background: #ff52521f;
+    border: 1px solid #ff525240
+  }
+
+  .btn-danger:hover {
+    background: #ff525233
+  }
+
+  .btn-sm {
+    height: 32px;
+    padding: 0 12px;
+    font-size: .78rem
+  }
+
+  .btn-lg {
+    height: 48px;
+    padding: 0 28px;
+    font-size: 1rem
+  }
+
+  .view {
+    min-height: calc(100dvh - 58px);
+    display: none
+  }
+
+  .view.active {
+    display: block
+  }
+
+  .hero {
+    text-align: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 80px 24px 60px
+  }
+
+  .hero__badge {
+    color: var(--vl);
+    background: #6c63ff1f;
+    border: 1px solid #6c63ff40;
+    border-radius: 99px;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 28px;
+    padding: 6px 16px;
+    font-size: .78rem;
+    font-weight: 600;
+    animation: .6s both fadeUp;
+    display: inline-flex
+  }
+
+  .hero__title {
+    letter-spacing: -.04em;
+    margin-bottom: 22px;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 800;
+    line-height: 1.05;
+    animation: .6s .1s both fadeUp
+  }
+
+  .hero__title span {
+    background: var(--grad);
+    -webkit-text-fill-color: transparent;
+    background-clip: text
+  }
+
+  .hero__sub {
+    color: var(--t2c);
+    max-width: 520px;
+    margin: 0 auto 36px;
+    font-size: 1.1rem;
+    font-weight: 300;
+    animation: .6s .2s both fadeUp
+  }
+
+  .hero__cta {
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    animation: .6s .3s both fadeUp;
+    display: flex
+  }
+
+  .hero__trust {
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin-top: 44px;
+    animation: .6s .4s both fadeUp;
+    display: flex
+  }
+
+  .trust-item {
+    color: var(--t3c);
+    align-items: center;
+    gap: 6px;
+    font-size: .82rem;
+    display: flex
+  }
+
+  .trust-icon {
+    font-size: 16px
+  }
+
+  .features {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px 80px
+  }
+
+  .features__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    display: grid
+  }
+
+  .feat-card {
+    background: var(--sf);
+    border: 1px solid var(--bd);
+    border-radius: var(--r-xl);
+    transition: transform var(--t2), box-shadow var(--t2);
+    padding: 28px;
+    position: relative;
+    overflow: hidden
+  }
+
+  .feat-card:before {
+    content: "";
+    background: var(--c, var(--v));
+    opacity: .8;
+    height: 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0
+  }
+
+  .feat-card:hover {
+    box-shadow: var(--shmd);
+    transform: translateY(-3px)
+  }
+
+  .feat-icon {
+    border-radius: var(--r-md);
+    background: color-mix(in srgb, var(--c, var(--v)) 15%, transparent);
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 16px;
+    font-size: 22px;
+    display: flex
+  }
+
+  .feat-card h3 {
+    margin-bottom: 8px;
+    font-size: .95rem;
+    font-weight: 700
+  }
+
+  .feat-card p {
+    color: var(--t2c);
+    font-size: .82rem;
+    line-height: 1.6
+  }
+
+  .steps {
+    text-align: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px 80px
+  }
+
+  .steps__title {
+    letter-spacing: -.03em;
+    margin-bottom: 48px;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800
+  }
+
+  .steps__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    display: grid;
+    position: relative
+  }
+
+  .steps__grid:before {
+    content: "";
+    background: linear-gradient(90deg, var(--v), var(--r));
+    opacity: .4;
+    height: 1.5px;
+    position: absolute;
+    top: 32px;
+    left: 32.6667%;
+    right: 32.6667%
+  }
+
+  .step {
+    text-align: center
+  }
+
+  .step__num {
+    background: var(--grad);
+    width: 64px;
+    height: 64px;
+    font-family: var(--font-d);
+    color: #fff;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+    font-size: 1.5rem;
+    font-weight: 800;
+    display: flex;
+    box-shadow: 0 4px 20px #6c63ff59
+  }
+
+  .step h3 {
+    margin-bottom: 8px;
+    font-size: 1rem;
+    font-weight: 700
+  }
+
+  .step p {
+    color: var(--t2c);
+    font-size: .85rem
+  }
+
+  .cta-banner {
+    max-width: 1280px;
+    margin: 0 auto 80px;
+    padding: 0 24px
+  }
+
+  .cta-banner__inner {
+    background: var(--grad);
+    border-radius: var(--r-xl);
+    text-align: center;
+    padding: 56px 48px;
+    position: relative;
+    overflow: hidden
+  }
+
+  .cta-banner__inner:before {
+    content: "";
+    background: #ffffff14;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: -40px;
+    right: -40px
+  }
+
+  .cta-banner__inner:after {
+    content: "";
+    background: #ffffff0f;
+    border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    position: absolute;
+    bottom: -60px;
+    left: -30px
+  }
+
+  .cta-banner h2 {
+    color: #fff;
+    z-index: 1;
+    margin-bottom: 12px;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    position: relative
+  }
+
+  .cta-banner p {
+    color: #fffc;
+    z-index: 1;
+    margin-bottom: 28px;
+    position: relative
+  }
+
+  .btn-white {
+    color: var(--v);
+    z-index: 1;
+    background: #fff;
+    font-weight: 700;
+    position: relative
+  }
+
+  .btn-white:hover {
+    background: #ffffffe6;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px #0003
+  }
+
+  .converter {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 24px
+  }
+
+  .conv-header {
+    text-align: center;
+    margin-bottom: 40px
+  }
+
+  .conv-header h1 {
+    letter-spacing: -.03em;
+    margin-bottom: 10px;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 800
+  }
+
+  .conv-header p {
+    color: var(--t2c);
+    font-size: .9rem
+  }
+
+  .conv-settings {
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    display: flex
+  }
+
+  .sel {
+    background: var(--sf2);
+    border: 1px solid var(--bd2);
+    border-radius: var(--r-md);
+    height: 36px;
+    color: var(--t1c);
+    cursor: pointer;
+    appearance: none;
+    transition: border-color var(--t2);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%236B698A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+    padding: 0 32px 0 12px;
+    font-size: .85rem
+  }
+
+  .sel:focus {
+    border-color: var(--v);
+    outline: none
+  }
+
+  .dz {
+    border: 2px dashed var(--bd2);
+    border-radius: var(--r-xl);
+    text-align: center;
+    background: var(--sf);
+    cursor: pointer;
+    transition: border-color var(--t2), background var(--t2), transform var(--t2);
+    padding: 72px 32px;
+    position: relative;
+    overflow: hidden
+  }
+
+  .dz:hover,
+  .dz.over {
+    border-color: var(--v);
+    background: var(--sf2);
+    box-shadow: var(--glow)
+  }
+
+  .dz.over {
+    transform: scale(1.01)
+  }
+
+  .dz__icon {
+    width: 72px;
+    height: 72px;
+    transition: transform var(--t2);
+    background: #6c63ff1a;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+    display: flex
+  }
+
+  .dz.over .dz__icon {
+    transform: translateY(-4px)scale(1.05)
+  }
+
+  .dz__title {
+    font-family: var(--font-d);
+    margin-bottom: 8px;
+    font-size: 1.3rem;
+    font-weight: 700
+  }
+
+  .dz__sub {
+    color: var(--t3c);
+    margin-bottom: 20px;
+    font-size: .82rem
+  }
+
+  .filetypes {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 0;
+    display: flex
+  }
+
+  .ftpill {
+    background: var(--sf3);
+    border: 1px solid var(--bd2);
+    color: var(--t2c);
+    border-radius: 99px;
+    padding: 3px 10px;
+    font-size: .72rem;
+    font-weight: 600
+  }
+
+  .fq {
+    background: var(--sf);
+    border: 1px solid var(--bd);
+    border-radius: var(--r-xl);
+    box-shadow: var(--shsm);
+    margin-top: 24px;
+    overflow: hidden
+  }
+
+  .fq__head {
+    background: var(--sf2);
+    border-bottom: 1px solid var(--bd);
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    display: flex
+  }
+
+  .fq__head h3 {
+    font-size: .88rem;
+    font-weight: 600
+  }
+
+  .fq__acts {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    display: flex
+  }
+
+  .flist {
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px;
+    display: flex
+  }
+
+  .fi {
+    border-radius: var(--r-md);
+    background: var(--sf2);
+    transition: border-color var(--t2), box-shadow var(--t2);
+    cursor: grab;
+    border: 1.5px solid #0000;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    animation: .2s both slideIn;
+    display: flex
+  }
+
+  .fi:hover {
+    border-color: var(--bd2)
+  }
+
+  .fi.over {
+    border-color: var(--v);
+    background: #6c63ff0f
+  }
+
+  .fi.dragging {
+    opacity: .4;
+    cursor: grabbing
+  }
+
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      transform: translate(-8px)
+    }
+
+    to {
+      opacity: 1;
+      transform: translate(0)
+    }
+  }
+
+  .fi__thumb {
+    background: var(--sf3);
+    border-radius: 6px;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    width: 42px;
+    height: 50px;
+    font-size: 18px;
+    display: flex;
+    overflow: hidden
+  }
+
+  .fi__thumb img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%
+  }
+
+  .fi__info {
+    flex: 1;
+    min-width: 0
+  }
+
+  .fi__name {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: .85rem;
+    font-weight: 500;
+    overflow: hidden
+  }
+
+  .fi__meta {
+    color: var(--t3c);
+    margin-top: 2px;
+    font-size: .75rem
+  }
+
+  .fi__acts {
+    flex-shrink: 0;
+    align-items: center;
+    gap: 4px;
+    display: flex
+  }
+
+  .ib {
+    border-radius: var(--r-sm);
+    width: 30px;
+    height: 30px;
+    color: var(--t3c);
+    transition: color var(--t2), background var(--t2);
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    display: flex
+  }
+
+  .ib:hover {
+    color: var(--t1c);
+    background: var(--sf3)
+  }
+
+  .ib-del:hover {
+    color: var(--rd);
+    background: #ff52521a
+  }
+
+  .prog-wrap {
+    background: var(--sf);
+    border: 1px solid var(--bd);
+    border-radius: var(--r-xl);
+    margin-top: 20px;
+    padding: 20px
+  }
+
+  .prog-label {
+    color: var(--t2c);
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: .82rem;
+    display: flex
+  }
+
+  .prog-bar {
+    background: var(--sf3);
+    border-radius: 99px;
+    height: 8px;
+    overflow: hidden
+  }
+
+  .prog-fill {
+    background: var(--grad);
+    border-radius: 99px;
+    width: 0;
+    height: 100%;
+    transition: width .3s
+  }
+
+  .results {
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
+    display: flex
+  }
+
+  .rc {
+    background: var(--sf);
+    border: 1.5px solid var(--bd);
+    border-radius: var(--r-xl);
+    box-shadow: var(--shsm);
+    transition: border-color var(--t2);
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    animation: .3s both slideIn;
+    display: flex
+  }
+
+  .rc:hover {
+    border-color: var(--bd2)
+  }
+
+  .rc__icon {
+    border-radius: var(--r-md);
+    width: 48px;
+    height: 56px;
+    color: var(--v);
+    background: #6c63ff1a;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    display: flex
+  }
+
+  .rc__info {
+    flex: 1;
+    min-width: 0
+  }
+
+  .rc__name {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: .9rem;
+    font-weight: 600;
+    overflow: hidden
+  }
+
+  .rc__meta {
+    color: var(--t3c);
+    margin-top: 2px;
+    font-size: .75rem
+  }
+
+  .rc__acts {
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 8px;
+    display: flex
+  }
+
+  .inline-editor {
+    background: var(--sf);
+    border: 1.5px solid var(--bd);
+    border-radius: var(--r-xl);
+    box-shadow: var(--shmd);
+    margin-top: 24px;
+    animation: .35s both fadeUp;
+    overflow: hidden
+  }
+
+  .ie-header {
+    background: var(--sf2);
+    border-bottom: 1px solid var(--bd);
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    display: flex
+  }
+
+  .ie-title {
+    align-items: center;
+    gap: 8px;
+    font-size: .9rem;
+    font-weight: 700;
+    display: flex
+  }
+
+  .ie-body {
+    height: 540px;
+    display: flex
+  }
+
+  .ie-thumbs {
+    border-right: 1px solid var(--bd);
+    background: var(--bg2);
+    flex-shrink: 0;
+    width: 140px;
+    padding: 8px;
+    overflow-y: auto
+  }
+
+  .ie-thumb-item {
+    cursor: pointer;
+    border-radius: var(--r-md);
+    transition: border-color var(--t2);
+    background: var(--sf3);
+    border: 2px solid #0000;
+    margin-bottom: 6px;
+    position: relative;
+    overflow: hidden
+  }
+
+  .ie-thumb-item:hover {
+    border-color: var(--bd2)
+  }
+
+  .ie-thumb-item.active {
+    border-color: var(--v);
+    box-shadow: var(--glow)
+  }
+
+  .ie-thumb-item canvas {
+    width: 100%;
+    height: auto;
+    display: block
+  }
+
+  .ie-thumb-label {
+    color: #fff;
+    text-align: center;
+    background: #00000080;
+    padding: 2px 4px;
+    font-size: 9px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0
+  }
+
+  .ie-canvas-area {
+    flex-direction: column;
+    flex: 1;
+    display: flex;
+    overflow: hidden
+  }
+
+  .ie-toolbar {
+    background: var(--sf);
+    border-bottom: 1px solid var(--bd);
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px;
+    display: flex
+  }
+
+  .tg {
+    border-right: 1px solid var(--bd);
+    align-items: center;
+    gap: 2px;
+    padding: 0 8px;
+    display: flex
+  }
+
+  .tg:last-child {
+    border-right: none
+  }
+
+  .tb {
+    border-radius: var(--r-sm);
+    width: 32px;
+    height: 32px;
+    color: var(--t2c);
+    transition: color var(--t2), background var(--t2);
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    display: flex
+  }
+
+  .tb:hover {
+    color: var(--t1c);
+    background: var(--sf2)
+  }
+
+  .tb.active {
+    color: var(--v);
+    background: #6c63ff1f
+  }
+
+  .zoom-val {
+    color: var(--t2c);
+    text-align: center;
+    min-width: 38px;
+    font-size: .75rem
+  }
+
+  .scale-sl {
+    appearance: none;
+    background: var(--sf3);
+    cursor: pointer;
+    border-radius: 99px;
+    width: 90px;
+    height: 4px
+  }
+
+  .scale-sl::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: var(--v);
+    cursor: pointer;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    box-shadow: 0 0 0 3px #6c63ff40
+  }
+
+  .ie-viewport {
+    background: var(--bg2);
+    flex: 1;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 28px;
+    display: flex;
+    overflow: auto
+  }
+
+  .ie-page {
+    box-shadow: var(--shlg);
+    border-radius: 4px;
+    display: inline-block;
+    position: relative
+  }
+
+  #pdfCanvas {
+    background: #fff;
+    max-width: 100%;
+    display: block
+  }
+
+  .dash {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 40px 24px
+  }
+
+  .dash-header {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    display: flex
+  }
+
+  .dash-title {
+    letter-spacing: -.03em;
+    font-size: 2rem;
+    font-weight: 800
+  }
+
+  .stats-g {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+    display: grid
+  }
+
+  .sc {
+    background: var(--sf);
+    border: 1px solid var(--bd);
+    border-radius: var(--r-xl);
+    transition: transform var(--t2), box-shadow var(--t2);
+    padding: 24px;
+    position: relative;
+    overflow: hidden
+  }
+
+  .sc:before {
+    content: "";
+    background: var(--c, var(--v));
+    height: 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0
+  }
+
+  .sc:hover {
+    box-shadow: var(--shmd);
+    transform: translateY(-2px)
+  }
+
+  .sc__icon {
+    border-radius: var(--r-md);
+    background: color-mix(in srgb, var(--c, var(--v)) 15%, transparent);
+    width: 40px;
+    height: 40px;
+    color: var(--c, var(--v));
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 14px;
+    font-size: 20px;
+    display: flex
+  }
+
+  .sc__val {
+    font-family: var(--font-d);
+    letter-spacing: -.04em;
+    margin-bottom: 4px;
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1;
+    display: block
+  }
+
+  .sc__lbl {
+    color: var(--t3c);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    font-size: .72rem;
+    font-weight: 600
+  }
+
+  .sc__tr {
+    border-radius: 99px;
+    margin-top: 12px;
+    padding: 2px 8px;
+    font-size: .72rem;
+    font-weight: 600;
+    display: inline-block
+  }
+
+  .sc__tr.up {
+    color: var(--gn);
+    background: #56cf8a26
+  }
+
+  .sc__tr.dn {
+    color: var(--rd);
+    background: #ff525226
+  }
+
+  .chart-row {
+    grid-template-columns: 1fr 260px;
+    gap: 16px;
+    margin-bottom: 24px;
+    display: grid
+  }
+
+  .card {
+    background: var(--sf);
+    border: 1px solid var(--bd);
+    border-radius: var(--r-xl);
+    box-shadow: var(--shsm);
+    padding: 24px
+  }
+
+  .card-title {
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: .85rem;
+    font-weight: 700;
+    display: flex
+  }
+
+  .chart-bars {
+    align-items: flex-end;
+    gap: 8px;
+    height: 140px;
+    padding: 0 4px;
+    display: flex
+  }
+
+  .cbar-g {
+    flex: 1;
+    align-items: flex-end;
+    gap: 3px;
+    display: flex;
+    position: relative
+  }
+
+  .cbar {
+    cursor: pointer;
+    min-width: 5px;
+    transition: opacity var(--t1);
+    border-radius: 3px 3px 0 0;
+    flex: 1
+  }
+
+  .cbar:hover {
+    opacity: .75
+  }
+
+  .cbar-i {
+    background: var(--v)
+  }
+
+  .cbar-d {
+    background: var(--r)
+  }
+
+  .cday {
+    color: var(--t3c);
+    white-space: nowrap;
+    font-size: 9px;
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translate(-50%)
+  }
+
+  .donut-wrap {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    display: flex
+  }
+
+  .donut-leg {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    display: flex
+  }
+
+  .dl-item {
+    color: var(--t2c);
+    align-items: center;
+    gap: 8px;
+    font-size: .78rem;
+    display: flex
+  }
+
+  .dl-dot {
+    border-radius: 2px;
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px
+  }
+
+  .bot-row {
+    grid-template-columns: 320px 1fr;
+    gap: 16px;
+    display: grid
+  }
+
+  .timeline li {
+    gap: 10px;
+    padding: 10px 0;
+    display: flex;
+    position: relative
+  }
+
+  .timeline li:before {
+    content: "";
+    background: var(--bd);
+    width: 1px;
+    height: calc(100% - 16px);
+    position: absolute;
+    top: 28px;
+    left: 6px
+  }
+
+  .timeline li:last-child:before {
+    display: none
+  }
+
+  .tl-dot {
+    border-radius: 50%;
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    margin-top: 4px
+  }
+
+  .tl-name {
+    font-size: .83rem;
+    font-weight: 500
+  }
+
+  .tl-time {
+    color: var(--t3c);
+    margin-top: 1px;
+    font-size: .72rem
+  }
+
+  .tbl-wrap {
+    border: 1px solid var(--bd);
+    border-radius: var(--r-md);
+    overflow-x: auto
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: .83rem
+  }
+
+  th {
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--t3c);
+    background: var(--sf2);
+    border-bottom: 1px solid var(--bd);
+    padding: 10px 14px;
+    font-size: .7rem;
+    font-weight: 700
+  }
+
+  td {
+    color: var(--t2c);
+    border-bottom: 1px solid var(--bd);
+    padding: 10px 14px
+  }
+
+  tr:last-child td {
+    border-bottom: none
+  }
+
+  tr:hover td {
+    background: var(--sf2)
+  }
+
+  td:first-child {
+    color: var(--t1c);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 180px;
+    font-weight: 500;
+    overflow: hidden
+  }
+
+  .badge {
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    border-radius: 99px;
+    align-items: center;
+    padding: 2px 8px;
+    font-size: .68rem;
+    font-weight: 700;
+    display: inline-flex
+  }
+
+  .b-img {
+    color: var(--vl);
+    background: #6c63ff26
+  }
+
+  .b-doc {
+    color: var(--rl);
+    background: #ff658426
+  }
+
+  .b-pdf {
+    color: var(--am);
+    background: #f7971e26
+  }
+
+  .b-ok {
+    color: var(--gn);
+    background: #56cf8a26
+  }
+
+  .b-pend {
+    color: var(--am);
+    background: #f7971e26
+  }
+
+  .tc {
+    z-index: 999;
+    pointer-events: none;
+    flex-direction: column;
+    gap: 8px;
+    display: flex;
+    position: fixed;
+    bottom: 24px;
+    right: 24px
+  }
+
+  .toast {
+    background: var(--gl);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glb);
+    border-radius: var(--r-lg);
+    min-width: 260px;
+    max-width: 380px;
+    box-shadow: var(--shlg);
+    color: var(--t1c);
+    pointer-events: auto;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    font-size: .85rem;
+    animation: .35s cubic-bezier(.34, 1.56, .64, 1) both toastIn;
+    display: flex
+  }
+
+  .toast.out {
+    animation: .28s both toastOut
+  }
+
+  @keyframes toastIn {
+    0% {
+      opacity: 0;
+      transform: translateY(18px)scale(.9)
+    }
+
+    to {
+      opacity: 1;
+      transform: none
+    }
+  }
+
+  @keyframes toastOut {
+    to {
+      opacity: 0;
+      transform: translateY(6px)scale(.95)
+    }
+  }
+
+  .t-icon {
+    flex-shrink: 0;
+    font-size: 16px
+  }
+
+  .t-ok .t-icon:before {
+    content: "✓";
+    color: var(--gn)
+  }
+
+  .t-err .t-icon:before {
+    content: "✕";
+    color: var(--rd)
+  }
+
+  .t-info .t-icon:before {
+    content: "ℹ";
+    color: var(--v)
+  }
+
+  .t-warn .t-icon:before {
+    content: "⚠";
+    color: var(--am)
+  }
+
+  @keyframes fadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(14px)
+    }
+
+    to {
+      opacity: 1;
+      transform: none
+    }
+  }
+
+  @media (width<=768px) {
+
+    .features__grid,
+    .steps__grid {
+      grid-template-columns: 1fr
+    }
+
+    .steps__grid:before {
+      display: none
+    }
+
+    .stats-g {
+      grid-template-columns: 1fr 1fr
+    }
+
+    .chart-row,
+    .bot-row {
+      grid-template-columns: 1fr
+    }
+
+    .ie-body {
+      flex-direction: column;
+      height: auto
+    }
+
+    .ie-thumbs {
+      border-right: none;
+      border-bottom: 1px solid var(--bd);
+      flex-direction: row;
+      gap: 6px;
+      width: 100%;
+      height: 90px;
+      padding: 8px;
+      display: flex;
+      overflow: auto hidden
+    }
+
+    .ie-thumb-item {
+      flex-shrink: 0;
+      width: 58px;
+      margin-bottom: 0
+    }
+
+    .ie-body .ie-canvas-area {
+      height: 420px
+    }
+
+    .rc {
+      flex-wrap: wrap
+    }
+
+    .rc__acts {
+      justify-content: flex-end;
+      width: 100%
+    }
+
+    .fq__acts {
+      width: 100%
+    }
+
+    .tc {
+      bottom: 12px;
+      left: 12px;
+      right: 12px
+    }
+
+    .toast {
+      width: 100%;
+      min-width: 0
+    }
+
+    .nav__links {
+      display: none
+    }
+
+    .cta-banner__inner {
+      padding: 36px 24px
+    }
+
+    .hero {
+      padding: 48px 20px 40px
+    }
+  }
+
+  @media (width<=480px) {
+    .stats-g {
+      grid-template-columns: 1fr
+    }
+
+    .conv-settings {
+      flex-direction: column;
+      align-items: stretch
+    }
+
+    .sel {
+      width: 100%
+    }
+  }
+
+  .site-footer {
+    background: var(--sf);
+    border-top: 1px solid var(--bd);
+    margin-top: auto
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 32px;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px 24px 28px;
+    display: grid
+  }
+
+  .footer-brand-name-f {
+    font-family: var(--font-d);
+    background: var(--grad);
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -.02em;
+    background-clip: text;
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    display: block
+  }
+
+  .footer-tagline {
+    color: var(--t3c);
+    max-width: 230px;
+    font-size: .8rem;
+    line-height: 1.5
+  }
+
+  .footer-links-group {
+    flex-wrap: wrap;
+    gap: 32px;
+    display: flex
+  }
+
+  .footer-col h4 {
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--t3c);
+    margin-bottom: 12px;
+    font-size: .7rem;
+    font-weight: 700
+  }
+
+  .footer-col ul {
+    flex-direction: column;
+    gap: 8px;
+    list-style: none;
+    display: flex
+  }
+
+  .footer-col a {
+    color: var(--t2c);
+    transition: color var(--t2);
+    font-size: .82rem;
+    text-decoration: none
+  }
+
+  .footer-col a:hover {
+    color: var(--v)
+  }
+
+  .footer-bottom {
+    border-top: 1px solid var(--bd);
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex
+  }
+
+  .footer-copy {
+    color: var(--t3c);
+    font-size: .78rem
+  }
+
+  .footer-copy-brand {
+    background: var(--grad);
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700
+  }
+
+  .footer-legal-links {
+    flex-wrap: wrap;
+    gap: 16px;
+    display: flex
+  }
+
+  .footer-legal-links a {
+    color: var(--t3c);
+    transition: color var(--t2);
+    font-size: .75rem;
+    text-decoration: none
+  }
+
+  .footer-legal-links a:hover {
+    color: var(--v)
+  }
+
+  .footer-social {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+    display: flex
+  }
+
+  .social-link {
+    border-radius: var(--r-md);
+    background: var(--sf3);
+    border: 1px solid var(--bd2);
+    width: 34px;
+    height: 34px;
+    color: var(--t2c);
+    transition: color var(--t2), background var(--t2), border-color var(--t2), transform var(--t2);
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    display: flex
+  }
+
+  .social-link:hover {
+    color: #fff;
+    background: var(--v);
+    border-color: var(--v);
+    transform: translateY(-2px)
+  }
+
+  .social-link:nth-child(2):hover {
+    background: #e1306c;
+    border-color: #e1306c
+  }
+
+  .social-link:nth-child(3):hover {
+    background: red;
+    border-color: red
+  }
+
+  .social-link:nth-child(4):hover {
+    background: #25d366;
+    border-color: #25d366
+  }
+
+  .cookie-banner {
+    z-index: 998;
+    background: var(--gl);
+    -webkit-backdrop-filter: blur(20px)saturate(1.4);
+    border-top: 1px solid var(--glb);
+    color: var(--t2c);
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 24px;
+    font-size: .83rem;
+    transition: transform .4s cubic-bezier(.16, 1, .3, 1);
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translateY(100%)
+  }
+
+  .cookie-banner.visible {
+    transform: translateY(0)
+  }
+
+  .cookie-banner a {
+    color: var(--v);
+    text-decoration: underline
+  }
+
+  .cookie-banner__acts {
+    flex-shrink: 0;
+    gap: 8px;
+    display: flex
+  }
+
+  .cb-accept {
+    background: var(--grad);
+    color: #fff;
+    border-radius: var(--r-md);
+    font-family: var(--font-b);
+    cursor: pointer;
+    transition: filter var(--t2);
+    border: none;
+    padding: 8px 20px;
+    font-size: .83rem;
+    font-weight: 600
+  }
+
+  .cb-accept:hover {
+    filter: brightness(1.1)
+  }
+
+  .cb-decline {
+    background: var(--sf3);
+    color: var(--t2c);
+    border: 1px solid var(--bd2);
+    border-radius: var(--r-md);
+    font-family: var(--font-b);
+    cursor: pointer;
+    transition: background var(--t2), color var(--t2);
+    padding: 8px 14px;
+    font-size: .83rem
+  }
+
+  .cb-decline:hover {
+    background: var(--sf2);
+    color: var(--t1c)
+  }
+
+  .terms-gate {
+    border-radius: var(--r-lg);
+    background: #6c63ff0f;
+    border: 1.5px solid #6c63ff29;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding: 14px 16px;
+    display: flex
+  }
+
+  .terms-gate input[type=checkbox] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--v);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 3px
+  }
+
+  .terms-gate label {
+    color: var(--t2c);
+    cursor: pointer;
+    font-size: .83rem;
+    line-height: 1.5
+  }
+
+  .terms-gate a {
+    color: var(--v)
+  }
+
+  .terms-gate a:hover {
+    text-decoration: underline
+  }
+
+  .terms-gate-error {
+    color: var(--rd);
+    margin-top: 4px;
+    font-size: .78rem;
+    display: none
+  }
+
+  @media (width<=768px) {
+    .footer-inner {
+      grid-template-columns: 1fr
+    }
+
+    .footer-links-group {
+      gap: 20px
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px
+    }
+
+    .cookie-banner {
+      text-align: center;
+      flex-direction: column
+    }
+  }
+</style>
+
+<body>
+
+
+  <header class=nav role=banner>
+    <div class=nav__inner>
+      <a href=# class=brand id=brandHome aria-label="PDFCraft home">
+        <svg width=26 height=26 fill=none aria-hidden=true viewBox="0 0 26 26">
+          <rect width=26 height=26 fill=url(#ng) rx=7 />
+          <path fill=#fff d="M6 7h8l5 5v7H6Z" opacity=.9 />
+          <path fill=#fff d="m14 7 5 5h-5Z" opacity=.45 />
+          <line x1=9 x2=16 y1=13 y2=13 stroke=#43c6ac stroke-linecap=round stroke-width=1.5 />
+          <line x1=9 x2=16 y1=16 y2=16 stroke=#43c6ac stroke-linecap=round stroke-width=1.5 />
+          <defs>
+            <linearGradient id=ng x1=0 x2=26 y1=0 y2=26>
+              <stop stop-color=#6c63ff />
+              <stop offset=1 stop-color=#ff6584 />
+            </linearGradient>
+          </defs>
+        </svg>
+        <span class=brand-name>PDFCraft</span>
+      </a>
+
+      <div class=nav__spacer></div>
+
+      <nav class=nav__links role=navigation aria-label="Main navigation">
+        <button class=nav-btn id=navHome aria-current=page>Home</button>
+        <button class=nav-btn id=navConvert>Convert</button>
+        <span id=navAdminLink style=display:none>
+          <button class=nav-btn id=navDash>Dashboard</button>
+        </span>
+      </nav>
+
+      <div class=nav__actions>
+        <div class=tt id=themeToggle role=switch aria-checked=true aria-label="Toggle dark mode" tabindex=0>
+          <span class=tt__icon>☀</span>
+          <div class=tt__track>
+            <div class=tt__thumb></div>
+          </div>
+          <span class=tt__icon>☽</span>
+        </div>
+        <button class="btn btn-primary btn-sm" id=navStartBtn>
+          <svg width=14 height=14 fill=currentColor viewBox="0 0 14 14">
+            <path d="M7 1v12M1 7h12" />
+          </svg>
+          Start Free
+        </button>
+      </div>
+    </div>
+  </header>
+
+
+  <div class=tc id=tc role=alert aria-live=assertive></div>
+
+
+
+
+  <div class="active view" id=viewHome>
+
+    <section class=hero aria-labelledby=heroTitle>
+      <div class=hero__badge>
+        <svg width=14 height=14 fill=none viewBox="0 0 14 14">
+          <circle cx=7 cy=7 r=6 stroke=#8b85ff stroke-width=1.5 />
+          <path stroke=#8b85ff stroke-linecap=round stroke-linejoin=round stroke-width=1.5 d="m5 7 2 2 3-3" />
+        </svg>
+        100% Free · No Account Needed · Works Offline
+      </div>
+      <h1 class=hero__title id=heroTitle>
+        Convert anything<br>to <span>PDF instantly</span>
+      </h1>
+      <p class=hero__sub>Upload images or Word documents and get a perfect PDF in seconds — entirely in your browser.
+        Nothing leaves your device.</p>
+      <div class=hero__cta>
+        <button class="btn btn-lg btn-primary" id=heroConvertBtn>
+          <svg width=18 height=18 fill=none stroke=currentColor stroke-width=2 viewBox="0 0 18 18">
+            <path d="M3 2h9l5 5v10H3Z" />
+            <path d="M12 2v5h5" />
+          </svg>
+          Convert Files Now
+        </button>
+        <button class="btn btn-lg btn-secondary" id=heroLearnBtn>See How It Works</button>
+      </div>
+      <div class=hero__trust>
+        <div class=trust-item><span class=trust-icon>🔒</span> Private &amp; secure</div>
+        <div class=trust-item><span class=trust-icon>⚡</span> Instant conversion</div>
+        <div class=trust-item><span class=trust-icon>💻</span> No install needed</div>
+        <div class=trust-item><span class=trust-icon>🌍</span> Works on any device</div>
+      </div>
+    </section>
+
+
+    <section class=features aria-labelledby=featTitle>
+      <div class=features__grid>
+        <div class=feat-card style=--c:#6c63ff>
+          <div class=feat-icon style=--c:#6c63ff>🖼</div>
+          <h3>Images to PDF</h3>
+          <p>PNG, JPG, JPEG, WEBP — all supported. Preserves quality with perfect page scaling for A4 or Letter format.
+          </p>
+        </div>
+        <div class=feat-card style=--c:#ff6584>
+          <div class=feat-icon style=--c:#ff6584>📄</div>
+          <h3>Word to PDF</h3>
+          <p>Convert DOC and DOCX files without installing Microsoft Office. Fast, clean, and client-side.</p>
+        </div>
+        <div class=feat-card style=--c:#43c6ac>
+          <div class=feat-icon style=--c:#43c6ac>🔗</div>
+          <h3>Merge &amp; Combine</h3>
+          <p>Drag to reorder, then merge multiple files into one polished PDF in a single click.</p>
+        </div>
+        <div class=feat-card style=--c:#f7971e>
+          <div class=feat-icon style=--c:#f7971e>✂️</div>
+          <h3>Edit Pages</h3>
+          <p>Rotate, delete, and reorder pages in the built-in editor. Preview every change in real time.</p>
+        </div>
+        <div class=feat-card style=--c:#56cf8a>
+          <div class=feat-icon style=--c:#56cf8a>📦</div>
+          <h3>Compress PDF</h3>
+          <p>Reduce file size for email or upload with one-click optimization — no quality loss.</p>
+        </div>
+        <div class=feat-card style=--c:#8b85ff>
+          <div class=feat-icon style=--c:#8b85ff>📥</div>
+          <h3>Download &amp; Print</h3>
+          <p>Download your PDF instantly or send it to your printer. Rename it before saving.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <section class=steps id=howItWorks aria-labelledby=stepsTitle>
+      <h2 class=steps__title id=stepsTitle>Three steps to your PDF</h2>
+      <div class=steps__grid>
+        <div class=step>
+          <div class=step__num>1</div>
+          <h3>Upload Files</h3>
+          <p>Drag &amp; drop or click to browse. Supports images and Word documents up to 50 MB each.</p>
+        </div>
+        <div class=step>
+          <div class=step__num>2</div>
+          <h3>Convert &amp; Edit</h3>
+          <p>Click Convert. Then reorder pages, rotate, delete, or merge — right in the browser.</p>
+        </div>
+        <div class=step>
+          <div class=step__num>3</div>
+          <h3>Download</h3>
+          <p>Get your PDF instantly. No email required, no watermarks, no limits.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <div class=cta-banner>
+      <div class=cta-banner__inner>
+        <h2>Ready to convert your first file?</h2>
+        <p>Free forever. No sign-up. Works 100% in your browser.</p>
+        <button class="btn btn-lg btn-white" id=ctaBannerBtn>Get Started — It's Free</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class=view id=viewConverter>
+    <div class=converter>
+      <div class=conv-header>
+        <h1>Convert to PDF</h1>
+        <p>Upload images or documents · everything stays on your device</p>
+      </div>
+
+
+      <div class=conv-settings>
+        <select class=sel id=pageSizeSel aria-label="Page size">
+          <option value=A4>A4 Page</option>
+          <option value=Letter>US Letter</option>
+        </select>
+        <select class=sel id=orientSel aria-label=Orientation>
+          <option value=portrait>Portrait</option>
+          <option value=landscape>Landscape</option>
+        </select>
+      </div>
+
+
+
+      <div class=terms-gate id=termsGate>
+        <input type=checkbox id=termsCheck aria-required=true aria-describedby=termsGateError>
+        <div>
+          <label for=termsCheck>I have read and agree to the <a href=/legal/terms.html target=_blank rel=noopener>Terms
+              of Service</a> and <a href=/legal/privacy.html target=_blank rel=noopener>Privacy Policy</a></label>
+          <p class=terms-gate-error id=termsGateError role=alert>Please accept the Terms of Service to continue.</p>
+        </div>
+      </div>
+
+      <div class=dz id=dz role=button tabindex=0 aria-label="File upload area — click or drag files here">
+        <div class=dz__icon aria-hidden=true>
+          <svg width=36 height=36 fill=none viewBox="0 0 36 36">
+            <path stroke=url(#dzg) stroke-linecap=round stroke-linejoin=round stroke-width=2.5
+              d="M18 8v16m-8-8 8-10 8 10" />
+            <path stroke=url(#dzg) stroke-linecap=round stroke-width=2 d="M6 30h24" opacity=.5 />
+            <defs>
+              <linearGradient id=dzg x1=0 x2=36 y1=0 y2=36>
+                <stop stop-color=#6c63ff />
+                <stop offset=1 stop-color=#ff6584 />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <p class=dz__title>Drop files here</p>
+        <p class=dz__sub>or click the button below to browse</p>
+
+        <button class="btn btn-outline" id=browseBtn type=button style=margin-bottom:16px>Browse Files</button>
+        <div class=filetypes>
+          <span class=ftpill>PNG</span><span class=ftpill>JPG</span>
+          <span class=ftpill>JPEG</span><span class=ftpill>WEBP</span>
+          <span class=ftpill>DOC</span><span class=ftpill>DOCX</span>
+        </div>
+
+        <input type=file id=fileInput class=sr-only accept=.png,.jpg,.jpeg,.webp,.doc,.docx multiple
+          aria-label="File input">
+      </div>
+
+
+      <div class=fq id=fq style=display:none>
+        <div class=fq__head>
+          <h3>Files (<span id=fqCount>0</span>)</h3>
+          <div class=fq__acts>
+            <button class="btn btn-ghost btn-sm" id=clearBtn>Clear All</button>
+            <button class="btn btn-secondary btn-sm" id=mergeBtn>
+              <svg width=14 height=14 fill=none stroke=currentColor stroke-width=1.5 viewBox="0 0 14 14">
+                <path d="M4 7h6M8 5l2 2-2 2" />
+              </svg>
+              Merge All
+            </button>
+            <button class="btn btn-primary btn-sm" id=convertBtn>
+              <svg width=14 height=14 fill=currentColor viewBox="0 0 14 14">
+                <path d="M2 1h7l4 4v9H2Z" />
+              </svg>
+              Convert to PDF
+            </button>
+          </div>
+        </div>
+        <ul class=flist id=flist role=list aria-label="Files to convert"></ul>
+      </div>
+
+
+      <div class=prog-wrap id=progWrap style=display:none aria-live=polite>
+        <div class=prog-label>
+          <span id=progText>Converting…</span>
+          <span id=progPct>0%</span>
+        </div>
+        <div class=prog-bar role=progressbar aria-valuenow=0 aria-valuemin=0 aria-valuemax=100>
+          <div class=prog-fill id=progFill></div>
+        </div>
+      </div>
+
+
+      <div class=results id=results style=display:none aria-live=polite></div>
+
+
+      <div class=inline-editor id=inlineEditor style=display:none>
+        <div class=ie-header>
+          <span class=ie-title>
+            <svg width=16 height=16 fill=none stroke=currentColor stroke-width=1.5 viewBox="0 0 16 16">
+              <path d="m11.5 1.5 3 3-9 9H2V10Z" />
+            </svg>
+            PDF Editor
+            <span id=iePageLabel style=color:var(--t3c);font-size:.8rem;font-weight:400></span>
+          </span>
+          <div style=flex-wrap:wrap;align-items:center;gap:8px;display:flex>
+            <button class="btn btn-ghost btn-sm" id=ieUndo disabled>↩ Undo</button>
+            <button class="btn btn-ghost btn-sm" id=ieRedo disabled>↪ Redo</button>
+            <button class="btn btn-secondary btn-sm" id=iePrint>🖨 Print</button>
+            <button class="btn btn-primary btn-sm" id=ieExport>
+              <svg width=14 height=14 fill=none stroke=currentColor stroke-width=1.5 viewBox="0 0 14 14">
+                <path d="M7 1v9M4 7l3 3 3-3m-9 5h12" />
+              </svg>
+              Export PDF
+            </button>
+            <button class="btn btn-ghost btn-sm" id=ieClose aria-label="Close editor">✕ Close</button>
+          </div>
+        </div>
+        <div class=ie-body>
+
+          <div class=ie-thumbs id=ieThumbs aria-label="Page thumbnails"></div>
+
+          <div class=ie-canvas-area>
+            <div class=ie-toolbar role=toolbar aria-label="Editor tools">
+              <div class=tg>
+                <button class=tb id=ieRotCCW title="Rotate counter-clockwise" aria-label="Rotate CCW">
+                  <svg width=15 height=15 fill=none stroke=currentColor stroke-width=1.5 viewBox="0 0 15 15">
+                    <path d="M3 7.5a4.5 4.5 0 1 0 1.4-3.2L2 6" />
+                    <path d="M2 2.5V6h3.5" />
+                  </svg>
+                </button>
+                <button class=tb id=ieRotCW title="Rotate clockwise" aria-label="Rotate CW">
+                  <svg width=15 height=15 fill=none stroke=currentColor stroke-width=1.5 viewBox="0 0 15 15">
+                    <path d="M12 7.5a4.5 4.5 0 1 1-1.4-3.2L13 6" />
+                    <path d="M13 2.5V6H9.5" />
+                  </svg>
+                </button>
+                <button class=tb id=ieDelPage title="Delete page" aria-label="Delete page">
+                  <svg width=15 height=15 fill=none stroke=currentColor stroke-width=1.5 viewBox="0 0 15 15">
+                    <path d="M2.5 4h10M5 4V3h5v1M5.5 7v4m4-4v4m-6-7 1 8h6l1-8" />
+                  </svg>
+                </button>
+              </div>
+              <div class=tg>
+                <button class=tb id=ieZoomOut title="Zoom out" aria-label="Zoom out"
+                  style=font-size:18px;font-weight:700>−</button>
+                <span class=zoom-val id=ieZoomVal aria-live=polite>100%</span>
+                <button class=tb id=ieZoomIn title="Zoom in" aria-label="Zoom in"
+                  style=font-size:18px;font-weight:700>+</button>
+              </div>
+              <div class=tg style=gap:6px>
+                <label for=ieScale class=sr-only>Scale</label>
+                <input type=range id=ieScale class=scale-sl min=20 max=200 value=100 step=5 aria-label="Scale page">
+              </div>
+            </div>
+            <div class=ie-viewport id=ieViewport>
+              <div class=ie-page>
+                <canvas id=pdfCanvas aria-label="PDF page preview"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class=view id=viewDash>
+    <div class=dash>
+      <div class=dash-header>
+        <h1 class=dash-title>Admin Dashboard</h1>
+        <div style=align-items:center;gap:8px;display:flex>
+          <span
+            style="color:var(--rd);background:#ff52521f;border:1px solid #ff525240;border-radius:99px;padding:4px 12px;font-size:.78rem;font-weight:600">🔐
+            Admin Mode</span>
+        </div>
+      </div>
+
+      <div class=stats-g>
+        <div class=sc style=--c:#6c63ff>
+          <div class=sc__icon>📄</div>
+          <span class=sc__val data-count=142>0</span>
+          <span class=sc__lbl>Files Converted</span>
+          <span class="sc__tr up">↑ 12% this week</span>
+        </div>
+        <div class=sc style=--c:#ff6584>
+          <div class=sc__icon>📑</div>
+          <span class=sc__val data-count=38>0</span>
+          <span class=sc__lbl>PDFs Created</span>
+          <span class="sc__tr up">↑ 8%</span>
+        </div>
+        <div class=sc style=--c:#43c6ac>
+          <div class=sc__icon>📦</div>
+          <span class=sc__val data-count=96>0</span>
+          <span class=sc__lbl>MB Saved</span>
+          <span class="sc__tr up">↑ 22%</span>
+        </div>
+        <div class=sc style=--c:#f7971e>
+          <div class=sc__icon>⏱</div>
+          <span class=sc__val data-count=4.2 data-float=1>0</span>
+          <span class=sc__lbl>Avg. Process (s)</span>
+          <span class="dn sc__tr">↓ 5% faster</span>
+        </div>
+      </div>
+
+      <div class=chart-row>
+        <div class=card>
+          <div class=card-title>
+            Conversion Activity
+            <div style=color:var(--t3c);gap:10px;font-size:.72rem;display:flex>
+              <span><span
+                  style=background:var(--v);border-radius:50%;width:8px;height:8px;margin-right:4px;display:inline-block></span>Images</span>
+              <span><span
+                  style=background:var(--r);border-radius:50%;width:8px;height:8px;margin-right:4px;display:inline-block></span>Docs</span>
+            </div>
+          </div>
+          <div class=chart-bars id=chartBars></div>
+        </div>
+        <div class=card>
+          <div class=card-title>File Types</div>
+          <div class=donut-wrap>
+            <svg width=130 height=130 aria-hidden=true viewBox="0 0 100 100">
+              <circle cx=50 cy=50 r=36 fill=none stroke=var(--sf2) stroke-width=16 />
+              <circle cx=50 cy=50 r=36 fill=none stroke=#6c63ff stroke-dasharray="84 142" stroke-width=16
+                transform="rotate(-90 50 50)" />
+              <circle cx=50 cy=50 r=36 fill=none stroke=#ff6584 stroke-dasharray="50 142" stroke-dashoffset=-84
+                stroke-width=16 transform="rotate(-90 50 50)" />
+              <circle cx=50 cy=50 r=36 fill=none stroke=#43c6ac stroke-dasharray="28 142" stroke-dashoffset=-134
+                stroke-width=16 transform="rotate(-90 50 50)" />
+            </svg>
+            <div class=donut-leg>
+              <div class=dl-item><span class=dl-dot style=background:#6c63ff></span>PNG/JPG — 59%</div>
+              <div class=dl-item><span class=dl-dot style=background:#ff6584></span>DOCX — 35%</div>
+              <div class=dl-item><span class=dl-dot style=background:#43c6ac></span>Other — 6%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class=bot-row>
+        <div class=card>
+          <div class=card-title>Recent Activity</div>
+          <ul class=timeline role=list>
+            <li><span class=tl-dot style=background:#6c63ff></span>
+              <div>
+                <div class=tl-name>design_mockup.png → PDF</div><time class=tl-time>2 min ago</time>
+              </div>
+            </li>
+            <li><span class=tl-dot style=background:#ff6584></span>
+              <div>
+                <div class=tl-name>report_q4.docx → PDF</div><time class=tl-time>14 min ago</time>
+              </div>
+            </li>
+            <li><span class=tl-dot style=background:#43c6ac></span>
+              <div>
+                <div class=tl-name>Merged 3 files → combined.pdf</div><time class=tl-time>1 hr ago</time>
+              </div>
+            </li>
+            <li><span class=tl-dot style=background:#f7971e></span>
+              <div>
+                <div class=tl-name>photo_album.jpg → PDF</div><time class=tl-time>3 hr ago</time>
+              </div>
+            </li>
+            <li><span class=tl-dot style=background:#56cf8a></span>
+              <div>
+                <div class=tl-name>contract_draft.docx → PDF</div><time class=tl-time>Yesterday</time>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class=card>
+          <div class=card-title>Recent Conversions</div>
+          <div class=tbl-wrap>
+            <table aria-label="Recent conversions">
+              <thead>
+                <tr>
+                  <th>Filename
+                  <th>Type
+                  <th>Size
+                  <th>Status
+              </thead>
+              <tbody>
+                <tr>
+                  <td>design_mockup.png
+                  <td><span class="b-img badge">IMG</span>
+                  <td>2.4 MB
+                  <td><span class="b-ok badge">Done</span>
+                </tr>
+                <tr>
+                  <td>report_q4.docx
+                  <td><span class="b-doc badge">DOC</span>
+                  <td>840 KB
+                  <td><span class="b-ok badge">Done</span>
+                </tr>
+                <tr>
+                  <td>combined.pdf
+                  <td><span class="b-pdf badge">PDF</span>
+                  <td>5.1 MB
+                  <td><span class="b-ok badge">Done</span>
+                </tr>
+                <tr>
+                  <td>photo_album.jpg
+                  <td><span class="b-img badge">IMG</span>
+                  <td>3.8 MB
+                  <td><span class="b-ok badge">Done</span>
+                </tr>
+                <tr>
+                  <td>contract_v2.docx
+                  <td><span class="b-doc badge">DOC</span>
+                  <td>120 KB
+                  <td><span class="b-pend badge">Processing</span>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>const ACCEPTED = ["image/png", "image/jpeg", "image/webp", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"], MAX_SIZE = 0x3200000, PAGE_SIZES = { A4: { w: 595.28, h: 841.89 }, Letter: { w: 612, h: 792 } }; !function () { let e = document.documentElement, t = document.getElementById("themeToggle"), n = "pctheme", a = localStorage.getItem(n), r = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; e.dataset.theme = a || r, t.addEventListener("click", () => { var a; return a = "dark" === e.dataset.theme ? "light" : "dark", void (e.dataset.theme = a, t.setAttribute("aria-checked", "dark" === a), localStorage.setItem(n, a)) }), t.addEventListener("keydown", e => { ("Enter" === e.key || " " === e.key) && (e.preventDefault(), t.click()) }) }(); const Toast = { _c: document.getElementById("tc"), show(e, t = "info", n = 3500) { let a = document.createElement("div"); a.className = `toast t-${t}`, a.innerHTML = `<span class="t-icon" aria-hidden="true"></span><span>${esc(e)}</span>`, this._c.appendChild(a), n > 0 && setTimeout(() => { a.classList.add("out"), a.addEventListener("animationend", () => a.remove(), { once: !0 }) }, n) }, ok(e, t) { this.show(e, "ok", t) }, err(e, t) { this.show(e, "err", t) }, info(e, t) { this.show(e, "info", t) }, warn(e, t) { this.show(e, "warn", t) } }; function esc(e) { return String(e).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") } function fmtBytes(e) { if (!e) return "0 B"; let t = Math.floor(Math.log(e) / Math.log(1024)); return (e / Math.pow(1024, t)).toFixed(1) + " " + ["B", "KB", "MB", "GB"][t] } function uid() { return Math.random().toString(36).slice(2, 9) } function readURL(e) { return new Promise((t, n) => { let a = new FileReader; a.onload = e => t(e.target.result), a.onerror = n, a.readAsDataURL(e) }) } function readBuf(e) { return new Promise((t, n) => { let a = new FileReader; a.onload = e => t(e.target.result), a.onerror = n, a.readAsArrayBuffer(e) }) } function loadImg(e) { return new Promise((t, n) => { let a = new Image; a.onload = () => t(a), a.onerror = n, a.src = e }) } const IS_ADMIN = new URLSearchParams(location.search).has("admin"); IS_ADMIN && (document.getElementById("navAdminLink").style.display = "inline"); const views = { home: document.getElementById("viewHome"), converter: document.getElementById("viewConverter"), dash: document.getElementById("viewDash") }; function showView(e) { Object.entries(views).forEach(([t, n]) => n.classList.toggle("active", t === e)), document.querySelectorAll(".nav-btn").forEach(e => e.classList.remove("active")), document.getElementById({ home: "navHome", converter: "navConvert", dash: "navDash" }[e])?.classList.add("active"), window.scrollTo({ top: 0, behavior: "smooth" }) } document.getElementById("navHome").addEventListener("click", () => showView("home")), document.getElementById("navConvert").addEventListener("click", () => showView("converter")), document.getElementById("navDash")?.addEventListener("click", () => showView("dash")), document.getElementById("brandHome").addEventListener("click", e => { e.preventDefault(), showView("home") }), ["heroConvertBtn", "navStartBtn", "ctaBannerBtn"].forEach(e => { document.getElementById(e)?.addEventListener("click", () => showView("converter")) }), document.getElementById("heroLearnBtn")?.addEventListener("click", () => { document.getElementById("howItWorks")?.scrollIntoView({ behavior: "smooth" }) }); const dz = document.getElementById("dz"), fileInput = document.getElementById("fileInput"), browseBtn = document.getElementById("browseBtn"); browseBtn.addEventListener("click", e => { e.stopPropagation(), fileInput.click() }), dz.addEventListener("click", e => { e.target === browseBtn || browseBtn.contains(e.target) || fileInput.click() }), dz.addEventListener("keydown", e => { ("Enter" === e.key || " " === e.key) && (e.preventDefault(), fileInput.click()) }), dz.addEventListener("dragenter", e => { e.preventDefault(), dz.classList.add("over") }), dz.addEventListener("dragover", e => { e.preventDefault(), dz.classList.add("over") }), dz.addEventListener("dragleave", e => { dz.contains(e.relatedTarget) || dz.classList.remove("over") }), dz.addEventListener("drop", e => { e.preventDefault(), dz.classList.remove("over"), handleFiles([...e.dataTransfer.files]) }), fileInput.addEventListener("change", e => { handleFiles([...e.target.files]), e.target.value = "" }); const fileMap = new Map; let dragSrcEl = null; function getCategory(e) { let t = e.name.toLowerCase(); return /\.(png|jpe?g|webp)$/i.test(t) ? "image" : /\.(docx?)$/i.test(t) ? "doc" : /\.pdf$/i.test(t) ? "pdf" : "unknown" } async function handleFiles(e) { for (let t of e) { if (!ACCEPTED.includes(t.type) && !/\.(docx?)$/i.test(t.name)) { Toast.err(`${t.name}: unsupported type`); continue } if (t.size > 0x3200000) { Toast.err(`${t.name}: exceeds 50 MB`); continue } let e = uid(), n = getCategory(t), a = null; if ("image" === n) try { a = await readURL(t) } catch { } let r = { id: e, file: t, category: n, dataUrl: a }; fileMap.set(e, r), renderFileItem(r) } syncQueueUI() } function renderFileItem(e) {
+      let t = document.createElement("li"); t.className = "fi", t.dataset.id = e.id, t.draggable = !0; let n = e.dataUrl ? `<img src="${e.dataUrl}" alt=""/>` : `<span>${"doc" === e.category ? "📄" : "📎"}</span>`; t.innerHTML = `
+    <div class="fi__thumb" aria-hidden="true">${n}</div>
+    <div class="fi__info">
+      <p class="fi__name" title="${esc(e.file.name)}">${esc(e.file.name)}</p>
+      <p class="fi__meta">${fmtBytes(e.file.size)} \xb7 ${e.category.toUpperCase()}</p>
+    </div>
+    <div class="fi__acts">
+      <button class="ib ib-del" data-rm="${e.id}" aria-label="Remove ${esc(e.file.name)}" title="Remove">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M2 3h10M5 3V2h4v1M4 3l1 8h4l1-8"/>
+        </svg>
+      </button>
+    </div>`, t.querySelector("[data-rm]").addEventListener("click", () => { fileMap.delete(e.id), t.remove(), syncQueueUI() }), t.addEventListener("dragstart", () => { dragSrcEl = t, t.classList.add("dragging") }), t.addEventListener("dragend", () => { t.classList.remove("dragging"), document.querySelectorAll(".fi.over").forEach(e => e.classList.remove("over")), dragSrcEl = null }), t.addEventListener("dragover", e => { e.preventDefault(), dragSrcEl && dragSrcEl !== t && t.classList.add("over") }), t.addEventListener("dragleave", () => t.classList.remove("over")), t.addEventListener("drop", e => { if (e.preventDefault(), t.classList.remove("over"), dragSrcEl && dragSrcEl !== t) { let e = [...document.querySelectorAll(".fi")]; e.indexOf(dragSrcEl) < e.indexOf(t) ? t.after(dragSrcEl) : t.before(dragSrcEl) } }), document.getElementById("flist").appendChild(t)
+    } function syncQueueUI() { let e = fileMap.size; document.getElementById("fq").style.display = e ? "block" : "none", document.getElementById("fqCount").textContent = e } function getOrderedEntries() { return [...document.querySelectorAll(".fi")].map(e => fileMap.get(e.dataset.id)).filter(Boolean) } function setProgress(e, t = "", n = 0) { if (document.getElementById("progWrap").style.display = e ? "block" : "none", e) { document.getElementById("progText").textContent = t, document.getElementById("progPct").textContent = n + "%"; let e = document.getElementById("progFill"); e.style.width = n + "%", e.closest('[role="progressbar"]')?.setAttribute("aria-valuenow", n) } } async function imgToBytes(e, t = "A4", n = "portrait") { let { PDFDocument: a } = PDFLib, r = await a.create(), o = PAGE_SIZES[t].w, i = PAGE_SIZES[t].h; "landscape" === n && ([o, i] = [i, o]); let d = URL.createObjectURL(e), l = await loadImg(d); URL.revokeObjectURL(d); let s = document.createElement("canvas"); s.width = l.naturalWidth, s.height = l.naturalHeight, s.getContext("2d").drawImage(l, 0, 0); let c = await new Promise((e, t) => s.toBlob(n => n ? n.arrayBuffer().then(e) : t(Error("blob fail")), "image/jpeg", .93)), m = await r.embedJpg(c), u = Math.min(o / m.width, i / m.height), g = m.width * u, h = m.height * u; return r.addPage([o, i]).drawImage(m, { x: (o - g) / 2, y: (i - h) / 2, width: g, height: h }), r.save() } async function docToBytes(e, t = "A4", n = "portrait") {
+      let { PDFDocument: a, rgb: r } = PDFLib, o = await a.create(), i = PAGE_SIZES[t].w, d = PAGE_SIZES[t].h; "landscape" === n && ([i, d] = [d, i]); let l = `File: ${e.name}
+Size: ${fmtBytes(e.size)}
+
+`; if (window.mammoth) try { let t = await window.mammoth.extractRawText({ arrayBuffer: await readBuf(e) }); l += t.value || "(empty)" } catch (e) { l += "(extraction error: " + e.message + ")" } else l += "[For full DOCX text, add mammoth.js]\n\nFilename: " + e.name; let s = Math.floor((i - 100) / 6), c = l.split("\n").flatMap(e => { if (!e.trim()) return [""]; let t = [], n = e; for (; n.length > s;) { let e = n.lastIndexOf(" ", s), a = e > 0 ? e : s; t.push(n.slice(0, a)), n = n.slice(a + 1) } return n && t.push(n), t }), m = o.addPage([i, d]); m.drawRectangle({ x: 0, y: d - 54, width: i, height: 54, color: r(.42, .39, 1) }), m.drawText(`\u{1F4C4} ${e.name}`, { x: 50, y: d - 34, size: 12, color: r(1, 1, 1) }); let u = d - 74; for (let e of c) u < 50 && (m = o.addPage([i, d]), u = d - 50), e && m.drawText(e, { x: 50, y: u, size: 9, color: r(.1, .1, .15) }), u -= 14; return o.save()
+    } async function convertEntry(e) { let t = document.getElementById("pageSizeSel").value, n = document.getElementById("orientSel").value; if ("image" === e.category) return imgToBytes(e.file, t, n); if ("doc" === e.category) return docToBytes(e.file, t, n); throw Error("Unsupported type") } async function mergeBytes(e) { let { PDFDocument: t } = PDFLib, n = await t.create(); for (let a of e) { let e = await t.load(a); (await n.copyPages(e, e.getPageIndices())).forEach(e => n.addPage(e)) } return n.save() } document.getElementById("clearBtn").addEventListener("click", () => { fileMap.clear(), document.getElementById("flist").innerHTML = "", document.getElementById("results").style.display = "none", document.getElementById("inlineEditor").style.display = "none", syncQueueUI() }), document.getElementById("convertBtn").addEventListener("click", async () => { if (!checkTerms()) return; let e = getOrderedEntries(); if (!e.length) return; let t = document.getElementById("results"); t.innerHTML = "", t.style.display = "none", document.getElementById("inlineEditor").style.display = "none", setProgress(!0, "Preparing…", 0); let n = 0; for (let t of e) { setProgress(!0, `Converting ${t.file.name}\u{2026}`, Math.round(n / e.length * 100)); try { let e = await convertEntry(t), n = new Blob([e], { type: "application/pdf" }), a = t.file.name.replace(/\.[^.]+$/, "") + ".pdf"; addResultCard(n, a, e.byteLength) } catch (e) { Toast.err(`Failed: ${t.file.name} \u{2014} ${e.message}`) } n++ } setProgress(!1), t.style.display = "flex", Toast.ok(`Converted ${n} file${n > 1 ? "s" : ""} successfully!`) }), document.getElementById("mergeBtn").addEventListener("click", async () => { if (!checkTerms()) return; let e = getOrderedEntries(); if (!e.length) return; let t = document.getElementById("results"); t.innerHTML = "", t.style.display = "none", document.getElementById("inlineEditor").style.display = "none", setProgress(!0, "Merging files…", 0); let n = [], a = 0; for (let t of e) { setProgress(!0, `Processing ${t.file.name}\u{2026}`, Math.round(a / e.length * 80)); try { n.push(await convertEntry(t)) } catch (e) { Toast.err(`Skipped: ${t.file.name}`) } a++ } if (!n.length) return void setProgress(!1); setProgress(!0, "Merging…", 90); try { let e = await mergeBytes(n), a = new Blob([e], { type: "application/pdf" }); setProgress(!0, "Done!", 100), setTimeout(() => setProgress(!1), 600), addResultCard(a, "merged.pdf", e.byteLength, !0), t.style.display = "flex", Toast.ok("Merged PDF ready!") } catch (e) { setProgress(!1), Toast.err("Merge failed: " + e.message) } }); let activeEditorBlob = null, activeEditorName = ""; function addResultCard(e, t, n, a = !1) {
+      let r = document.getElementById("results"), o = document.createElement("div"); o.className = "rc", o.innerHTML = `
+    <div class="rc__icon" aria-hidden="true">
+      <svg width="26" height="32" viewBox="0 0 26 32" fill="none">
+        <path d="M3 1h13l8 8v22H3V1z" fill="rgba(108,99,255,.12)" stroke="#6C63FF" stroke-width="1.5"/>
+        <path d="M16 1v8h8" stroke="#6C63FF" stroke-width="1.5"/>
+        <text x="6" y="23" fill="#6C63FF" font-size="6.5" font-weight="bold" font-family="sans-serif">PDF</text>
+      </svg>
+    </div>
+    <div class="rc__info">
+      <p class="rc__name">${esc(t)}${a ? ' <span class="badge b-doc">MERGED</span>' : ""}</p>
+      <p class="rc__meta">${fmtBytes(n)} \xb7 PDF Document</p>
+    </div>
+    <div class="rc__acts">
+      <button class="btn btn-ghost btn-sm" data-act="edit">\u{270F} Edit PDF</button>
+      <button class="btn btn-secondary btn-sm" data-act="compress">Compress</button>
+      <button class="btn btn-primary btn-sm" data-act="dl">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.5 1v8M4 7l2.5 2.5L9 7M1 11h11"/></svg>
+        Download
+      </button>
+    </div>`, o.querySelector('[data-act="dl"]').addEventListener("click", () => { saveAs(e, t), Toast.ok(`Downloaded: ${t}`) }), o.querySelector('[data-act="edit"]').addEventListener("click", () => { activeEditorBlob = e, activeEditorName = t, openInlineEditor(e, t), document.getElementById("inlineEditor").scrollIntoView({ behavior: "smooth", block: "start" }) }), o.querySelector('[data-act="compress"]').addEventListener("click", async n => { let a = n.currentTarget; a.disabled = !0, a.textContent = "…"; try { let { PDFDocument: n } = PDFLib, a = await (await n.load(await e.arrayBuffer())).save({ useObjectStreams: !0 }), r = new Blob([a], { type: "application/pdf" }), o = ((e.size - r.size) / e.size * 100).toFixed(1); Toast.ok(`Saved ${o}% (${fmtBytes(r.size)})`), saveAs(r, t.replace(".pdf", "-compressed.pdf")) } catch { Toast.err("Compression failed") } finally { a.disabled = !1, a.textContent = "Compress" } }), r.appendChild(o)
+    } let iePdfDoc = null, iePages = [], ieCurrIdx = 0, ieZoom = 1, ieUndo = [], ieRedo = []; async function openInlineEditor(e, t) { let n = document.getElementById("inlineEditor"); n.style.display = "block", iePdfDoc = null, iePages = [], ieCurrIdx = 0, ieZoom = 1, ieUndo = [], ieRedo = [], updateUndoRedo(), document.getElementById("ieThumbs").innerHTML = "", document.getElementById("pdfCanvas").getContext("2d").clearRect(0, 0, 9999, 9999), window.pdfjsLib && (pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"); try { let t = await e.arrayBuffer(), n = pdfjsLib.getDocument({ data: new Uint8Array(t) }); iePdfDoc = await n.promise, iePages = Array.from({ length: iePdfDoc.numPages }, (e, t) => ({ num: t + 1, rot: 0, del: !1 })), document.getElementById("ieScale").value = 100, await renderAllThumbs(), await renderPage(0), Toast.info(`Editor ready \u{2014} ${iePdfDoc.numPages} page${iePdfDoc.numPages > 1 ? "s" : ""}`) } catch (e) { Toast.err("Could not load PDF in editor: " + e.message), n.style.display = "none" } } async function renderPage(e) { if (!iePdfDoc) return; let t = iePages.filter(e => !e.del)[e]; if (!t) return; ieCurrIdx = e; let n = await iePdfDoc.getPage(t.num), a = n.getViewport({ scale: ieZoom, rotation: t.rot }), r = document.getElementById("pdfCanvas"); r.width = a.width, r.height = a.height, await n.render({ canvasContext: r.getContext("2d"), viewport: a }).promise, document.getElementById("ieZoomVal").textContent = Math.round(100 * ieZoom) + "%", document.getElementById("ieScale").value = Math.round(100 * ieZoom); let o = iePages.filter(e => !e.del); document.getElementById("iePageLabel").textContent = `Page ${e + 1} of ${o.length}`, document.querySelectorAll(".ie-thumb-item").forEach((t, n) => t.classList.toggle("active", n === e)) } async function renderAllThumbs() { if (!iePdfDoc) return; let e = document.getElementById("ieThumbs"); e.innerHTML = ""; let t = iePages.filter(e => !e.del); for (let n = 0; n < t.length; n++) { let a = t[n], r = document.createElement("div"); r.className = "ie-thumb-item" + (n === ieCurrIdx ? " active" : ""), r.setAttribute("role", "button"), r.setAttribute("tabindex", "0"), r.setAttribute("aria-label", `Page ${a.num}`); let o = document.createElement("canvas"), i = document.createElement("div"); i.className = "ie-thumb-label", i.textContent = a.num, r.appendChild(o), r.appendChild(i), e.appendChild(r), (async (e, t) => { try { let n = await iePdfDoc.getPage(t.num), a = n.getViewport({ scale: .18, rotation: t.rot }); e.width = a.width, e.height = a.height, await n.render({ canvasContext: e.getContext("2d"), viewport: a }).promise } catch { } })(o, a); let d = n; r.addEventListener("click", () => renderPage(d)), r.addEventListener("keydown", e => { ("Enter" === e.key || " " === e.key) && (e.preventDefault(), renderPage(d)) }) } } function rotateCurrent(e) { let t = iePages.filter(e => !e.del)[ieCurrIdx]; t && (pushUndo(), t.rot = ((t.rot + e) % 360 + 360) % 360, renderAllThumbs().then(() => renderPage(ieCurrIdx)), Toast.info(e > 0 ? "Rotated clockwise" : "Rotated counter-clockwise")) } function deleteCurrent() { let e = iePages.filter(e => !e.del); if (e.length <= 1) return void Toast.warn("Cannot delete the last page"); let t = e[ieCurrIdx]; t && (pushUndo(), t.del = !0, ieCurrIdx = Math.max(0, ieCurrIdx - 1), renderAllThumbs().then(() => renderPage(ieCurrIdx)), Toast.ok("Page deleted — undo to restore")) } function setZoom(e) { ieZoom = Math.max(.2, Math.min(3, e)), renderPage(ieCurrIdx) } function pushUndo() { ieUndo.push(JSON.parse(JSON.stringify(iePages))), ieRedo = [], updateUndoRedo() } function doUndo() { ieUndo.length && (ieRedo.push(JSON.parse(JSON.stringify(iePages))), iePages = ieUndo.pop(), updateUndoRedo(), renderAllThumbs().then(() => renderPage(ieCurrIdx)), Toast.info("Undo")) } function doRedo() { ieRedo.length && (ieUndo.push(JSON.parse(JSON.stringify(iePages))), iePages = ieRedo.pop(), updateUndoRedo(), renderAllThumbs().then(() => renderPage(ieCurrIdx)), Toast.info("Redo")) } function updateUndoRedo() { document.getElementById("ieUndo").disabled = !ieUndo.length, document.getElementById("ieRedo").disabled = !ieRedo.length } function animCount(e, t, n) { let a = performance.now(); requestAnimationFrame(function r(o) { let i = Math.min((o - a) / 1200, 1), d = t * (1 - Math.pow(1 - i, 3)); e.textContent = n ? d.toFixed(1) : Math.floor(d).toString(), i < 1 && requestAnimationFrame(r) }) } function initDashboard() { document.querySelectorAll("[data-count]").forEach(e => { let t = new IntersectionObserver(n => { n[0].isIntersecting && (animCount(e, parseFloat(e.dataset.count), !!e.dataset.float), t.unobserve(e)) }, { threshold: .5 }); t.observe(e) }); let e = document.getElementById("chartBars"); if (!e) return; let t = [8, 14, 6, 20, 18, 5, 9], n = [4, 8, 3, 12, 10, 2, 5], a = Math.max(...t, ...n); e.innerHTML = "", ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].forEach((r, o) => { let i = document.createElement("div"); i.className = "cbar-g"; let d = document.createElement("div"); d.className = "cbar cbar-i", d.title = `${r}: ${t[o]} images`, d.style.height = "0"; let l = document.createElement("div"); l.className = "cbar cbar-d", l.title = `${r}: ${n[o]} docs`, l.style.height = "0"; let s = document.createElement("span"); s.className = "cday", s.textContent = r, i.appendChild(d), i.appendChild(l), i.appendChild(s), e.appendChild(i), setTimeout(() => { d.style.transition = "height .6s cubic-bezier(.34,1.56,.64,1)", l.style.transition = "height .6s cubic-bezier(.34,1.56,.64,1)", d.style.height = Math.round(t[o] / a * 120) + "px", l.style.height = Math.round(n[o] / a * 120) + "px" }, 80 * o + 200) }) } function checkTerms() { let e = document.getElementById("termsCheck"), t = document.getElementById("termsGateError"); return e && !e.checked ? (t.style.display = "block", e.closest(".terms-gate").scrollIntoView({ behavior: "smooth", block: "center" }), e.focus(), !1) : (t && (t.style.display = "none"), !0) } document.getElementById("ieRotCCW").addEventListener("click", () => rotateCurrent(-90)), document.getElementById("ieRotCW").addEventListener("click", () => rotateCurrent(90)), document.getElementById("ieDelPage").addEventListener("click", () => deleteCurrent()), document.getElementById("ieZoomIn").addEventListener("click", () => setZoom(ieZoom + .1)), document.getElementById("ieZoomOut").addEventListener("click", () => setZoom(ieZoom - .1)), document.getElementById("ieScale").addEventListener("input", e => setZoom(e.target.value / 100)), document.getElementById("ieUndo").addEventListener("click", () => doUndo()), document.getElementById("ieRedo").addEventListener("click", () => doRedo()), document.getElementById("ieClose").addEventListener("click", () => { document.getElementById("inlineEditor").style.display = "none" }), document.getElementById("iePrint").addEventListener("click", () => { if (!activeEditorBlob) return; let e = URL.createObjectURL(activeEditorBlob), t = window.open(e, "_blank"); t ? setTimeout(() => t.print(), 800) : Toast.warn("Pop-up blocked — please allow pop-ups to print.") }), document.getElementById("ieExport").addEventListener("click", async () => { if (!iePdfDoc || !activeEditorBlob) return; let e = document.getElementById("ieExport"); e.disabled = !0, e.textContent = "Exporting…"; try { let { PDFDocument: e, degrees: t } = PDFLib, n = await e.load(await activeEditorBlob.arrayBuffer()), a = await e.create(); for (let e of iePages.filter(e => !e.del)) { let [r] = await a.copyPages(n, [e.num - 1]), o = r.getRotation().angle; r.setRotation(t((o + e.rot) % 360)), a.addPage(r) } let r = await a.save(), o = new Blob([r], { type: "application/pdf" }), i = (activeEditorName || "edited").replace(".pdf", "") + "-edited.pdf"; saveAs(o, i), Toast.ok("PDF exported!") } catch (e) { Toast.err("Export failed: " + e.message) } finally { e.disabled = !1, e.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 1v9M4 7l3 3 3-3M1 12h12"/></svg> Export PDF' } }), document.getElementById("termsCheck")?.addEventListener("change", function () { this.checked && (document.getElementById("termsGateError").style.display = "none") }); const origShowView = showView; let dashInited = !1; function showViewPatched(e) { "dash" !== e || dashInited || (dashInited = !0, setTimeout(initDashboard, 100)), showView(e) } document.getElementById("navDash")?.addEventListener("click", () => showViewPatched("dash")), IS_ADMIN && showViewPatched("dash");</script>
+
+
+  <footer class=site-footer role=contentinfo>
+    <div class=footer-inner>
+      <div class=footer-brand>
+        <span class=footer-brand-name-f>PDFCraft</span>
+        <p class=footer-tagline>Free PDF conversion and editing — 100% in your browser. Nothing uploaded, nothing
+          stored.</p>
+
+        <div class=footer-social>
+          <a href=https://twitter.com/pdfcraft class=social-link target=_blank rel=noopener aria-label="Twitter / X">
+            <svg width=16 height=16 fill=currentColor viewBox="0 0 24 24">
+              <path
+                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117Z" />
+            </svg>
+          </a>
+          <a href=https://instagram.com/pdfcraft class=social-link target=_blank rel=noopener aria-label=Instagram>
+            <svg width=16 height=16 fill=currentColor viewBox="0 0 24 24">
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849s-.012 3.584-.069 4.849c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069M12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12s.014 3.668.072 4.948c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24s3.668-.014 4.948-.072c4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0m0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324M12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8m6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881" />
+            </svg>
+          </a>
+          <a href=https://youtube.com/@pdfcraft class=social-link target=_blank rel=noopener aria-label=YouTube>
+            <svg width=16 height=16 fill=currentColor viewBox="0 0 24 24">
+              <path
+                d="M23.498 6.186a3.02 3.02 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.02 3.02 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.02 3.02 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.02 3.02 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814M9.545 15.568V8.432L15.818 12Z" />
+            </svg>
+          </a>
+          <a href=https://wa.me/1234567890 class=social-link target=_blank rel=noopener aria-label=WhatsApp>
+            <svg width=16 height=16 fill=currentColor viewBox="0 0 24 24">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52s.198-.298.298-.497c.099-.198.05-.371-.025-.52s-.669-1.612-.916-2.207c-.242-.579-.487-.5-.669-.51a13 13 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074s2.096 3.2 5.077 4.487c.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413s.248-1.289.173-1.413c-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.82 11.82 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.9 11.9 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413" />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class=footer-links-group>
+        <div class=footer-col>
+          <h4>Product</h4>
+          <ul>
+            <li><a href=# id=footerNavHome>Home</a></li>
+            <li><a href=# id=footerNavConvert>Convert Files</a></li>
+          </ul>
+        </div>
+        <div class=footer-col>
+          <h4>Legal</h4>
+          <ul>
+            <li><a href=/legal/terms.html>Terms of Service</a></li>
+            <li><a href=/legal/privacy.html>Privacy Policy</a></li>
+            <li><a href=/legal/disclaimer.html>Disclaimer</a></li>
+            <li><a href=/legal/acceptable-use.html>Acceptable Use</a></li>
+            <li><a href=/legal/cookies.html>Cookie Policy</a></li>
+            <li><a href=/legal/copyright.html>Copyright / DMCA</a></li>
+          </ul>
+        </div>
+        <div class=footer-col>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href=/legal/contact.html>Support Form</a></li>
+            <li><a href=mailto:hello@pdfcraft.app>hello@pdfcraft.app</a></li>
+            <li><a href=https://wa.me/1234567890 target=_blank rel=noopener>WhatsApp Chat</a></li>
+            <li><a href=https://twitter.com/pdfcraft target=_blank rel=noopener>@pdfcraft</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class=footer-bottom>
+      <p class=footer-copy>© <span id=footerYear></span> <span class=footer-copy-brand>PDFCraft</span>. All rights
+        reserved.</p>
+      <nav class=footer-legal-links aria-label="Legal links">
+        <a href=/legal/terms.html>Terms</a>
+        <a href=/legal/privacy.html>Privacy</a>
+        <a href=/legal/cookies.html>Cookies</a>
+        <a href=/legal/contact.html>Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+
+  <div class=cookie-banner id=cookieBanner role=region aria-label="Cookie consent notice">
+    <p>🍪 We use minimal browser storage to save your preferences. <a href=/legal/cookies.html>Learn more</a></p>
+    <div class=cookie-banner__acts>
+      <button class=cb-accept id=cbAccept>Accept</button>
+      <button class=cb-decline id=cbDecline>Decline</button>
+    </div>
+  </div>
+
+
+  <script>document.getElementById("footerYear").textContent = new Date().getFullYear(), document.getElementById("footerNavHome").addEventListener("click", function (e) { e.preventDefault(), showView("home"), window.scrollTo({ top: 0, behavior: "smooth" }) }), document.getElementById("footerNavConvert").addEventListener("click", function (e) { e.preventDefault(), showView("converter"), window.scrollTo({ top: 0, behavior: "smooth" }) }), function () { var e = document.getElementById("cookieBanner"), t = document.getElementById("cbAccept"), o = document.getElementById("cbDecline"), n = "pc_cookie_consent"; !e || localStorage.getItem(n) || (setTimeout(function () { e.classList.add("visible") }, 1200), t.addEventListener("click", function () { localStorage.setItem(n, "accepted"), e.classList.remove("visible") }), o.addEventListener("click", function () { localStorage.setItem(n, "declined"), e.classList.remove("visible") })) }();</script>
