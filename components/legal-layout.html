@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title><!-- PAGE_TITLE --> — DailyPDFTask</title>
+<meta name="description" content="<!-- PAGE_DESC -->"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+/* ── Tokens (mirrors main app) ── */
+:root{
+  --v:#0D9B6B;--vl:#34D399;--r:#F59E0B;--tl:#6366F1;--am:#EA580C;--gn:#10B981;--rd:#EF4444;
+  --grad:linear-gradient(135deg,#0D9B6B 0%,#F59E0B 100%);
+  --font-d:'Syne',sans-serif;--font-b:'DM Sans',sans-serif;
+  --r-sm:6px;--r-md:10px;--r-lg:16px;--r-xl:20px;--r-full:999px;
+  --t2:220ms ease;--t4:500ms cubic-bezier(.34,1.56,.64,1);
+}
+[data-theme=dark]{
+  --bg:#0A0F0D;--bg2:#0F1610;--sf:#141A15;--sf2:#1A2219;--sf3:#1F2B22;
+  --bd:rgba(255,255,255,.07);--bd2:rgba(255,255,255,.13);
+  --t1c:#F0EFFF;--t2c:#A8A6C8;--t3c:#6B698A;
+  --shsm:0 1px 4px rgba(0,0,0,.5);--shmd:0 4px 18px rgba(0,0,0,.45);
+  --gl:rgba(10,15,13,.82);--glb:rgba(13,155,107,.15);
+}
+[data-theme=light]{
+  --bg:#F2F7F4;--bg2:#E6F0EA;--sf:#FFF;--sf2:#F0F7F3;--sf3:#E2EDE7;
+  --bd:rgba(0,0,0,.07);--bd2:rgba(0,0,0,.13);
+  --t1c:#1A1830;--t2c:#4A4868;--t3c:#8D8BAA;
+  --shsm:0 1px 4px rgba(13,155,107,.08);--shmd:0 4px 18px rgba(13,155,107,.12);
+  --gl:rgba(242,247,244,.88);--glb:rgba(13,155,107,.1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:var(--font-b);font-size:.95rem;line-height:1.7;color:var(--t1c);background:var(--bg);min-height:100dvh;-webkit-font-smoothing:antialiased;transition:background .35s,color .35s;display:flex;flex-direction:column}
+h1,h2,h3,h4{font-family:var(--font-d);font-weight:700;line-height:1.2;color:var(--t1c)}
+a{color:var(--v);text-decoration:none}
+a:hover{text-decoration:underline}
+img,svg{display:block}
+:focus-visible{outline:2px solid var(--v);outline-offset:3px;border-radius:4px}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:var(--sf3);border-radius:99px}
+
+/* ── Navbar ── */
+.nav{position:sticky;top:0;z-index:100;height:56px;background:var(--gl);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border-bottom:1px solid var(--glb)}
+.nav__inner{display:flex;align-items:center;justify-content:space-between;height:100%;padding:0 24px;max-width:900px;margin:0 auto;gap:16px}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none}
+.brand-name{font-family:var(--font-d);font-weight:800;font-size:1.05rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.02em}
+.nav-home{font-size:.83rem;color:var(--t2c);padding:6px 12px;border-radius:var(--r-md);transition:color var(--t2),background var(--t2)}
+.nav-home:hover{color:var(--t1c);background:var(--sf3);text-decoration:none}
+/* Theme toggle */
+.tt{display:flex;align-items:center;gap:5px;cursor:pointer;padding:4px;border-radius:99px;user-select:none;border:none;background:none}
+.tt__track{width:36px;height:19px;background:var(--sf3);border-radius:99px;position:relative;border:1px solid var(--bd2);transition:background var(--t2)}
+[data-theme=dark] .tt__track{background:rgba(13,155,107,.3)}
+.tt__thumb{width:13px;height:13px;background:var(--t3c);border-radius:50%;position:absolute;top:2px;left:2px;transition:transform var(--t4),background var(--t2)}
+[data-theme=dark] .tt__thumb{transform:translateX(17px);background:var(--v)}
+.tt__icon{font-size:10px;color:var(--t3c)}
+
+/* ── Legal content ── */
+main{flex:1}
+.legal-wrap{max-width:760px;margin:0 auto;padding:52px 24px 80px}
+.legal-hero{margin-bottom:44px;padding-bottom:28px;border-bottom:1px solid var(--bd)}
+.legal-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(13,155,107,.1);border:1px solid rgba(13,155,107,.2);border-radius:99px;padding:4px 12px;font-size:.75rem;font-weight:600;color:var(--vl);margin-bottom:16px}
+.legal-title{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;letter-spacing:-.03em;margin-bottom:12px}
+.legal-meta{font-size:.82rem;color:var(--t3c)}
+/* Article body */
+.legal-body section{margin-bottom:36px}
+.legal-body h2{font-size:1.15rem;font-weight:700;margin-bottom:14px;color:var(--t1c);padding-bottom:8px;border-bottom:1px solid var(--bd)}
+.legal-body h3{font-size:1rem;font-weight:600;margin:20px 0 8px;color:var(--t1c)}
+.legal-body p{color:var(--t2c);margin-bottom:12px;font-size:.9rem}
+.legal-body ul,.legal-body ol{color:var(--t2c);font-size:.9rem;padding-left:20px;margin-bottom:12px;display:flex;flex-direction:column;gap:6px}
+.legal-body ul{list-style:disc}
+.legal-body ol{list-style:decimal}
+.legal-body li{line-height:1.65}
+.legal-body a{color:var(--v)}
+.legal-body a:hover{text-decoration:underline}
+.legal-body strong{color:var(--t1c);font-weight:600}
+.legal-callout{background:rgba(13,155,107,.08);border:1px solid rgba(13,155,107,.18);border-radius:var(--r-lg);padding:16px 20px;margin:20px 0;font-size:.85rem;color:var(--t2c)}
+.legal-callout strong{color:var(--v)}
+
+/* ── Footer (shared) ── */
+.site-footer{background:var(--sf);border-top:1px solid var(--bd)}
+.footer-inner{max-width:1280px;margin:0 auto;padding:40px 24px 28px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start}
+.footer-brand .brand-name{margin-bottom:8px;display:block}
+.footer-tagline{font-size:.8rem;color:var(--t3c);max-width:220px;line-height:1.5}
+.footer-links-group{display:flex;flex-wrap:wrap;gap:32px}
+.footer-col h4{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t3c);margin-bottom:12px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-col a{font-size:.82rem;color:var(--t2c);transition:color var(--t2);text-decoration:none}
+.footer-col a:hover{color:var(--v)}
+.footer-bottom{max-width:1280px;margin:0 auto;padding:16px 24px;border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-copy{font-size:.78rem;color:var(--t3c)}
+.footer-copy span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:600}
+.footer-legal-links{display:flex;gap:16px;flex-wrap:wrap}
+.footer-legal-links a{font-size:.75rem;color:var(--t3c);transition:color var(--t2)}
+.footer-legal-links a:hover{color:var(--v);text-decoration:none}
+
+/* ── Cookie banner ── */
+.cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:999;background:var(--gl);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border-top:1px solid var(--glb);padding:16px 24px;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;font-size:.83rem;color:var(--t2c);transform:translateY(100%);transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.cookie-banner.visible{transform:translateY(0)}
+.cookie-banner a{color:var(--v);text-decoration:underline}
+.cookie-banner__actions{display:flex;gap:8px;flex-shrink:0}
+.cb-accept{background:var(--grad);color:#fff;border:none;padding:8px 20px;border-radius:var(--r-md);font-family:var(--font-b);font-size:.83rem;font-weight:600;cursor:pointer;transition:filter var(--t2)}
+.cb-accept:hover{filter:brightness(1.1)}
+.cb-decline{background:var(--sf3);color:var(--t2c);border:1px solid var(--bd2);padding:8px 14px;border-radius:var(--r-md);font-family:var(--font-b);font-size:.83rem;cursor:pointer;transition:background var(--t2),color var(--t2)}
+.cb-decline:hover{background:var(--sf2);color:var(--t1c)}
+
+@media(max-width:768px){
+  .footer-inner{grid-template-columns:1fr}
+  .footer-links-group{gap:20px}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:8px}
+  .cookie-banner{flex-direction:column;text-align:center}
+  .legal-wrap{padding:36px 16px 60px}
+}
+</style>
+</head>
+<body>
+
+<header class="nav" role="banner">
+  <div class="nav__inner">
+    <a href="../index.html" class="brand" aria-label="DailyPDFTask — Go home">
+      <svg width="24" height="24" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <rect width="26" height="26" rx="7" fill="url(#lg2)"/>
+        <path d="M6 7h8l5 5v7H6V7z" fill="white" opacity=".9"/>
+        <path d="M14 7l5 5h-5V7z" fill="white" opacity=".45"/>
+        <line x1="9" y1="13" x2="16" y2="13" stroke="#6366F1" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="9" y1="16" x2="16" y2="16" stroke="#6366F1" stroke-width="1.5" stroke-linecap="round"/>
+        <defs><linearGradient id="lg2" x1="0" y1="0" x2="26" y2="26"><stop stop-color="#0D9B6B"/><stop offset="1" stop-color="#F59E0B"/></linearGradient></defs>
+      </svg>
+      <span class="brand-name">DailyPDFTask</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:10px">
+      <a href="../index.html" class="nav-home">← Back to App</a>
+      <button class="tt" id="themeToggle" role="switch" aria-checked="true" aria-label="Toggle dark mode" tabindex="0">
+        <span class="tt__icon">☀</span>
+        <div class="tt__track"><div class="tt__thumb"></div></div>
+        <span class="tt__icon">☽</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="legal-wrap">
+    <!-- PAGE CONTENT INJECTED HERE -->
+    <!-- PAGE_CONTENT -->
+  </div>
+</main>
+
+<!-- ── SHARED FOOTER ── -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="brand-name" style="font-family:var(--font-d);font-weight:800;font-size:1.05rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">DailyPDFTask</span>
+      <p class="footer-tagline">Free PDF conversion and editing — 100% in your browser. Nothing uploaded, nothing stored.</p>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../index.html#convert">Convert Files</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="disclaimer.html">Disclaimer</a></li>
+          <li><a href="acceptable-use.html">Acceptable Use</a></li>
+          <li><a href="cookies.html">Cookie Policy</a></li>
+          <li><a href="copyright.html">Copyright / DMCA</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© <span id="footerYear"></span> <span>DailyPDFTask</span>. All rights reserved.</p>
+    <nav class="footer-legal-links" aria-label="Legal links">
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="cookies.html">Cookies</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- ── COOKIE BANNER ── -->
+<div class="cookie-banner" id="cookieBanner" role="region" aria-label="Cookie consent">
+  <p>🍪 We use minimal cookies to remember your preferences. <a href="cookies.html">Learn more</a></p>
+  <div class="cookie-banner__actions">
+    <button class="cb-accept" id="cbAccept">Accept</button>
+    <button class="cb-decline" id="cbDecline">Decline</button>
+  </div>
+</div>
+
+<script>
+// ── Theme (mirrors main app) ──────────────────────────────────
+(function(){
+  const html=document.documentElement, btn=document.getElementById('themeToggle'), KEY='dpttheme';
+  const t=localStorage.getItem(KEY)||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  html.dataset.theme=t; btn.setAttribute('aria-checked',t==='dark');
+  function apply(theme){ html.dataset.theme=theme; btn.setAttribute('aria-checked',theme==='dark'); localStorage.setItem(KEY,theme); }
+  btn.addEventListener('click',()=>apply(html.dataset.theme==='dark'?'light':'dark'));
+  btn.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); btn.click(); }});
+})();
+
+// ── Dynamic copyright year ────────────────────────────────────
+document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+// ── Cookie banner ─────────────────────────────────────────────
+(function(){
+  const banner=document.getElementById('cookieBanner');
+  const KEY='dpt_cookie_consent';
+  if(localStorage.getItem(KEY)) return; // already decided
+  setTimeout(()=> banner.classList.add('visible'), 800);
+  document.getElementById('cbAccept').addEventListener('click',()=>{
+    localStorage.setItem(KEY,'accepted');
+    banner.classList.remove('visible');
+  });
+  document.getElementById('cbDecline').addEventListener('click',()=>{
+    localStorage.setItem(KEY,'declined');
+    banner.classList.remove('visible');
+  });
+})();
+</script>
+</body>
+</html>
