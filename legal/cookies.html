@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="../public/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../public/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="64x64" href="../public/favicon-64.png" />
+  <link rel="apple-touch-icon" href="../public/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="64x64" href="../public/favicon-64.png" />
+  <meta name="theme-color" content="#0D9B6B" />
+  <title>Cookie Policy — DailyPDFTask | localStorage Only</title>
+  <meta name="description"
+    content="DailyPDFTask uses only essential localStorage — no tracking cookies, no analytics. Learn exactly what is stored and how to clear it." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="../components/legal.css" />
+  <style>
+    .cookie-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .83rem;
+      margin: 16px 0
+    }
+
+    .cookie-table th {
+      padding: 10px 14px;
+      text-align: left;
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--t3c);
+      background: var(--sf2);
+      border-bottom: 1px solid var(--bd)
+    }
+
+    .cookie-table td {
+      padding: 10px 14px;
+      color: var(--t2c);
+      border-bottom: 1px solid var(--bd);
+      vertical-align: top
+    }
+
+    .cookie-table tr:last-child td {
+      border-bottom: none
+    }
+
+    .cookie-table code {
+      background: rgba(13, 155, 107, .1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: .78rem;
+      color: var(--vl);
+      font-family: monospace
+    }
+
+    .tbl-wrap {
+      border: 1px solid var(--bd);
+      border-radius: var(--r-md);
+      overflow: hidden;
+      margin: 16px 0
+    }
+  </style>
+  <link rel="canonical" href="https://jsupport1.github.io/legal/cookies.html" />
+</head>
+
+<body>
+  <header class="nav">
+    <div class="nav__inner"><a href="../index.html" class="brand" aria-label="DailyPDFTask home"><svg width="24"
+          height="24" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+          <rect width="26" height="26" rx="7" fill="url(#lg)" />
+          <path d="M6 7h8l5 5v7H6V7z" fill="white" opacity=".9" />
+          <path d="M14 7l5 5h-5V7z" fill="white" opacity=".45" />
+          <line x1="9" y1="13" x2="16" y2="13" stroke="#6366F1" stroke-width="1.5" stroke-linecap="round" />
+          <line x1="9" y1="16" x2="16" y2="16" stroke="#6366F1" stroke-width="1.5" stroke-linecap="round" />
+          <defs>
+            <linearGradient id="lg" x1="0" y1="0" x2="26" y2="26">
+              <stop stop-color="#0D9B6B" />
+              <stop offset="1" stop-color="#F59E0B" />
+            </linearGradient>
+          </defs>
+        </svg><span class="brand-name">DailyPDFTask</span></a>
+      <div style="display:flex;align-items:center;gap:10px"><a href="../index.html" class="nav-back">← Back to
+          App</a><button class="tt" id="themeToggle" role="switch" aria-checked="true" aria-label="Toggle dark mode"
+          tabindex="0"><span class="tt__icon">☀</span>
+          <div class="tt__track">
+            <div class="tt__thumb"></div>
+          </div><span class="tt__icon">☽</span>
+        </button></div>
+    </div>
+  </header>
+  <main>
+    <div class="legal-wrap">
+      <div class="legal-hero">
+        <div class="legal-badge">🍪 Cookies</div>
+        <h1 class="legal-title">Cookie Policy</h1>
+        <p class="legal-meta">Last updated: <time datetime="2025-01-01">January 1, 2025</time></p>
+      </div>
+      <article class="legal-body">
+        <div class="legal-callout"><strong>TL;DR:</strong> We don't use tracking cookies. We only use
+          <code>localStorage</code> to remember your theme preference and cookie consent status — both stored entirely
+          on your own device.</div>
+
+        <section>
+          <h2>1. What Are Cookies?</h2>
+          <p>Cookies are small text files stored on your device by websites you visit. DailyPDFTask does not use
+            traditional cookies. Instead, we use the browser's <strong>localStorage API</strong>, which provides similar
+            preference-saving functionality without transmitting data to any server.</p>
+        </section>
+
+        <section>
+          <h2>2. What We Store</h2>
+          <p>DailyPDFTask stores only two items in your browser's localStorage:</p>
+          <div class="tbl-wrap">
+            <table class="cookie-table" aria-label="localStorage items used by DailyPDFTask">
+              <thead>
+                <tr>
+                  <th>Key</th>
+                  <th>Purpose</th>
+                  <th>Type</th>
+                  <th>Expires</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>pctheme</code></td>
+                  <td>Stores your chosen colour theme (dark or light mode)</td>
+                  <td>Essential / Preference</td>
+                  <td>Persists until cleared</td>
+                </tr>
+                <tr>
+                  <td><code>pc_cookie_consent</code></td>
+                  <td>Records whether you accepted or declined our cookie notice</td>
+                  <td>Essential / Consent</td>
+                  <td>Persists until cleared</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>No other data is stored by DailyPDFTask in your browser.</p>
+        </section>
+
+        <section>
+          <h2>3. Third-Party Scripts</h2>
+          <p>DailyPDFTask loads resources from the following third-party CDNs, which may store their own cookies or
+            collect standard request data:</p>
+          <ul>
+            <li><strong>Google Fonts</strong> (fonts.googleapis.com) — may log font requests</li>
+            <li><strong>Cloudflare CDN</strong> (cdnjs.cloudflare.com) — serves JavaScript libraries</li>
+            <li><strong>unpkg.com</strong> — serves the pdf-lib library</li>
+          </ul>
+          <p>We do not control these third parties' data practices. Their privacy policies apply independently.</p>
+        </section>
+
+        <section>
+          <h2>4. How to Manage or Delete Storage</h2>
+          <p>You can clear DailyPDFTask's localStorage at any time:</p>
+          <ol>
+            <li>Open your browser's Developer Tools (F12)</li>
+            <li>Navigate to <strong>Application → Local Storage</strong></li>
+            <li>Find <code>pctheme</code> and <code>pc_cookie_consent</code> and delete them</li>
+          </ol>
+          <p>Alternatively, clearing your browser's site data will remove all stored items.</p>
+        </section>
+
+        <section>
+          <h2>5. Consent</h2>
+          <p>By clicking "Accept" on our cookie banner, you consent to our use of localStorage as described above. You
+            may withdraw consent at any time by clearing your browser's local storage for this site.</p>
+        </section>
+
+        <section>
+          <h2>6. Contact</h2>
+          <p>Questions about our cookie practices? <a href="contact.html">Contact us</a>.</p>
+        </section>
+      </article>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand"><span class="brand-name-footer">DailyPDFTask</span>
+        <p class="footer-tagline">Free PDF conversion — 100% in your browser.</p>
+      </div>
+      <div class="footer-links-group">
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="terms.html">Terms of Service</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="disclaimer.html">Disclaimer</a></li>
+            <li><a href="acceptable-use.html">Acceptable Use</a></li>
+            <li><a href="cookies.html">Cookie Policy</a></li>
+            <li><a href="copyright.html">Copyright / DMCA</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="../index.html">Back to App</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© <span id="footerYear"></span> <span class="footer-brand-name">DailyPDFTask</span>. All
+        rights reserved.</p>
+      <nav class="footer-legal-links"><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a
+          href="cookies.html">Cookies</a><a href="contact.html">Contact</a></nav>
+    </div>
+  </footer>
+  <div class="cookie-banner" id="cookieBanner">
+    <p>🍪 We use minimal cookies to remember your preferences. <a href="cookies.html">Learn more</a></p>
+    <div class="cookie-banner__actions"><button class="cb-accept" id="cbAccept">Accept</button><button
+        class="cb-decline" id="cbDecline">Decline</button></div>
+  </div>
+  <script src="../components/legal.js"></script>
+</body>
+
+</html>
