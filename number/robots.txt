@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jsupport1.github.io/dnt/sitemap.xml
+Sitemap: https://jsupport1.com/number/sitemap.xml
 
 # Block common bots from legal pages
 User-agent: *
