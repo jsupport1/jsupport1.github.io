@@ -1330,301 +1330,6 @@
       max-width: 100%
     }
 
-    /* ═══════════════════════ DASHBOARD (admin) ════════════ */
-    .dash {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 40px 24px
-    }
-
-    .dash-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 32px;
-      flex-wrap: wrap;
-      gap: 12px
-    }
-
-    .dash-title {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -.03em
-    }
-
-    .stats-g {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 24px
-    }
-
-    .sc {
-      background: var(--sf);
-      border: 1px solid var(--bd);
-      border-radius: var(--r-xl);
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
-      transition: transform var(--t2), box-shadow var(--t2)
-    }
-
-    .sc::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: var(--c, var(--v))
-    }
-
-    .sc:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shmd)
-    }
-
-    .sc__icon {
-      width: 40px;
-      height: 40px;
-      border-radius: var(--r-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 14px;
-      background: color-mix(in srgb, var(--c, var(--v)) 15%, transparent);
-      color: var(--c, var(--v));
-      font-size: 20px
-    }
-
-    .sc__val {
-      display: block;
-      font-family: var(--font-d);
-      font-size: 2.2rem;
-      font-weight: 800;
-      letter-spacing: -.04em;
-      line-height: 1;
-      margin-bottom: 4px
-    }
-
-    .sc__lbl {
-      font-size: .72rem;
-      color: var(--t3c);
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      font-weight: 600
-    }
-
-    .sc__tr {
-      font-size: .72rem;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 99px;
-      margin-top: 12px;
-      display: inline-block
-    }
-
-    .sc__tr.up {
-      background: rgba(16, 185, 129, .15);
-      color: var(--gn)
-    }
-
-    .sc__tr.dn {
-      background: rgba(255, 82, 82, .15);
-      color: var(--rd)
-    }
-
-    .chart-row {
-      display: grid;
-      grid-template-columns: 1fr 260px;
-      gap: 16px;
-      margin-bottom: 24px
-    }
-
-    .card {
-      background: var(--sf);
-      border: 1px solid var(--bd);
-      border-radius: var(--r-xl);
-      padding: 24px;
-      box-shadow: var(--shsm)
-    }
-
-    .card-title {
-      font-size: .85rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between
-    }
-
-    .chart-bars {
-      display: flex;
-      align-items: flex-end;
-      gap: 8px;
-      height: 140px;
-      padding: 0 4px
-    }
-
-    .cbar-g {
-      display: flex;
-      align-items: flex-end;
-      gap: 3px;
-      flex: 1;
-      position: relative
-    }
-
-    .cbar {
-      flex: 1;
-      border-radius: 3px 3px 0 0;
-      min-width: 5px;
-      cursor: pointer;
-      transition: opacity var(--t1)
-    }
-
-    .cbar:hover {
-      opacity: .75
-    }
-
-    .cbar-i {
-      background: var(--v)
-    }
-
-    .cbar-d {
-      background: var(--r)
-    }
-
-    .cday {
-      position: absolute;
-      bottom: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 9px;
-      color: var(--t3c);
-      white-space: nowrap
-    }
-
-    .donut-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px
-    }
-
-    .donut-leg {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 8px
-    }
-
-    .dl-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: .78rem;
-      color: var(--t2c)
-    }
-
-    .dl-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 2px;
-      flex-shrink: 0
-    }
-
-    .bot-row {
-      display: grid;
-      grid-template-columns: 320px 1fr;
-      gap: 16px
-    }
-
-    .timeline li {
-      display: flex;
-      gap: 10px;
-      padding: 10px 0;
-      position: relative
-    }
-
-    .timeline li::before {
-      content: '';
-      position: absolute;
-      left: 6px;
-      top: 28px;
-      width: 1px;
-      height: calc(100% - 16px);
-      background: var(--bd)
-    }
-
-    .timeline li:last-child::before {
-      display: none
-    }
-
-    .tl-dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      margin-top: 4px
-    }
-
-    .tl-name {
-      font-size: .83rem;
-      font-weight: 500
-    }
-
-    .tl-time {
-      font-size: .72rem;
-      color: var(--t3c);
-      margin-top: 1px
-    }
-
-    .tbl-wrap {
-      overflow-x: auto;
-      border: 1px solid var(--bd);
-      border-radius: var(--r-md)
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: .83rem
-    }
-
-    th {
-      padding: 10px 14px;
-      text-align: left;
-      font-size: .7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      color: var(--t3c);
-      background: var(--sf2);
-      border-bottom: 1px solid var(--bd)
-    }
-
-    td {
-      padding: 10px 14px;
-      color: var(--t2c);
-      border-bottom: 1px solid var(--bd)
-    }
-
-    tr:last-child td {
-      border-bottom: none
-    }
-
-    tr:hover td {
-      background: var(--sf2)
-    }
-
-    td:first-child {
-      color: var(--t1c);
-      font-weight: 500;
-      max-width: 180px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap
-    }
 
     .badge {
       display: inline-flex;
@@ -2544,10 +2249,8 @@
       <nav class="nav__links" role="navigation" aria-label="Main navigation">
         <button class="nav-btn" id="navHome" aria-current="page">Home</button>
         <button class="nav-btn" id="navConvert">Convert</button>
-        <span id="navAdminLink" style="display:none">
-          <button class="nav-btn" id="navDash">Dashboard</button>
-        </span>
       </nav>
+
 
       <div class="nav__actions">
         <div class="tt" id="themeToggle" role="switch" aria-checked="true" aria-label="Toggle dark mode" tabindex="0">
@@ -3036,162 +2739,9 @@
     </div>
   </div>
 
-  <!-- ── DASHBOARD VIEW (admin only) ── -->
-  <div class="view" id="viewDash">
-    <div class="dash">
-      <div class="dash-header">
-        <h1 class="dash-title">Admin Dashboard</h1>
-        <div style="display:flex;gap:8px;align-items:center">
-          <span
-            style="font-size:.78rem;background:rgba(255,82,82,.12);color:var(--rd);padding:4px 12px;border-radius:99px;font-weight:600;border:1px solid rgba(255,82,82,.25)">🔐
-            Admin Mode</span>
-        </div>
-      </div>
-      <!-- Stats -->
-      <div class="stats-g">
-        <div class="sc" style="--c:#0D9B6B">
-          <div class="sc__icon">📄</div>
-          <span class="sc__val" data-count="142">0</span>
-          <span class="sc__lbl">Files Converted</span>
-          <span class="sc__tr up">↑ 12% this week</span>
-        </div>
-        <div class="sc" style="--c:#F59E0B">
-          <div class="sc__icon">📑</div>
-          <span class="sc__val" data-count="38">0</span>
-          <span class="sc__lbl">PDFs Created</span>
-          <span class="sc__tr up">↑ 8%</span>
-        </div>
-        <div class="sc" style="--c:#6366F1">
-          <div class="sc__icon">📦</div>
-          <span class="sc__val" data-count="96">0</span>
-          <span class="sc__lbl">MB Saved</span>
-          <span class="sc__tr up">↑ 22%</span>
-        </div>
-        <div class="sc" style="--c:#EA580C">
-          <div class="sc__icon">⏱</div>
-          <span class="sc__val" data-count="4.2" data-float="1">0</span>
-          <span class="sc__lbl">Avg. Process (s)</span>
-          <span class="sc__tr dn">↓ 5% faster</span>
-        </div>
-      </div>
-      <!-- Charts -->
-      <div class="chart-row">
-        <div class="card">
-          <div class="card-title">
-            Conversion Activity
-            <div style="display:flex;gap:10px;font-size:.72rem;color:var(--t3c)">
-              <span><span
-                  style="display:inline-block;width:8px;height:8px;background:var(--v);border-radius:50%;margin-right:4px"></span>Images</span>
-              <span><span
-                  style="display:inline-block;width:8px;height:8px;background:var(--r);border-radius:50%;margin-right:4px"></span>Docs</span>
-            </div>
-          </div>
-          <div class="chart-bars" id="chartBars"></div>
-        </div>
-        <div class="card">
-          <div class="card-title">File Types</div>
-          <div class="donut-wrap">
-            <svg viewBox="0 0 100 100" width="130" height="130" aria-hidden="true">
-              <circle cx="50" cy="50" r="36" fill="none" stroke="var(--sf2)" stroke-width="16" />
-              <circle cx="50" cy="50" r="36" fill="none" stroke="#0D9B6B" stroke-width="16" stroke-dasharray="84 142"
-                stroke-dashoffset="0" transform="rotate(-90 50 50)" />
-              <circle cx="50" cy="50" r="36" fill="none" stroke="#F59E0B" stroke-width="16" stroke-dasharray="50 142"
-                stroke-dashoffset="-84" transform="rotate(-90 50 50)" />
-              <circle cx="50" cy="50" r="36" fill="none" stroke="#6366F1" stroke-width="16" stroke-dasharray="28 142"
-                stroke-dashoffset="-134" transform="rotate(-90 50 50)" />
-            </svg>
-            <div class="donut-leg">
-              <div class="dl-item"><span class="dl-dot" style="background:#0D9B6B"></span>PNG/JPG — 59%</div>
-              <div class="dl-item"><span class="dl-dot" style="background:#F59E0B"></span>DOCX — 35%</div>
-              <div class="dl-item"><span class="dl-dot" style="background:#6366F1"></span>Other — 6%</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Bottom -->
-      <div class="bot-row">
-        <div class="card">
-          <div class="card-title">Recent Activity</div>
-          <ul class="timeline" role="list">
-            <li><span class="tl-dot" style="background:#0D9B6B"></span>
-              <div>
-                <div class="tl-name">design_mockup.png → PDF</div><time class="tl-time">2 min ago</time>
-              </div>
-            </li>
-            <li><span class="tl-dot" style="background:#F59E0B"></span>
-              <div>
-                <div class="tl-name">report_q4.docx → PDF</div><time class="tl-time">14 min ago</time>
-              </div>
-            </li>
-            <li><span class="tl-dot" style="background:#6366F1"></span>
-              <div>
-                <div class="tl-name">Merged 3 files → combined.pdf</div><time class="tl-time">1 hr ago</time>
-              </div>
-            </li>
-            <li><span class="tl-dot" style="background:#EA580C"></span>
-              <div>
-                <div class="tl-name">photo_album.jpg → PDF</div><time class="tl-time">3 hr ago</time>
-              </div>
-            </li>
-            <li><span class="tl-dot" style="background:#10B981"></span>
-              <div>
-                <div class="tl-name">contract_draft.docx → PDF</div><time class="tl-time">Yesterday</time>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="card-title">Recent Conversions</div>
-          <div class="tbl-wrap">
-            <table aria-label="Recent conversions">
-              <thead>
-                <tr>
-                  <th>Filename</th>
-                  <th>Type</th>
-                  <th>Size</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>design_mockup.png</td>
-                  <td><span class="badge b-img">IMG</span></td>
-                  <td>2.4 MB</td>
-                  <td><span class="badge b-ok">Done</span></td>
-                </tr>
-                <tr>
-                  <td>report_q4.docx</td>
-                  <td><span class="badge b-doc">DOC</span></td>
-                  <td>840 KB</td>
-                  <td><span class="badge b-ok">Done</span></td>
-                </tr>
-                <tr>
-                  <td>combined.pdf</td>
-                  <td><span class="badge b-pdf">PDF</span></td>
-                  <td>5.1 MB</td>
-                  <td><span class="badge b-ok">Done</span></td>
-                </tr>
-                <tr>
-                  <td>photo_album.jpg</td>
-                  <td><span class="badge b-img">IMG</span></td>
-                  <td>3.8 MB</td>
-                  <td><span class="badge b-ok">Done</span></td>
-                </tr>
-                <tr>
-                  <td>contract_v2.docx</td>
-                  <td><span class="badge b-doc">DOC</span></td>
-                  <td>120 KB</td>
-                  <td><span class="badge b-pend">Processing</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- ════════════════════════════ SCRIPTS ════════════════════════════ -->
+
   <script>
     // ═══════════════════════════════════════════════════════════════
     // CONFIG
@@ -3244,28 +2794,20 @@
     function readBuf(file) { return new Promise((r, j) => { const fr = new FileReader(); fr.onload = e => r(e.target.result); fr.onerror = j; fr.readAsArrayBuffer(file); }); }
     function loadImg(src) { return new Promise((r, j) => { const i = new Image(); i.onload = () => r(i); i.onerror = j; i.src = src; }); }
 
-    // ═══════════════════════════════════════════════════════════════
-    // ADMIN: ?admin URL param → show dashboard nav
-    // ═══════════════════════════════════════════════════════════════
-    const IS_ADMIN = new URLSearchParams(location.search).has('admin');
-    if (IS_ADMIN) {
-      document.getElementById('navAdminLink').style.display = 'inline';
-    }
 
     // ═══════════════════════════════════════════════════════════════
     // NAVIGATION
     // ═══════════════════════════════════════════════════════════════
     const views = {
       home: document.getElementById('viewHome'),
-      converter: document.getElementById('viewConverter'),
-      dash: document.getElementById('viewDash')
+      converter: document.getElementById('viewConverter')
     };
 
     function showView(name) {
       Object.entries(views).forEach(([k, v]) => v.classList.toggle('active', k === name));
       // nav active state
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      const map = { home: 'navHome', converter: 'navConvert', dash: 'navDash' };
+      const map = { home: 'navHome', converter: 'navConvert' };
       document.getElementById(map[name])?.classList.add('active');
       // scroll to top
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -3273,8 +2815,8 @@
 
     document.getElementById('navHome').addEventListener('click', () => showView('home'));
     document.getElementById('navConvert').addEventListener('click', () => showView('converter'));
-    document.getElementById('navDash')?.addEventListener('click', () => showView('dash'));
     document.getElementById('brandHome').addEventListener('click', (e) => { e.preventDefault(); showView('home'); });
+
 
     // CTA buttons → converter  (ctaBannerBtn removed from DOM; guard with ?.)
     ['heroConvertBtn', 'navStartBtn', 'ctaBannerBtn'].forEach(id => {
@@ -4066,58 +3608,11 @@
       document.getElementById('ieRedo').disabled = !ieRedo.length;
     }
 
-    // ═══════════════════════════════════════════════════════════════
-    // DASHBOARD — animated counters + bar chart
-    // ═══════════════════════════════════════════════════════════════
-    function animCount(el, target, isFloat) {
-      const dur = 1200, start = performance.now();
-      function step(now) {
-        const p = Math.min((now - start) / dur, 1);
-        const e = 1 - Math.pow(1 - p, 3);
-        const v = target * e;
-        el.textContent = isFloat ? v.toFixed(1) : Math.floor(v).toString();
-        if (p < 1) requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
-    }
-
-    function initDashboard() {
-      // Counters
-      document.querySelectorAll('[data-count]').forEach(el => {
-        const obs = new IntersectionObserver(entries => {
-          if (entries[0].isIntersecting) {
-            animCount(el, parseFloat(el.dataset.count), !!el.dataset.float);
-            obs.unobserve(el);
-          }
-        }, { threshold: .5 });
-        obs.observe(el);
-      });
-
-      // Bar chart
-      const container = document.getElementById('chartBars');
-      if (!container) return;
-      const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-      const imgs = [8, 14, 6, 20, 18, 5, 9], docs = [4, 8, 3, 12, 10, 2, 5];
-      const max = Math.max(...imgs, ...docs);
-      container.innerHTML = '';
-      days.forEach((d, i) => {
-        const g = document.createElement('div'); g.className = 'cbar-g';
-        const ib = document.createElement('div'); ib.className = 'cbar cbar-i'; ib.title = `${d}: ${imgs[i]} images`; ib.style.height = '0';
-        const db = document.createElement('div'); db.className = 'cbar cbar-d'; db.title = `${d}: ${docs[i]} docs`; db.style.height = '0';
-        const lbl = document.createElement('span'); lbl.className = 'cday'; lbl.textContent = d;
-        g.appendChild(ib); g.appendChild(db); g.appendChild(lbl); container.appendChild(g);
-        setTimeout(() => {
-          ib.style.transition = 'height .6s cubic-bezier(.34,1.56,.64,1)';
-          db.style.transition = 'height .6s cubic-bezier(.34,1.56,.64,1)';
-          ib.style.height = Math.round(imgs[i] / max * 120) + 'px';
-          db.style.height = Math.round(docs[i] / max * 120) + 'px';
-        }, i * 80 + 200);
-      });
-    }
 
     // ═══════════════════════════════════════════════════════════════
     // TERMS GATE — blocks convert/merge until checkbox is accepted
     // ═══════════════════════════════════════════════════════════════
+
     function checkTerms() {
       const cb = document.getElementById('termsCheck');
       const err = document.getElementById('termsGateError');
@@ -4180,8 +3675,7 @@
     // ═══════════════════════════════════════════════════════════════
     const PAGE_TITLES = {
       home: 'DailyPDFTask — Free Online PDF Converter | Images, Word & Text to PDF',
-      converter: 'Convert to PDF Free — DailyPDFTask | No Upload, No Account',
-      dash: 'Admin Dashboard — DailyPDFTask'
+      converter: 'Convert to PDF Free — DailyPDFTask | No Upload, No Account'
     };
     const origShowViewForTitle = showView;
     function showViewWithTitle(name) {
@@ -4194,27 +3688,8 @@
     ['heroConvertBtn', 'navStartBtn'].forEach(id => {
       document.getElementById(id)?.addEventListener('click', () => showViewWithTitle('converter'));
     });
-
-    // Only init dashboard when navigated to
-    const origShowView = showView;
-    // Patch: run dashboard init on first visit
-    let dashInited = false;
-    function showViewPatched(name) {
-      if (name === 'dash' && !dashInited) { dashInited = true; setTimeout(initDashboard, 100); }
-      origShowView(name);
-    }
-    // Override nav listeners to use patched version
-    document.getElementById('navDash')?.addEventListener('click', () => showViewPatched('dash'));
-
-    // ═══════════════════════════════════════════════════════════════
-    // ADMIN redirect: if ?admin in URL, route to dash initially
-    // ═══════════════════════════════════════════════════════════════
-    if (IS_ADMIN) {
-      showViewPatched('dash');
-    }
   </script>
 
-  <!-- ════════════════════ GLOBAL FOOTER ════════════════════ -->
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
       <div class="footer-brand">
