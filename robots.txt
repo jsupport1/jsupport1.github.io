@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
 
-
 Sitemap: https://jsupport1.com/sitemap.xml
-
