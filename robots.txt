@@ -1,7 +1,6 @@
 User-agent: *
 Allow: /
 
-# Block admin dashboard from indexing
-Disallow: /?admin
 
 Sitemap: https://jsupport1.com/sitemap.xml
+
