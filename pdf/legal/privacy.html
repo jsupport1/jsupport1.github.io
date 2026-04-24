@@ -12,7 +12,7 @@
   <meta name="theme-color" content="#0D9B6B" />
   <title>Privacy Policy — DailyPDFTask | Zero Server Uploads</title>
   <meta name="description"
-    content="DailyPDFTask Privacy Policy. Your files never leave your browser. We collect no personal data and process everything client-side." />
+    content="DailyPDFTask Privacy Policy. Your files never leave your browser. We use Google AdSense for ads which may use cookies, but your documents stay 100% private." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link
     href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
@@ -60,10 +60,10 @@
       </div>
       <article class="legal-body">
         <div class="legal-callout"><strong>Short version:</strong> DailyPDFTask runs entirely in your browser. Your
-          files are never uploaded to any server. We do not collect, sell, or share your personal data.</div>
+          files are never uploaded to any server. We use trusted services like Google AdSense which may use cookies for ads and performance, but we do not store your documents.</div>
 
         <section>
-          <h2>1. What We Collect</h2>
+          <h2>1. Information We Collect</h2>
           <p>DailyPDFTask is a client-side only application. <strong>We do not collect, transmit, or store your
               files.</strong> All PDF conversion and editing happens locally in your browser using JavaScript.</p>
           <p>The only data we may store is limited to browser-level preferences:</p>
@@ -76,6 +76,13 @@
             </li>
           </ul>
           <p>These are stored locally on your device only and never transmitted anywhere.</p>
+          
+          <h3>Advertising Cookies</h3>
+          <p>We use Google AdSense to display advertisements. Google may use cookies 
+            and similar technologies to serve ads based on your prior visits to this 
+            or other websites.</p>
+          <p>Users may opt out of personalized advertising by visiting: 
+            <a href="https://adssettings.google.com" target="_blank" rel="noopener">https://adssettings.google.com</a></p>
         </section>
 
         <section>
@@ -114,21 +121,17 @@
           </ul>
         </section>
 
-        <section>
-          <h2>5. Analytics</h2>
-          <p>DailyPDFTask does not currently use any analytics or tracking services. We do not use Google Analytics,
-            Meta Pixel, or any other tracking code.</p>
-        </section>
+
 
         <section>
-          <h2>6. Children's Privacy</h2>
+          <h2>5. Children's Privacy</h2>
           <p>DailyPDFTask is not directed at children under the age of 13. We do not knowingly collect any personal
             information from children. If you believe a child has provided us with personal information, please <a
               href="contact.html">contact us</a> immediately.</p>
         </section>
 
         <section>
-          <h2>7. Your Rights</h2>
+          <h2>6. Your Rights</h2>
           <p>Since we do not collect personal data in the traditional sense, most data subject rights (access, deletion,
             portability) are inherently satisfied. Your only data is in your own browser. You can clear it at any time
             by:</p>
@@ -139,13 +142,13 @@
         </section>
 
         <section>
-          <h2>8. Changes to This Policy</h2>
+          <h2>7. Changes to This Policy</h2>
           <p>We may update this Privacy Policy from time to time. We will notify users of significant changes by
             updating the "Last updated" date at the top of this page.</p>
         </section>
 
         <section>
-          <h2>9. Contact</h2>
+          <h2>8. Contact</h2>
           <p>If you have questions about this Privacy Policy, please <a href="contact.html">contact us</a>.</p>
         </section>
       </article>
@@ -157,6 +160,13 @@
         <p class="footer-tagline">Free PDF conversion — 100% in your browser.</p>
       </div>
       <div class="footer-links-group">
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+          </ul>
+        </div>
         <div class="footer-col">
           <h4>Legal</h4>
           <ul>
@@ -190,6 +200,65 @@
         class="cb-decline" id="cbDecline">Decline</button></div>
   </div>
   <script src="../components/legal.js"></script>
+  <style>
+    .sticky-ad {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      min-height: 90px;
+      text-align: center;
+      background: var(--bg);
+      border-top: 1px solid var(--bd);
+      z-index: 999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+      padding: 10px 0;
+    }
+
+    .sticky-ad__close {
+      position: absolute;
+      top: -24px;
+      right: 12px;
+      background: var(--sf);
+      color: var(--t1c);
+      border: 1px solid var(--bd);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      box-shadow: var(--shsm);
+      transition: background var(--t2);
+    }
+
+    .sticky-ad__close:hover {
+      background: var(--sf2);
+    }
+
+    @media (max-width: 768px) {
+      .sticky-ad {
+        min-height: 50px;
+      }
+    }
+  </style>
+
+  <div class="sticky-ad" id="stickyAd" role="complementary" aria-label="Bottom advertisement">
+    <button class="sticky-ad__close" onclick="document.getElementById('stickyAd').style.display='none'"
+      aria-label="Close advertisement">×</button>
+    <div class="ad-slot ad-slot-sticky" style="border:none;background:none;padding:0;min-height:auto">
+      <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px"
+        data-ad-client="ca-pub-3643864519819772" data-ad-slot="sticky-footer-ad"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+  </div>
+
 </body>
 
 </html>

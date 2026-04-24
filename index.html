@@ -2,16 +2,6 @@
 <html lang="en" data-theme="dark">
 
 <head>
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-93RQK6CY9D"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-93RQK6CY9D');
-  </script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3643864519819772"
     crossorigin="anonymous"></script>
   <meta charset="UTF-8" />
@@ -2610,7 +2600,7 @@
         The free PDF converter<br>that <span>respects your privacy</span>
       </h1>
       <p class="hero__sub">Convert images, Word documents, and text files to PDF — entirely in your browser. No uploads.
-        No servers. No data collection.</p>
+        No servers. 🔒 Privacy First — Files stay on your device.</p>
       <div class="hero__cta">
         <button class="btn btn-primary btn-lg" id="heroConvertBtn">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2">
@@ -2724,9 +2714,12 @@
         <div class="why-copy">
           <p class="why-eyebrow">Why DailyPDFTask?</p>
           <h2 class="why-title" id="whyTitle">The PDF converter built for privacy</h2>
-          <p class="why-lead">DailyPDFTask is a free online PDF converter that works completely in your browser. Unlike
-            other tools, <strong>your files never leave your device</strong> — ensuring maximum privacy and security.
-            There are no servers processing your data, no cloud storage, and no third-party access to your documents.
+          <p class="why-lead">
+            <strong>🔒 Privacy First — Files Stay On Your Device</strong><br><br>
+            All file processing happens directly in your browser using client-side JavaScript.
+            Your files are never uploaded to our servers and we do not store your documents.<br><br>
+            We use trusted third-party services such as Google AdSense which may use cookies
+            to show relevant advertisements and measure performance.
           </p>
           <div class="why-points">
             <div class="why-point">
@@ -2797,7 +2790,7 @@
             </svg>
           </button>
           <p class="faq-a">No. Every conversion happens entirely inside your web browser using JavaScript. Your files
-            are never sent to any server and no data is collected.</p>
+            are never sent to any server. We use services like Google AdSense which may use cookies for ads, but your documents stay 100% private.</p>
         </div>
 
         <div class="faq-item" role="listitem">
@@ -4251,6 +4244,7 @@
           <h4>Product</h4>
           <ul>
             <li><a href="#" id="footerNavHome">Home</a></li>
+            <li><a href="legal/about.html">About Us</a></li>
             <li><a href="#" id="footerNavConvert">Convert Files</a></li>
           </ul>
         </div>
@@ -4316,6 +4310,66 @@
       decline.addEventListener('click', function () { localStorage.setItem(KEY, 'declined'); banner.classList.remove('visible'); });
     })();
   </script>
+
+  <style>
+    .sticky-ad {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      min-height: 90px;
+      text-align: center;
+      background: var(--bg);
+      border-top: 1px solid var(--bd);
+      z-index: 999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+      padding: 10px 0;
+    }
+
+    .sticky-ad__close {
+      position: absolute;
+      top: -24px;
+      right: 12px;
+      background: var(--sf);
+      color: var(--t1c);
+      border: 1px solid var(--bd);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      box-shadow: var(--shsm);
+      transition: background var(--t2);
+    }
+
+    .sticky-ad__close:hover {
+      background: var(--sf2);
+    }
+
+    @media (max-width: 768px) {
+      .sticky-ad {
+        min-height: 50px;
+      }
+    }
+  </style>
+
+  <div class="sticky-ad" id="stickyAd" role="complementary" aria-label="Bottom advertisement">
+    <button class="sticky-ad__close" onclick="document.getElementById('stickyAd').style.display='none'"
+      aria-label="Close advertisement">×</button>
+    <div class="ad-slot ad-slot-sticky" style="border:none;background:none;padding:0;min-height:auto">
+      <!-- Google AdSense: Bottom Sticky -->
+      <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px"
+        data-ad-client="ca-pub-3643864519819772" data-ad-slot="sticky-footer-ad"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+  </div>
 
 </body>
 

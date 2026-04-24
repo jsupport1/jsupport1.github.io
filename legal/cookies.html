@@ -101,9 +101,7 @@
         <p class="legal-meta">Last updated: <time datetime="2025-01-01">January 1, 2025</time></p>
       </div>
       <article class="legal-body">
-        <div class="legal-callout"><strong>TL;DR:</strong> We don't use tracking cookies. We only use
-          <code>localStorage</code> to remember your theme preference and cookie consent status — both stored entirely
-          on your own device.
+        <div class="legal-callout"><strong>TL;DR:</strong> Your files never leave your device. We use <code>localStorage</code> for your preferences and trusted third-party services like <strong>Google AdSense</strong> which may use cookies to show relevant ads.
         </div>
 
         <section>
@@ -139,6 +137,12 @@
                   <td>Essential / Consent</td>
                   <td>Persists until cleared</td>
                 </tr>
+                <tr>
+                  <td><code>__gads</code>, <code>_gcl_au</code></td>
+                  <td>Google AdSense advertising and performance cookies</td>
+                  <td>Third-Party / Marketing</td>
+                  <td>Varies (up to 2 years)</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -150,6 +154,7 @@
           <p>DailyPDFTask loads resources from the following third-party CDNs, which may store their own cookies or
             collect standard request data:</p>
           <ul>
+            <li><strong>Google AdSense</strong> — uses cookies to serve personalized advertisements</li>
             <li><strong>Google Fonts</strong> (fonts.googleapis.com) — may log font requests</li>
             <li><strong>Cloudflare CDN</strong> (cdnjs.cloudflare.com) — serves JavaScript libraries</li>
             <li><strong>unpkg.com</strong> — serves the pdf-lib library</li>
@@ -188,6 +193,13 @@
       </div>
       <div class="footer-links-group">
         <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
           <h4>Legal</h4>
           <ul>
             <li><a href="terms.html">Terms of Service</a></li>
@@ -220,6 +232,65 @@
         class="cb-decline" id="cbDecline">Decline</button></div>
   </div>
   <script src="../components/legal.js"></script>
+  <style>
+    .sticky-ad {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      min-height: 90px;
+      text-align: center;
+      background: var(--bg);
+      border-top: 1px solid var(--bd);
+      z-index: 999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+      padding: 10px 0;
+    }
+
+    .sticky-ad__close {
+      position: absolute;
+      top: -24px;
+      right: 12px;
+      background: var(--sf);
+      color: var(--t1c);
+      border: 1px solid var(--bd);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      box-shadow: var(--shsm);
+      transition: background var(--t2);
+    }
+
+    .sticky-ad__close:hover {
+      background: var(--sf2);
+    }
+
+    @media (max-width: 768px) {
+      .sticky-ad {
+        min-height: 50px;
+      }
+    }
+  </style>
+
+  <div class="sticky-ad" id="stickyAd" role="complementary" aria-label="Bottom advertisement">
+    <button class="sticky-ad__close" onclick="document.getElementById('stickyAd').style.display='none'"
+      aria-label="Close advertisement">×</button>
+    <div class="ad-slot ad-slot-sticky" style="border:none;background:none;padding:0;min-height:auto">
+      <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px"
+        data-ad-client="ca-pub-3643864519819772" data-ad-slot="sticky-footer-ad"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+  </div>
+
 </body>
 
 </html>
