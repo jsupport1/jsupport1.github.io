@@ -26,6 +26,17 @@
 const yearEl = document.getElementById('footerYear');
 if(yearEl) yearEl.textContent = new Date().getFullYear();
 
+// ── Dynamic last updated date ─────────────────────────────────
+const lastUpdEl = document.getElementById('lastUpdatedDate');
+if(lastUpdEl) {
+  const now = new Date();
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  lastUpdEl.textContent = now.toLocaleDateString('en-US', options);
+  // Also update datetime attribute
+  const iso = now.toISOString().split('T')[0];
+  lastUpdEl.setAttribute('datetime', iso);
+}
+
 // ── Cookie banner ─────────────────────────────────────────────
 (function(){
   const banner  = document.getElementById('cookieBanner');
