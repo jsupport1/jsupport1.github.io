@@ -24,6 +24,7 @@ export function renderHeader(activePage = '') {
       <a href="${pagePrefix}tool.html"           class="nav-link ${activePage==='tool'   ?'active':''}" aria-current="${activePage==='tool'   ?'page':'false'}">Converter</a>
       <a href="${pagePrefix}emi-calculator.html" class="nav-link ${activePage==='emi'    ?'active':''}" aria-current="${activePage==='emi'    ?'page':'false'}">EMI Calc</a>
       <a href="${pagePrefix}about.html"          class="nav-link ${activePage==='about'  ?'active':''}" aria-current="${activePage==='about'  ?'page':'false'}">About</a>
+      <a href="${pagePrefix}blog.html"           class="nav-link ${activePage==='blog'   ?'active':''}" aria-current="${activePage==='blog'   ?'page':'false'}">Blog</a>
       <a href="${pagePrefix}contact.html"        class="nav-link ${activePage==='contact'?'active':''}" aria-current="${activePage==='contact'?'page':'false'}">Contact</a>
       ${ctaBtn}
       <!-- Social icons in nav (desktop) -->
@@ -94,6 +95,7 @@ export function renderFooter() {
           <li><a href="${pagePrefix}tool.html">Roman Numerals</a></li>
           <li><a href="${pagePrefix}tool.html">Bulk Converter</a></li>
           <li><a href="${pagePrefix}emi-calculator.html">EMI Calculator</a></li>
+          <li><a href="${pagePrefix}blog.html">Blog</a></li>
         </ul>
       </div>
       <div class="footer-col">
