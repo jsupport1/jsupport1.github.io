@@ -4,82 +4,82 @@
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
  <url>
-    <loc>https://jsupport1.in/</loc>
+    <loc>https://dailynumbertask.in/</loc>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
   </url>
 
   <url>
-    <loc>https://jsupport1.in/number/</loc>
+    <loc>https://dailynumbertask.in/index.html</loc>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
   </url>
 
   <url>
-    <loc>https://jsupport1.in/emi/</loc>
-    <priority>0.9</priority>
+    <loc>https://dailynumbertask.in/pages/tool.html</loc>
+    <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
 
   <url>
-    <loc>https://jsupport1.in/pages/tool.html</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://dailynumbertask.in/pages/emi-calculator.html</loc>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://jsupport1.in/pages/emi-calculator.html</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://dailynumbertask.in/pages/blog.html</loc>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://jsupport1.in/pages/about.html</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://dailynumbertask.in/pages/about.html</loc>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://jsupport1.in/pages/contact.html</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://dailynumbertask.in/pages/contact.html</loc>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
-    <loc>https://jsupport1.in/pages/privacy-policy.html</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://dailynumbertask.in/pages/privacy-policy.html</loc>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://jsupport1.in/pages/terms-of-service.html</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://dailynumbertask.in/pages/terms-of-service.html</loc>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://jsupport1.in/pages/disclaimer.html</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://dailynumbertask.in/pages/disclaimer.html</loc>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url> 
-    <loc>https://jsupport1.in/pages/cookie-policy.html</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://dailynumbertask.in/pages/cookie-policy.html</loc>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://jsupport1.in/pages/copyright.html</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://dailynumbertask.in/pages/copyright.html</loc>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

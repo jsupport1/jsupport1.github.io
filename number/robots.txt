@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jsupport1.in/sitemap.xml
+Sitemap: https://dailynumbertask.in/sitemap.xml
 
 # Block common bots from legal pages
 User-agent: *

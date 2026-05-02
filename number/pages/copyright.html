@@ -7,10 +7,10 @@
   <title>Copyright Notice — DailyNumberTask</title>
   <meta name="description" content="DailyNumberTask Copyright Notice — intellectual property rights and usage terms.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://jsupport1.in/copyright">
+  <link rel="canonical" href="https://dailynumbertask.in/copyright">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Copyright Notice — DailyNumberTask">
-  <meta property="og:url" content="https://jsupport1.in/copyright">
+  <meta property="og:url" content="https://dailynumbertask.in/copyright">
   <link rel="manifest" href="../manifest.json">
   <meta name="theme-color" content="#C84B2F">
   <link rel="stylesheet" href="../css/main.css">
@@ -36,7 +36,7 @@
         </nav>
         <div class="policy-content">
           <h1>Copyright Notice</h1>
-          <p><strong>© 2025 DailyNumberTask. All Rights Reserved.</strong></p>
+          <p><strong>© <span id="copyright-year-main">2026</span> DailyNumberTask. All Rights Reserved.</strong></p>
           <h2>Website Content</h2>
           <p>All content on this website — including text, design, UI, graphics, logos, icons, HTML/CSS/JavaScript
             source code, and documentation — is the intellectual property of DailyNumberTask and protected under
@@ -83,6 +83,8 @@
     document.getElementById('header-mount').innerHTML = renderHeader();
     document.getElementById('footer-mount').innerHTML = renderFooter();
     initLayout();
+    const yearSpan = document.getElementById('copyright-year-main');
+    if (yearSpan) yearSpan.textContent = new Date().getFullYear();
   </script>
 </body>
 
