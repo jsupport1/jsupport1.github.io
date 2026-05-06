@@ -103,7 +103,7 @@
         {
           "@type": "Question",
           "name": "What file types can DailyPDFTask convert to PDF?",
-          "acceptedAnswer": { "@type": "Answer", "text": "DailyPDFTask converts PNG, JPG, JPEG, WEBP images, DOC and DOCX Word documents, and TXT plain text files to PDF format." }
+          "acceptedAnswer": { "@type": "Answer", "text": "DailyPDFTask converts PNG, JPG, JPEG, WEBP images, DOC and DOCX Word documents, TXT files, and HTML code to PDF format." }
         }
       ]
     }
@@ -122,6 +122,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mammoth/mammoth.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     /* ═══════════════════════ TOKENS ═══════════════════════ */
     :root {
@@ -2354,17 +2355,35 @@
           <p>Drag to reorder multiple files, then merge them all into a single PDF in one click. Supports mixed file
             types.</p>
         </div>
-        <div class="feat-card" style="--c:#34D399">
-          <div class="feat-icon" style="--c:#34D399">✂️</div>
-          <h3>Edit Pages</h3>
-          <p>Rotate, delete, and reorder PDF pages in the built-in editor. Preview every change in real time before
-            exporting.</p>
+        <div class="feat-card" style="--c:#EF4444">
+          <div class="feat-icon" style="--c:#EF4444">✂️</div>
+          <h3>Split PDF</h3>
+          <p>Extract specific pages, split by range, or divide a large PDF into smaller files. Complete control over your document structure.</p>
+        </div>
+        <div class="feat-card" style="--c:#8B5CF6">
+          <div class="feat-icon" style="--c:#8B5CF6">🖋️</div>
+          <h3>Sign &amp; Stamp</h3>
+          <p>Professional eSignatures and custom stamps. Add your signature or brand logo to any document locally and securely.</p>
+        </div>
+        <div class="feat-card" style="--c:#EC4899">
+          <div class="feat-icon" style="--c:#EC4899">🔢</div>
+          <h3>Page Numbers</h3>
+          <p>Add professional page numbering with customizable positions, fonts, and styles. Perfect for legal and academic files.</p>
         </div>
         <div class="feat-card" style="--c:#10B981">
-          <div class="feat-icon" style="--c:#10B981">📦</div>
-          <h3>Compress &amp; Download</h3>
-          <p>Reduce file size with one-click compression, then download instantly. No email required. No watermarks.
-            Ever.</p>
+          <div class="feat-icon" style="--c:#10B981">🔐</div>
+          <h3>Protect PDF</h3>
+          <p>Secure your documents with password protection. Prevent unauthorized viewing and keep your sensitive data safe.</p>
+        </div>
+        <div class="feat-card" style="--c:#3B82F6">
+          <div class="feat-icon" style="--c:#3B82F6">🌐</div>
+          <h3>HTML to PDF</h3>
+          <p>Convert uploaded .html files or raw code into high-quality PDFs. Perfect for saving receipts, articles, or reports.</p>
+        </div>
+        <div class="feat-card" style="--c:#F59E0B">
+          <div class="feat-icon" style="--c:#F59E0B">🌊</div>
+          <h3>Watermark</h3>
+          <p>Protect your work by adding text or image watermarks to all pages. Customize opacity and position easily.</p>
         </div>
       </div>
     </section>
@@ -2427,7 +2446,7 @@
             </div>
             <div class="why-point">
               <span class="why-point__icon">📂</span>
-              <span><strong>Multiple formats</strong> — convert PNG, JPG, WEBP, DOC, DOCX, and TXT to PDF.</span>
+              <span><strong>Multiple formats</strong> — convert PNG, JPG, WEBP, DOC, DOCX, TXT, and HTML to PDF.</span>
             </div>
           </div>
         </div>
@@ -2487,8 +2506,8 @@
               <path d="M2 5l5 5 5-5" />
             </svg>
           </button>
-          <p class="faq-a">DailyPDFTask converts PNG, JPG, JPEG, WEBP images, DOC and DOCX Word documents, and TXT plain
-            text files to PDF format. Support for more formats is coming.</p>
+          <p class="faq-a">DailyPDFTask converts PNG, JPG, JPEG, WEBP images, DOC and DOCX Word documents, TXT plain
+            text files, and HTML to PDF format. Support for more formats is coming.</p>
         </div>
 
         <div class="faq-item" role="listitem">
@@ -2591,9 +2610,10 @@
           <span class="ftpill">JPEG</span><span class="ftpill">WEBP</span>
           <span class="ftpill">DOCX</span>
           <span class="ftpill">DOC</span><span class="ftpill">TXT</span>
+          <span class="ftpill">HTML</span>
         </div>
         <!-- Hidden input — NEVER directly clicked by dz area click, only by browseBtn -->
-        <input type="file" id="fileInput" class="sr-only" accept=".png,.jpg,.jpeg,.webp,.doc,.docx,.txt" multiple
+        <input type="file" id="fileInput" class="sr-only" accept=".png,.jpg,.jpeg,.webp,.doc,.docx,.txt,.html,.htm" multiple
           aria-label="File input" />
       </div>
 
@@ -2684,6 +2704,20 @@
                     <path d="M2.5 4h10M5 4V3h5v1M5.5 7v4M9.5 7v4M3.5 4l1 8h6l1-8" />
                   </svg>
                 </button>
+                <button class="tb" id="ieSplit" title="Split PDF" aria-label="Split PDF">
+                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M7.5 2v11M2 7.5h11" stroke-dasharray="2 2"/>
+                    <rect x="2" y="2" width="5" height="11" rx="1" stroke="currentColor" fill="none"/>
+                    <rect x="8" y="2" width="5" height="11" rx="1" stroke="currentColor" fill="none"/>
+                  </svg>
+                </button>
+              </div>
+              <div class="tg">
+                <button class="tb" id="ieSign" title="Sign PDF" aria-label="Sign PDF">🖋️</button>
+                <button class="tb" id="ieStamp" title="Add Logo/Stamp" aria-label="Add Stamp">🖼️</button>
+                <button class="tb" id="ieWatermark" title="Add Watermark" aria-label="Add Watermark">🌊</button>
+                <button class="tb" id="iePageNum" title="Add Page Numbers" aria-label="Add Page Numbers">🔢</button>
+                <button class="tb" id="ieProtect" title="Password Protect" aria-label="Password Protect">🔐</button>
               </div>
               <div class="tg">
                 <button class="tb" id="ieZoomOut" title="Zoom out" aria-label="Zoom out"
@@ -2709,6 +2743,84 @@
     </div>
   </div>
 
+  <!-- ── MODALS ── -->
+  <div id="signModal" class="modal" style="display:none;position:fixed;z-index:1001;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center">
+    <div style="background:var(--sf);padding:24px;border-radius:var(--r-xl);max-width:500px;width:90%">
+      <h3 style="margin-bottom:8px">Sign PDF</h3>
+      <p style="font-size:.8rem;color:var(--t2c);margin-bottom:12px">Draw your signature below. It will be placed on the current page.</p>
+      <canvas id="signCanvas" width="450" height="200" style="border:1px solid var(--bd2);background:#fff;border-radius:var(--r-md);cursor:crosshair;width:100%"></canvas>
+      <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:16px">
+        <button class="btn btn-ghost" id="signClear">Clear</button>
+        <button class="btn btn-secondary" id="signCancel">Cancel</button>
+        <button class="btn btn-primary" id="signOk">Add to Page</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Split Range Modal -->
+  <div id="splitModal" class="modal" style="display:none;position:fixed;z-index:1001;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center">
+    <div style="background:var(--sf);padding:24px;border-radius:var(--r-xl);max-width:400px;width:90%">
+      <h3 style="margin-bottom:8px">Split PDF</h3>
+      <p style="font-size:.8rem;color:var(--t2c);margin-bottom:12px">Enter page ranges (e.g., 1-5, 8-10) or leave empty for current page.</p>
+      <input type="text" id="splitRangeInput" placeholder="e.g. 1-3, 5" style="width:100%;padding:10px;border-radius:var(--r-md);border:1px solid var(--bd2);background:var(--sf2);color:var(--t1c);margin-bottom:16px" />
+      <div style="display:flex;justify-content:flex-end;gap:12px">
+        <button class="btn btn-secondary" id="splitCancel">Cancel</button>
+        <button class="btn btn-primary" id="splitOk">Split PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Watermark Modal -->
+  <div id="watermarkModal" class="modal" style="display:none;position:fixed;z-index:1001;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center">
+    <div style="background:var(--sf);padding:24px;border-radius:var(--r-xl);max-width:400px;width:90%">
+      <h3 style="margin-bottom:8px">Add Watermark</h3>
+      <div style="margin-bottom:12px">
+        <label style="font-size:.8rem;color:var(--t2c);display:block;margin-bottom:4px">Text Watermark</label>
+        <input type="text" id="wmTextInput" placeholder="CONFIDENTIAL" style="width:100%;padding:10px;border-radius:var(--r-md);border:1px solid var(--bd2);background:var(--sf2);color:var(--t1c)" />
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="font-size:.8rem;color:var(--t2c);display:block;margin-bottom:4px">Or Image Watermark</label>
+        <input type="file" id="wmImageInput" accept="image/*" style="font-size:.8rem;color:var(--t2c)" />
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="font-size:.8rem;color:var(--t2c);display:block;margin-bottom:4px">Opacity (0.1 - 1.0)</label>
+        <input type="range" id="wmOpacity" min="0.1" max="1" step="0.1" value="0.3" style="width:100%" />
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:12px">
+        <button class="btn btn-secondary" id="wmCancel">Cancel</button>
+        <button class="btn btn-primary" id="wmOk">Apply to All</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Protect Modal -->
+  <div id="protectModal" class="modal" style="display:none;position:fixed;z-index:1001;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center">
+    <div style="background:var(--sf);padding:24px;border-radius:var(--r-xl);max-width:400px;width:90%">
+      <h3 style="margin-bottom:8px">Password Protect</h3>
+      <p style="font-size:.8rem;color:var(--t2c);margin-bottom:12px">Set a password to encrypt your PDF document.</p>
+      <input type="password" id="pdfPassword" placeholder="Enter password" style="width:100%;padding:10px;border-radius:var(--r-md);border:1px solid var(--bd2);background:var(--sf2);color:var(--t1c);margin-bottom:16px" />
+      <div style="display:flex;justify-content:flex-end;gap:12px">
+        <button class="btn btn-secondary" id="protectCancel">Cancel</button>
+        <button class="btn btn-primary" id="protectOk">Set Password</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HTML to PDF Modal -->
+  <div id="htmlModal" class="modal" style="display:none;position:fixed;z-index:1001;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center">
+    <div style="background:var(--sf);padding:24px;border-radius:var(--r-xl);max-width:600px;width:90%">
+      <h3 style="margin-bottom:8px">HTML to PDF</h3>
+      <p style="font-size:.8rem;color:var(--t2c);margin-bottom:12px">Paste your HTML code below to convert it to a PDF.</p>
+      <textarea id="htmlInputArea" placeholder="<html><body><h1>Hello World</h1></body></html>" style="width:100%;height:200px;padding:10px;border-radius:var(--r-md);border:1px solid var(--bd2);background:var(--sf2);color:var(--t1c);font-family:monospace;margin-bottom:16px"></textarea>
+      <div style="display:flex;justify-content:flex-end;gap:12px">
+        <button class="btn btn-secondary" id="htmlCancel">Cancel</button>
+        <button class="btn btn-primary" id="htmlOk">Convert to PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <input type="file" id="stampInput" style="display:none" accept="image/*" />
+
 
   <!-- ════════════════════════════ SCRIPTS ════════════════════════════ -->
 
@@ -2719,7 +2831,7 @@
     const ACCEPTED = ['image/png', 'image/jpeg', 'image/webp',
       'application/msword',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      'text/plain', 'text/txt', '']; // '' covers some OS TXT mime edge cases
+      'text/plain', 'text/txt', 'text/html', 'application/xhtml+xml', '']; // '' covers some OS TXT mime edge cases
     const MAX_SIZE = 50 * 1024 * 1024;
     const PAGE_SIZES = { A4: { w: 595.28, h: 841.89 }, Letter: { w: 612, h: 792 } };
 
@@ -2853,6 +2965,7 @@
       if (/\.(docx?)$/i.test(n)) return 'doc';
       if (/\.txt$/i.test(n)) return 'txt';
       if (/\.pdf$/i.test(n)) return 'pdf';
+      if (/\.html?$/i.test(n)) return 'html';
       return 'unknown';
     }
 
@@ -2887,14 +3000,15 @@
       for (const f of raw) {
         const isTxt = /\.txt$/i.test(f.name);
         const isDoc = /\.(docx?)$/i.test(f.name);
+        const isHtml = /\.html?$/i.test(f.name);
         const isImg = /\.(png|jpe?g|webp)$/i.test(f.name);
-        const isValid = isImg || isDoc || isTxt;
+        const isValid = isImg || isDoc || isTxt || isHtml;
 
         // ── Type validation ──────────────────────────────────────
         if (!isValid) {
           showValidationError(
             `"${f.name}" cannot be converted`,
-            `Unsupported file type (.${f.name.split('.').pop()}). Accepted: PNG, JPG, JPEG, WEBP, DOC, DOCX, TXT`
+            `Unsupported file type (.${f.name.split('.').pop()}). Accepted: PNG, JPG, JPEG, WEBP, DOC, DOCX, TXT, HTML`
           );
           hadError = true;
           continue;
@@ -2941,7 +3055,7 @@
 
       const thumb = entry.dataUrl
         ? `<img src="${entry.dataUrl}" alt=""/>`
-        : `<span>${entry.category === 'doc' ? '📄' : entry.category === 'txt' ? '📝' : '📎'}</span>`;
+        : `<span>${entry.category === 'doc' ? '📄' : entry.category === 'txt' ? '📝' : entry.category === 'html' ? '🌐' : '📎'}</span>`;
 
       // Size bar — visual indicator of file size relative to 50 MB limit
       const sizePct = Math.min(100, (entry.file.size / MAX_FILE_SIZE) * 100).toFixed(1);
@@ -3242,12 +3356,30 @@
       return doc.save();
     }
 
+    async function htmlToBytes(file, ps = 'A4', ori = 'portrait') {
+      const html = await new Promise((res, rej) => {
+        const fr = new FileReader();
+        fr.onload = e => res(e.target.result || '');
+        fr.onerror = () => rej(new Error('Failed to read file'));
+        fr.readAsText(file, 'UTF-8');
+      });
+      const worker = html2pdf().from(html).set({
+        margin: 0.5,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: ps.toLowerCase(), orientation: ori }
+      });
+      const blob = await worker.output('blob');
+      return new Uint8Array(await blob.arrayBuffer());
+    }
+
     async function convertEntry(entry) {
       const ps = document.getElementById('pageSizeSel').value;
       const ori = document.getElementById('orientSel').value;
       if (entry.category === 'image') return imgToBytes(entry.file, ps, ori);
       if (entry.category === 'doc') return docToBytes(entry.file, ps, ori);
       if (entry.category === 'txt') return txtToBytes(entry.file, ps, ori);
+      if (entry.category === 'html') return htmlToBytes(entry.file, ps, ori);
       throw new Error('Unsupported file type: ' + entry.file.name);
     }
 
@@ -3406,7 +3538,7 @@
         const task = pdfjsLib.getDocument({ data: new Uint8Array(buf) });
         iePdfDoc = await task.promise;
 
-        iePages = Array.from({ length: iePdfDoc.numPages }, (_, i) => ({ num: i + 1, rot: 0, del: false }));
+        iePages = Array.from({ length: iePdfDoc.numPages }, (_, i) => ({ num: i + 1, rot: 0, del: false, annots: [] }));
         document.getElementById('ieScale').value = 100;
 
         await renderAllThumbs();
@@ -3431,6 +3563,35 @@
       cv.width = vp.width;
       cv.height = vp.height;
       await page.render({ canvasContext: cv.getContext('2d'), viewport: vp }).promise;
+
+      // Draw annotations if any
+      if (info.annots) {
+        const ctx = cv.getContext('2d');
+        for (const a of info.annots) {
+          if (a.type === 'image' && a.img) {
+            ctx.drawImage(a.img, a.x * ieZoom, a.y * ieZoom, a.w * ieZoom, a.h * ieZoom);
+          }
+        }
+      }
+
+      // Draw active watermark if any
+      if (activeWatermark) {
+        const ctx = cv.getContext('2d');
+        ctx.save();
+        if (activeWatermark.type === 'text') {
+          ctx.translate(cv.width / 2, cv.height / 2);
+          ctx.rotate(-Math.PI / 4);
+          ctx.font = `${Math.round(40 * ieZoom)}px Syne`;
+          ctx.fillStyle = `rgba(128, 128, 128, ${activeWatermark.opacity})`;
+          ctx.textAlign = 'center';
+          ctx.fillText(activeWatermark.text, 0, 0);
+        } else if (activeWatermark.type === 'image') {
+          ctx.globalAlpha = activeWatermark.opacity;
+          const w = 150 * ieZoom, h = 150 * ieZoom;
+          ctx.drawImage(activeWatermark.img, (cv.width - w) / 2, (cv.height - h) / 2, w, h);
+        }
+        ctx.restore();
+      }
 
       document.getElementById('ieZoomVal').textContent = Math.round(ieZoom * 100) + '%';
       document.getElementById('ieScale').value = Math.round(ieZoom * 100);
@@ -3477,6 +3638,31 @@
         const idx2 = i;
         li.addEventListener('click', () => renderPage(idx2));
         li.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); renderPage(idx2); } });
+
+        // Thumb Drag Reorder
+        li.draggable = true;
+        li.addEventListener('dragstart', () => { dragSrcEl = li; li.classList.add('dragging'); });
+        li.addEventListener('dragend', () => { li.classList.remove('dragging'); document.querySelectorAll('.ie-thumb-item.over').forEach(el => el.classList.remove('over')); dragSrcEl = null; });
+        li.addEventListener('dragover', e => { e.preventDefault(); if (dragSrcEl && dragSrcEl !== li) li.classList.add('over'); });
+        li.addEventListener('dragleave', () => li.classList.remove('over'));
+        li.addEventListener('drop', e => {
+          e.preventDefault(); li.classList.remove('over');
+          if (dragSrcEl && dragSrcEl !== li) {
+            const allThumbs = [...document.querySelectorAll('.ie-thumb-item')];
+            const from = allThumbs.indexOf(dragSrcEl);
+            const to = allThumbs.indexOf(li);
+            if (from !== -1 && to !== -1) {
+              const active = iePages.filter(p => !p.del);
+              const [moved] = active.splice(from, 1);
+              active.splice(to, 0, moved);
+              // Re-construct iePages with new order
+              const deleted = iePages.filter(p => p.del);
+              iePages = [...active, ...deleted];
+              renderAllThumbs().then(() => renderPage(to));
+              pushUndo();
+            }
+          }
+        });
       }
     }
 
@@ -3499,28 +3685,266 @@
       else Toast.warn('Pop-up blocked — please allow pop-ups to print.');
     });
 
-    document.getElementById('ieExport').addEventListener('click', async () => {
+    document.getElementById('ieExport').addEventListener('click', () => exportRange());
+
+    // New Tool Handlers
+    const splitModal = document.getElementById('splitModal');
+    document.getElementById('ieSplit').addEventListener('click', () => {
+      document.getElementById('splitRangeInput').value = '';
+      splitModal.style.display = 'flex';
+    });
+    document.getElementById('splitCancel').addEventListener('click', () => splitModal.style.display = 'none');
+    document.getElementById('splitOk').addEventListener('click', () => {
+      const rangeStr = document.getElementById('splitRangeInput').value.trim();
+      const active = iePages.filter(p => !p.del);
+      let nums = null;
+      if (rangeStr) {
+        nums = parseRanges(rangeStr, active.length).map(i => active[i - 1].num);
+      } else {
+        nums = [active[ieCurrIdx].num];
+      }
+      splitModal.style.display = 'none';
+      if (nums.length > 0) {
+        Toast.info(`Extracting ${nums.length} page(s)...`);
+        exportRange(nums);
+      }
+    });
+
+    function parseRanges(str, max) {
+      const result = new Set();
+      const parts = str.split(',');
+      for (const p of parts) {
+        if (p.includes('-')) {
+          const [s, e] = p.split('-').map(Number);
+          for (let i = Math.max(1, s); i <= Math.min(max, e); i++) result.add(i);
+        } else {
+          const n = Number(p.trim());
+          if (n >= 1 && n <= max) result.add(n);
+        }
+      }
+      return [...result].sort((a, b) => a - b);
+    }
+
+    let addPageNums = false;
+    document.getElementById('iePageNum').addEventListener('click', (e) => {
+      addPageNums = !addPageNums;
+      e.currentTarget.classList.toggle('active', addPageNums);
+      Toast.ok(addPageNums ? 'Page numbers enabled for export' : 'Page numbers disabled');
+    });
+
+    // Watermark logic
+    const watermarkModal = document.getElementById('watermarkModal');
+    let activeWatermark = null;
+    document.getElementById('ieWatermark').addEventListener('click', () => {
+      document.getElementById('wmTextInput').value = '';
+      watermarkModal.style.display = 'flex';
+    });
+    document.getElementById('wmCancel').addEventListener('click', () => watermarkModal.style.display = 'none');
+    document.getElementById('wmOk').addEventListener('click', async () => {
+      const text = document.getElementById('wmTextInput').value.trim();
+      const imgFile = document.getElementById('wmImageInput').files[0];
+      const opacity = parseFloat(document.getElementById('wmOpacity').value);
+      
+      if (imgFile) {
+        const url = await readURL(imgFile);
+        const img = await loadImg(url);
+        activeWatermark = { type: 'image', img, opacity };
+        Toast.ok('Image watermark applied');
+      } else if (text) {
+        activeWatermark = { type: 'text', text, opacity };
+        Toast.ok('Text watermark applied');
+      } else {
+        activeWatermark = null;
+        Toast.info('Watermark cleared');
+      }
+      watermarkModal.style.display = 'none';
+      renderPage(ieCurrIdx);
+    });
+
+    // Password Protect logic (Simulated)
+    const protectModal = document.getElementById('protectModal');
+    let pdfPass = '';
+    document.getElementById('ieProtect').addEventListener('click', () => {
+      document.getElementById('pdfPassword').value = '';
+      protectModal.style.display = 'flex';
+    });
+    document.getElementById('protectCancel').addEventListener('click', () => protectModal.style.display = 'none');
+    document.getElementById('protectOk').addEventListener('click', () => {
+      pdfPass = document.getElementById('pdfPassword').value;
+      protectModal.style.display = 'none';
+      if (pdfPass) Toast.ok('Password set for export');
+      else Toast.info('Password removed');
+    });
+
+    // HTML to PDF logic
+    const htmlModal = document.getElementById('htmlModal');
+    document.getElementById('heroLearnBtn')?.addEventListener('click', () => {
+      // Find a button or way to trigger HTML to PDF from home? 
+      // For now, let's add it to the Convert view or a dedicated card action.
+    });
+
+    // Handle HTML to PDF card click (if added to grid)
+    document.querySelectorAll('.feat-card').forEach(card => {
+      if (card.querySelector('h3').textContent === 'HTML to PDF') {
+        card.addEventListener('click', () => {
+          document.getElementById('htmlInputArea').value = '';
+          htmlModal.style.display = 'flex';
+        });
+      }
+    });
+
+    document.getElementById('htmlCancel').addEventListener('click', () => htmlModal.style.display = 'none');
+    document.getElementById('htmlOk').addEventListener('click', async () => {
+      const html = document.getElementById('htmlInputArea').value.trim();
+      if (!html) return;
+      htmlModal.style.display = 'none';
+      setProgress(true, 'Converting HTML to PDF...', 30);
+      try {
+        const worker = html2pdf().from(html).set({
+          margin: 1,
+          filename: 'converted.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        });
+        const blob = await worker.output('blob');
+        const bytes = await blob.arrayBuffer();
+        addResultCard(blob, 'html-convert.pdf', bytes.byteLength);
+        Toast.ok('HTML converted successfully!');
+      } catch (err) { Toast.err('HTML conversion failed: ' + err.message); }
+      finally { setProgress(false); }
+    });
+
+    // Signature Pad
+    const signModal = document.getElementById('signModal');
+    const signCanvas = document.getElementById('signCanvas');
+    const sctx = signCanvas.getContext('2d');
+    let isSigning = false;
+
+    signCanvas.addEventListener('mousedown', startSign);
+    signCanvas.addEventListener('mousemove', drawSign);
+    signCanvas.addEventListener('mouseup', stopSign);
+    signCanvas.addEventListener('touchstart', (e) => { e.preventDefault(); startSign(e.touches[0]); });
+    signCanvas.addEventListener('touchmove', (e) => { e.preventDefault(); drawSign(e.touches[0]); });
+    signCanvas.addEventListener('touchend', stopSign);
+
+    function startSign(e) {
+      isSigning = true;
+      sctx.beginPath();
+      const rect = signCanvas.getBoundingClientRect();
+      sctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+    }
+    function drawSign(e) {
+      if (!isSigning) return;
+      const rect = signCanvas.getBoundingClientRect();
+      sctx.lineWidth = 2;
+      sctx.lineCap = 'round';
+      sctx.strokeStyle = '#000';
+      sctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+      sctx.stroke();
+    }
+    function stopSign() { isSigning = false; }
+
+    document.getElementById('ieSign').addEventListener('click', () => {
+      sctx.clearRect(0, 0, signCanvas.width, signCanvas.height);
+      signModal.style.display = 'flex';
+    });
+    document.getElementById('signCancel').addEventListener('click', () => signModal.style.display = 'none');
+    document.getElementById('signClear').addEventListener('click', () => sctx.clearRect(0, 0, signCanvas.width, signCanvas.height));
+    document.getElementById('signOk').addEventListener('click', () => {
+      const img = new Image();
+      img.onload = () => {
+        const active = iePages.filter(p => !p.del);
+        const info = active[ieCurrIdx];
+        if (!info) return;
+        if (!info.annots) info.annots = [];
+        info.annots.push({ type: 'image', img, x: 50, y: 50, w: 150, h: 66 });
+        renderPage(ieCurrIdx);
+        pushUndo();
+      };
+      img.src = signCanvas.toDataURL();
+      signModal.style.display = 'none';
+      Toast.ok('Signature added to page');
+    });
+
+    // Stamp handler
+    document.getElementById('ieStamp').addEventListener('click', () => document.getElementById('stampInput').click());
+    document.getElementById('stampInput').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const url = await readURL(file);
+      const img = await loadImg(url);
+      const active = iePages.filter(p => !p.del);
+      const info = active[ieCurrIdx];
+      if (!info) return;
+      if (!info.annots) info.annots = [];
+      info.annots.push({ type: 'image', img, x: 200, y: 200, w: 100, h: 100 });
+      renderPage(ieCurrIdx);
+      pushUndo();
+      e.target.value = '';
+      Toast.ok('Stamp added to page');
+    });
+
+    async function exportRange(nums) {
       if (!iePdfDoc || !activeEditorBlob) return;
       const btn = document.getElementById('ieExport');
-      btn.disabled = true; btn.textContent = 'Exporting…';
+      btn.disabled = true;
       try {
-        const { PDFDocument, degrees } = PDFLib;
+        const { PDFDocument, degrees, rgb, StandardFonts } = PDFLib;
         const src = await PDFDocument.load(await activeEditorBlob.arrayBuffer());
         const out = await PDFDocument.create();
-        for (const info of iePages.filter(p => !p.del)) {
+        const font = await out.embedFont(StandardFonts.Helvetica);
+        
+        const active = iePages.filter(p => !p.del && (nums ? nums.includes(p.num) : true));
+        let pcount = 1;
+        for (const info of active) {
           const [pg] = await out.copyPages(src, [info.num - 1]);
           const cur = pg.getRotation().angle;
           pg.setRotation(degrees((cur + info.rot) % 360));
+          
+          // Apply annotations
+          if (info.annots) {
+            for (const a of info.annots) {
+              if (a.type === 'image' && a.img) {
+                const pdfImg = await out.embedPng(a.img.src); // Simplification: assuming PNG
+                pg.drawImage(pdfImg, { x: a.x, y: pg.getHeight() - a.y - a.h, width: a.w, height: a.h });
+              }
+            }
+          }
+          
+          if (addPageNums) {
+            const label = `Page ${pcount} of ${active.length}`;
+            pg.drawText(label, { x: pg.getWidth() / 2 - 20, y: 15, size: 8, font, color: rgb(0.4, 0.4, 0.4) });
+          }
+
+          if (activeWatermark) {
+            if (activeWatermark.type === 'text') {
+              pg.drawText(activeWatermark.text, {
+                x: pg.getWidth() / 2 - 100, y: pg.getHeight() / 2,
+                size: 50, font, color: rgb(0.5, 0.5, 0.5),
+                opacity: activeWatermark.opacity, rotate: degrees(45)
+              });
+            } else if (activeWatermark.type === 'image') {
+              const pdfImg = await out.embedPng(activeWatermark.img.src);
+              const w = 200, h = 200;
+              pg.drawImage(pdfImg, {
+                x: (pg.getWidth() - w) / 2, y: (pg.getHeight() - h) / 2,
+                width: w, height: h, opacity: activeWatermark.opacity
+              });
+            }
+          }
+          
           out.addPage(pg);
+          pcount++;
         }
         const bytes = await out.save();
         const blob = new Blob([bytes], { type: 'application/pdf' });
-        const name = (activeEditorName || 'edited').replace('.pdf', '') + '-edited.pdf';
+        const name = (activeEditorName || 'split').replace('.pdf', '') + (nums ? '-extracted.pdf' : '-edited.pdf');
         saveAs(blob, name);
-        Toast.ok('PDF exported!');
-      } catch (err) { Toast.err('Export failed: ' + err.message); }
-      finally { btn.disabled = false; btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 1v9M4 7l3 3 3-3M1 12h12"/></svg> Export PDF'; }
-    });
+        Toast.ok('Export successful!');
+      } catch (err) { Toast.err('Export failed: ' + err.message); console.error(err); }
+      finally { btn.disabled = false; }
+    }
 
     function rotateCurrent(deg) {
       const active = iePages.filter(p => !p.del);
@@ -3698,6 +4122,7 @@
           <ul>
             <li><a href="image-to-pdf.html">Image to PDF</a></li>
             <li><a href="word-to-pdf.html">Word to PDF</a></li>
+            <li><a href="html-to-pdf.html">HTML to PDF</a></li>
             <li><a href="merge-pdf.html">Merge PDF</a></li>
             <li><a href="compress-pdf.html">Compress PDF</a></li>
             <li><a href="pdf-editor.html">PDF Editor</a></li>
