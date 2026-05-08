@@ -3,95 +3,115 @@
   <!-- Main Pages -->
   <url>
     <loc>https://dailypdftask.in/</loc>
-    <lastmod>2026-04-24</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- Tool Pages -->
   <url>
     <loc>https://dailypdftask.in/image-to-pdf.html</loc>
-    <lastmod>2026-04-24</lastmod>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://dailypdftask.in/word-to-pdf.html</loc>
-    <lastmod>2026-04-24</lastmod>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://dailypdftask.in/html-to-pdf.html</loc>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://dailypdftask.in/merge-pdf.html</loc>
-    <lastmod>2026-04-24</lastmod>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://dailypdftask.in/compress-pdf.html</loc>
-    <lastmod>2026-04-24</lastmod>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://dailypdftask.in/pdf-editor.html</loc>
-    <lastmod>2026-04-24</lastmod>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- Blog -->
   <url>
-    <loc>https://dailypdftask.in/index.html</loc>
-    <lastmod>2026-04-24</lastmod>
+    <loc>https://dailypdftask.in/blog/index.html</loc>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://dailypdftask.in/legal/about.html</loc>
-    <lastmod>2026-04-24</lastmod>
+    <loc>https://dailypdftask.in/blog/secure-document-management.html</loc>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://dailypdftask.in/legal/terms.html</loc>
-    <lastmod>2026-04-24</lastmod>
+    <loc>https://dailypdftask.in/blog/why-convert-to-pdf.html</loc>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.6</priority>
   </url>
 
   <!-- Legal & Support Pages -->
   <url>
-    <loc>https://dailypdftask.in/legal/privacy.html</loc>
-    <lastmod>2026-04-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://dailypdftask.in/legal/contact.html</loc>
-    <lastmod>2026-04-24</lastmod>
+    <loc>https://dailypdftask.in/legal/about.html</loc>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://dailypdftask.in/legal/cookies.html</loc>
-    <lastmod>2026-04-24</lastmod>
+    <loc>https://dailypdftask.in/legal/contact.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://dailypdftask.in/legal/privacy.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://dailypdftask.in/legal/terms.html</loc>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://dailypdftask.in/legal/disclaimer.html</loc>
-    <lastmod>2026-04-24</lastmod>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://dailypdftask.in/legal/acceptable-use.html</loc>
-    <lastmod>2026-04-24</lastmod>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://dailypdftask.in/legal/cookies.html</loc>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://dailypdftask.in/legal/copyright.html</loc>
-    <lastmod>2026-04-24</lastmod>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
