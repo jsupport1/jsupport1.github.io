@@ -11,7 +11,7 @@
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
-    gtag('config', 'G-D6WQNNE150');
+    gtag('config', 'G-S74NXT2PCY');
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
@@ -2359,32 +2359,38 @@
         <div class="feat-card" style="--c:#EF4444">
           <div class="feat-icon" style="--c:#EF4444">✂️</div>
           <h3>Split PDF</h3>
-          <p>Extract specific pages, split by range, or divide a large PDF into smaller files. Complete control over your document structure.</p>
+          <p>Extract specific pages, split by range, or divide a large PDF into smaller files. Complete control over
+            your document structure.</p>
         </div>
         <div class="feat-card" style="--c:#8B5CF6">
           <div class="feat-icon" style="--c:#8B5CF6">🖋️</div>
           <h3>Sign &amp; Stamp</h3>
-          <p>Professional eSignatures and custom stamps. Add your signature or brand logo to any document locally and securely.</p>
+          <p>Professional eSignatures and custom stamps. Add your signature or brand logo to any document locally and
+            securely.</p>
         </div>
         <div class="feat-card" style="--c:#EC4899">
           <div class="feat-icon" style="--c:#EC4899">🔢</div>
           <h3>Page Numbers</h3>
-          <p>Add professional page numbering with customizable positions, fonts, and styles. Perfect for legal and academic files.</p>
+          <p>Add professional page numbering with customizable positions, fonts, and styles. Perfect for legal and
+            academic files.</p>
         </div>
         <div class="feat-card" style="--c:#10B981">
           <div class="feat-icon" style="--c:#10B981">🔐</div>
           <h3>Protect PDF</h3>
-          <p>Secure your documents with password protection. Prevent unauthorized viewing and keep your sensitive data safe.</p>
+          <p>Secure your documents with password protection. Prevent unauthorized viewing and keep your sensitive data
+            safe.</p>
         </div>
         <div class="feat-card" style="--c:#3B82F6">
           <div class="feat-icon" style="--c:#3B82F6">🌐</div>
           <h3>HTML to PDF</h3>
-          <p>Convert uploaded .html files or raw code into high-quality PDFs. Perfect for saving receipts, articles, or reports.</p>
+          <p>Convert uploaded .html files or raw code into high-quality PDFs. Perfect for saving receipts, articles, or
+            reports.</p>
         </div>
         <div class="feat-card" style="--c:#F59E0B">
           <div class="feat-icon" style="--c:#F59E0B">🌊</div>
           <h3>Watermark</h3>
-          <p>Protect your work by adding text or image watermarks to all pages. Customize opacity and position easily.</p>
+          <p>Protect your work by adding text or image watermarks to all pages. Customize opacity and position easily.
+          </p>
         </div>
       </div>
     </section>
@@ -2614,8 +2620,8 @@
           <span class="ftpill">HTML</span>
         </div>
         <!-- Hidden input — NEVER directly clicked by dz area click, only by browseBtn -->
-        <input type="file" id="fileInput" class="sr-only" accept=".png,.jpg,.jpeg,.webp,.doc,.docx,.txt,.html,.htm" multiple
-          aria-label="File input" />
+        <input type="file" id="fileInput" class="sr-only" accept=".png,.jpg,.jpeg,.webp,.doc,.docx,.txt,.html,.htm"
+          multiple aria-label="File input" />
       </div>
 
       <!-- File Queue -->
@@ -2707,9 +2713,9 @@
                 </button>
                 <button class="tb" id="ieSplit" title="Split PDF" aria-label="Split PDF">
                   <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M7.5 2v11M2 7.5h11" stroke-dasharray="2 2"/>
-                    <rect x="2" y="2" width="5" height="11" rx="1" stroke="currentColor" fill="none"/>
-                    <rect x="8" y="2" width="5" height="11" rx="1" stroke="currentColor" fill="none"/>
+                    <path d="M7.5 2v11M2 7.5h11" stroke-dasharray="2 2" />
+                    <rect x="2" y="2" width="5" height="11" rx="1" stroke="currentColor" fill="none" />
+                    <rect x="8" y="2" width="5" height="11" rx="1" stroke="currentColor" fill="none" />
                   </svg>
                 </button>
               </div>
@@ -2745,11 +2751,14 @@
   </div>
 
   <!-- ── MODALS ── -->
-  <div id="signModal" class="modal" style="display:none;position:fixed;z-index:1001;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center">
+  <div id="signModal" class="modal"
+    style="display:none;position:fixed;z-index:1001;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center">
     <div style="background:var(--sf);padding:24px;border-radius:var(--r-xl);max-width:500px;width:90%">
       <h3 style="margin-bottom:8px">Sign PDF</h3>
-      <p style="font-size:.8rem;color:var(--t2c);margin-bottom:12px">Draw your signature below. It will be placed on the current page.</p>
-      <canvas id="signCanvas" width="450" height="200" style="border:1px solid var(--bd2);background:#fff;border-radius:var(--r-md);cursor:crosshair;width:100%"></canvas>
+      <p style="font-size:.8rem;color:var(--t2c);margin-bottom:12px">Draw your signature below. It will be placed on the
+        current page.</p>
+      <canvas id="signCanvas" width="450" height="200"
+        style="border:1px solid var(--bd2);background:#fff;border-radius:var(--r-md);cursor:crosshair;width:100%"></canvas>
       <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:16px">
         <button class="btn btn-ghost" id="signClear">Clear</button>
         <button class="btn btn-secondary" id="signCancel">Cancel</button>
@@ -2759,11 +2768,14 @@
   </div>
 
   <!-- Split Range Modal -->
-  <div id="splitModal" class="modal" style="display:none;position:fixed;z-index:1001;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center">
+  <div id="splitModal" class="modal"
+    style="display:none;position:fixed;z-index:1001;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center">
     <div style="background:var(--sf);padding:24px;border-radius:var(--r-xl);max-width:400px;width:90%">
       <h3 style="margin-bottom:8px">Split PDF</h3>
-      <p style="font-size:.8rem;color:var(--t2c);margin-bottom:12px">Enter page ranges (e.g., 1-5, 8-10) or leave empty for current page.</p>
-      <input type="text" id="splitRangeInput" placeholder="e.g. 1-3, 5" style="width:100%;padding:10px;border-radius:var(--r-md);border:1px solid var(--bd2);background:var(--sf2);color:var(--t1c);margin-bottom:16px" />
+      <p style="font-size:.8rem;color:var(--t2c);margin-bottom:12px">Enter page ranges (e.g., 1-5, 8-10) or leave empty
+        for current page.</p>
+      <input type="text" id="splitRangeInput" placeholder="e.g. 1-3, 5"
+        style="width:100%;padding:10px;border-radius:var(--r-md);border:1px solid var(--bd2);background:var(--sf2);color:var(--t1c);margin-bottom:16px" />
       <div style="display:flex;justify-content:flex-end;gap:12px">
         <button class="btn btn-secondary" id="splitCancel">Cancel</button>
         <button class="btn btn-primary" id="splitOk">Split PDF</button>
@@ -2772,12 +2784,14 @@
   </div>
 
   <!-- Watermark Modal -->
-  <div id="watermarkModal" class="modal" style="display:none;position:fixed;z-index:1001;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center">
+  <div id="watermarkModal" class="modal"
+    style="display:none;position:fixed;z-index:1001;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center">
     <div style="background:var(--sf);padding:24px;border-radius:var(--r-xl);max-width:400px;width:90%">
       <h3 style="margin-bottom:8px">Add Watermark</h3>
       <div style="margin-bottom:12px">
         <label style="font-size:.8rem;color:var(--t2c);display:block;margin-bottom:4px">Text Watermark</label>
-        <input type="text" id="wmTextInput" placeholder="CONFIDENTIAL" style="width:100%;padding:10px;border-radius:var(--r-md);border:1px solid var(--bd2);background:var(--sf2);color:var(--t1c)" />
+        <input type="text" id="wmTextInput" placeholder="CONFIDENTIAL"
+          style="width:100%;padding:10px;border-radius:var(--r-md);border:1px solid var(--bd2);background:var(--sf2);color:var(--t1c)" />
       </div>
       <div style="margin-bottom:12px">
         <label style="font-size:.8rem;color:var(--t2c);display:block;margin-bottom:4px">Or Image Watermark</label>
@@ -2795,11 +2809,13 @@
   </div>
 
   <!-- Protect Modal -->
-  <div id="protectModal" class="modal" style="display:none;position:fixed;z-index:1001;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center">
+  <div id="protectModal" class="modal"
+    style="display:none;position:fixed;z-index:1001;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center">
     <div style="background:var(--sf);padding:24px;border-radius:var(--r-xl);max-width:400px;width:90%">
       <h3 style="margin-bottom:8px">Password Protect</h3>
       <p style="font-size:.8rem;color:var(--t2c);margin-bottom:12px">Set a password to encrypt your PDF document.</p>
-      <input type="password" id="pdfPassword" placeholder="Enter password" style="width:100%;padding:10px;border-radius:var(--r-md);border:1px solid var(--bd2);background:var(--sf2);color:var(--t1c);margin-bottom:16px" />
+      <input type="password" id="pdfPassword" placeholder="Enter password"
+        style="width:100%;padding:10px;border-radius:var(--r-md);border:1px solid var(--bd2);background:var(--sf2);color:var(--t1c);margin-bottom:16px" />
       <div style="display:flex;justify-content:flex-end;gap:12px">
         <button class="btn btn-secondary" id="protectCancel">Cancel</button>
         <button class="btn btn-primary" id="protectOk">Set Password</button>
@@ -2808,11 +2824,14 @@
   </div>
 
   <!-- HTML to PDF Modal -->
-  <div id="htmlModal" class="modal" style="display:none;position:fixed;z-index:1001;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center">
+  <div id="htmlModal" class="modal"
+    style="display:none;position:fixed;z-index:1001;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);align-items:center;justify-content:center">
     <div style="background:var(--sf);padding:24px;border-radius:var(--r-xl);max-width:600px;width:90%">
       <h3 style="margin-bottom:8px">HTML to PDF</h3>
-      <p style="font-size:.8rem;color:var(--t2c);margin-bottom:12px">Paste your HTML code below to convert it to a PDF.</p>
-      <textarea id="htmlInputArea" placeholder="<html><body><h1>Hello World</h1></body></html>" style="width:100%;height:200px;padding:10px;border-radius:var(--r-md);border:1px solid var(--bd2);background:var(--sf2);color:var(--t1c);font-family:monospace;margin-bottom:16px"></textarea>
+      <p style="font-size:.8rem;color:var(--t2c);margin-bottom:12px">Paste your HTML code below to convert it to a PDF.
+      </p>
+      <textarea id="htmlInputArea" placeholder="<html><body><h1>Hello World</h1></body></html>"
+        style="width:100%;height:200px;padding:10px;border-radius:var(--r-md);border:1px solid var(--bd2);background:var(--sf2);color:var(--t1c);font-family:monospace;margin-bottom:16px"></textarea>
       <div style="display:flex;justify-content:flex-end;gap:12px">
         <button class="btn btn-secondary" id="htmlCancel">Cancel</button>
         <button class="btn btn-primary" id="htmlOk">Convert to PDF</button>
@@ -3745,7 +3764,7 @@
       const text = document.getElementById('wmTextInput').value.trim();
       const imgFile = document.getElementById('wmImageInput').files[0];
       const opacity = parseFloat(document.getElementById('wmOpacity').value);
-      
+
       if (imgFile) {
         const url = await readURL(imgFile);
         const img = await loadImg(url);
@@ -3895,14 +3914,14 @@
         const src = await PDFDocument.load(await activeEditorBlob.arrayBuffer());
         const out = await PDFDocument.create();
         const font = await out.embedFont(StandardFonts.Helvetica);
-        
+
         const active = iePages.filter(p => !p.del && (nums ? nums.includes(p.num) : true));
         let pcount = 1;
         for (const info of active) {
           const [pg] = await out.copyPages(src, [info.num - 1]);
           const cur = pg.getRotation().angle;
           pg.setRotation(degrees((cur + info.rot) % 360));
-          
+
           // Apply annotations
           if (info.annots) {
             for (const a of info.annots) {
@@ -3912,7 +3931,7 @@
               }
             }
           }
-          
+
           if (addPageNums) {
             const label = `Page ${pcount} of ${active.length}`;
             pg.drawText(label, { x: pg.getWidth() / 2 - 20, y: 15, size: 8, font, color: rgb(0.4, 0.4, 0.4) });
@@ -3934,7 +3953,7 @@
               });
             }
           }
-          
+
           out.addPage(pg);
           pcount++;
         }
