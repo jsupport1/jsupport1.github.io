@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="public/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="public/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="64x64" href="public/favicon-64.png" />
+  <meta name="theme-color" content="#0D9B6B" />
+  <title>Free Online PDF Watermark — Add Text & Image Watermarks | DailyPDFTask</title>
+  <meta name="description"
+    content="Add text or image watermarks to your PDF documents for free. Control opacity, position, and rotation entirely in your browser. 100% secure and private." />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+    rel="stylesheet" />
+  
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "DailyPDFTask Watermark Tool",
+      "operatingSystem": "Web",
+      "applicationCategory": "MultimediaApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Add text watermarks to PDF",
+        "Add image watermarks to PDF",
+        "Control watermark opacity",
+        "Rotate and position watermarks",
+        "Batch watermark all pages"
+      ]
+    }
+  </script>
+
+  <style>
+    :root {
+      --v: #0D9B6B;
+      --vl: #34D399;
+      --vd: #047857;
+      --grad: linear-gradient(135deg, #0D9B6B 0%, #F59E0B 100%);
+      --font-d: 'Syne', sans-serif;
+      --font-b: 'DM Sans', sans-serif;
+      --r-md: 10px;
+      --r-lg: 16px;
+    }
+
+    [data-theme=dark] {
+      --bg: #080E0A;
+      --sf: #111A13;
+      --sf2: #172019;
+      --sf3: #1C2820;
+      --bd: rgba(255, 255, 255, .07);
+      --t1c: #E8F5EF;
+      --t2c: #9BB8A8;
+      --shmd: 0 4px 18px rgba(0, 0, 0, .5);
+      --gl: rgba(8, 14, 10, .84);
+      --glb: rgba(13, 155, 107, .18);
+    }
+
+    body {
+      font-family: var(--font-b);
+      background: var(--bg);
+      color: var(--t1c);
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    /* Navbar */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      height: 60px;
+      background: var(--gl);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glb);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .brand-name {
+      font-family: var(--font-d);
+      font-weight: 800;
+      font-size: 1.2rem;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Layout */
+    .editor-container {
+      display: flex;
+      height: calc(100vh - 60px);
+    }
+
+    .sidebar {
+      width: 320px;
+      background: var(--sf);
+      border-right: 1px solid var(--bd);
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .main-workspace {
+      flex: 1;
+      background: #1a1a1a;
+      overflow: auto;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Controls */
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .control-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--t2c);
+    }
+
+    .input-field {
+      background: var(--sf2);
+      border: 1px solid var(--bd);
+      color: var(--t1c);
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .input-field:focus { border-color: var(--v); }
+
+    .radio-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .radio-btn {
+      flex: 1;
+      padding: 8px;
+      background: var(--sf2);
+      border: 1px solid var(--bd);
+      border-radius: 6px;
+      text-align: center;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .radio-btn.active {
+      background: var(--v);
+      color: white;
+      border-color: var(--v);
+    }
+
+    /* Slider */
+    .slider {
+      width: 100%;
+      height: 6px;
+      background: var(--sf3);
+      border-radius: 99px;
+      appearance: none;
+      outline: none;
+    }
+
+    .slider::-webkit-slider-thumb {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      background: var(--v);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    /* Preview Wrapper */
+    .page-wrapper {
+      position: relative;
+      background: white;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    #watermark-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .watermark-text {
+      font-size: 60px;
+      font-weight: 800;
+      color: rgba(0,0,0,0.3);
+      transform: rotate(-45deg);
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .watermark-image {
+      max-width: 200px;
+      opacity: 0.3;
+      user-select: none;
+    }
+
+    /* Upload Screen */
+    .upload-screen {
+      position: fixed;
+      inset: 0;
+      top: 60px;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+    }
+
+    .drop-zone {
+      width: 400px;
+      height: 250px;
+      border: 2px dashed var(--bd);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--grad);
+      color: white;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+    }
+
+    .seo-content {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 0 24px;
+      line-height: 1.6;
+    }
+
+    .seo-content h2 {
+      font-family: var(--font-d);
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .faq-section { margin-top: 40px; }
+
+    .faq-item {
+      background: var(--sf);
+      border: 1px solid var(--bd);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+
+    .faq-item h3 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      color: var(--v);
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav">
+    <a href="index.html" class="brand">
+      <svg width="24" height="24" viewBox="0 0 26 26" fill="none">
+        <rect width="26" height="26" rx="7" fill="url(#lg)" />
+        <path d="M6 7h8l5 5v7H6V7z" fill="white" opacity=".9" />
+        <path d="M14 7l5 5h-5V7z" fill="white" opacity=".45" />
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="26" y2="26">
+            <stop stop-color="#0D9B6B" />
+            <stop offset="1" stop-color="#F59E0B" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="brand-name">DailyPDFTask</span>
+    </a>
+  </nav>
+
+  <div class="editor-container">
+    <aside class="sidebar">
+      <h3 style="font-family: var(--font-d);">Watermark Settings</h3>
+      
+      <div class="control-group">
+        <label class="control-label">Type</label>
+        <div class="radio-group" id="type-toggle">
+          <div class="radio-btn active" data-type="text">Text</div>
+          <div class="radio-btn" data-type="image">Image</div>
+        </div>
+      </div>
+
+      <div id="text-controls" class="control-group">
+        <label class="control-label">Watermark Text</label>
+        <input type="text" class="input-field" id="wm-text" value="CONFIDENTIAL">
+      </div>
+
+      <div id="image-controls" class="control-group" style="display: none;">
+        <label class="control-label">Watermark Image</label>
+        <button class="btn-secondary" onclick="document.getElementById('img-input').click()" 
+                style="padding: 10px; border-radius: 8px; border: 1px solid var(--bd); background: var(--sf2); color: var(--t1c);">
+          Choose Image...
+        </button>
+        <input type="file" id="img-input" accept="image/*" style="display: none;">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Opacity (<span id="opacity-val">30</span>%)</label>
+        <input type="range" class="slider" id="wm-opacity" min="0" max="100" value="30">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Rotation (<span id="rotate-val">-45</span>°)</label>
+        <input type="range" class="slider" id="wm-rotate" min="-180" max="180" value="-45">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Position</label>
+        <select class="input-field" id="wm-position">
+          <option value="center">Center</option>
+          <option value="top">Top</option>
+          <option value="bottom">Bottom</option>
+          <option value="tile">Tile (Repeat)</option>
+        </select>
+      </div>
+
+      <button class="btn-primary" id="apply-watermark" style="margin-top: 20px;">Download Watermarked PDF</button>
+    </aside>
+
+    <main class="main-workspace">
+      <div id="pdf-render-container">
+        <!-- Preview will be here -->
+      </div>
+    </main>
+  </div>
+
+  <section class="seo-content">
+    <h2>Professional PDF Watermarking Online</h2>
+    <p>DailyPDFTask's Watermark Tool is the easiest way to protect your intellectual property and brand your documents. Add semi-transparent text or images to your PDF files instantly, with all processing handled locally in your browser for maximum security.</p>
+    
+    <div style="margin: 30px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div>
+        <h3>Text and Image Support</h3>
+        <p>Whether you need a "DRAFT" text stamp or your company's full-color logo, our tool handles both with ease. Upload any image or type your custom text to begin.</p>
+      </div>
+      <div>
+        <h3>Complete Creative Control</h3>
+        <p>Fine-tune your watermark with precision. Adjust opacity to ensure readability, rotate for diagonal impact, and choose between centered or repeating tile patterns.</p>
+      </div>
+    </div>
+
+    <div class="faq-section">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>Will watermarking increase my file size?</h3>
+        <p>Text watermarks add negligible size to your PDF. Image watermarks will increase the size slightly depending on the resolution of the image you upload.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I remove a watermark later?</h3>
+        <p>Once a watermark is "burned" into a PDF, it becomes part of the document's content layer. This makes it difficult to remove without professional PDF editing software.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Does it watermark every page?</h3>
+        <p>Yes, our tool automatically applies your chosen watermark to every single page of the uploaded PDF in one operation.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer style="margin-top: 80px; padding: 40px 24px; background: var(--sf); border-top: 1px solid var(--bd); text-align: center;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <p style="font-family: var(--font-d); font-weight: 800; font-size: 1.5rem; margin-bottom: 20px;">DailyPDFTask</p>
+      <div style="display: flex; justify-content: center; gap: 40px; margin-bottom: 30px; font-size: 0.9rem;">
+        <a href="index.html" style="color: var(--t1c); text-decoration: none;">Home</a>
+        <a href="advanced-editor.html" style="color: var(--t1c); text-decoration: none;">Advanced Editor</a>
+        <a href="page-organizer.html" style="color: var(--t1c); text-decoration: none;">Page Organizer</a>
+      </div>
+      <p style="color: var(--t2c); font-size: 0.8rem;">© 2026 DailyPDFTask. Professional Browser-Based Watermarking.</p>
+    </div>
+  </footer>
+
+  <div class="upload-screen" id="upload-screen">
+    <div class="drop-zone" id="drop-zone">
+      <div style="font-size: 40px;">🌊</div>
+      <p>Drag & Drop PDF to Watermark</p>
+      <input type="file" id="file-input" accept=".pdf" style="display: none;">
+    </div>
+  </div>
+
+  <script src="js/watermark-tools.js"></script>
+</body>
+
+</html>

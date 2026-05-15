@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="public/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="public/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="64x64" href="public/favicon-64.png" />
+  <meta name="theme-color" content="#0D9B6B" />
+  <title>Visual PDF Page Organizer — Reorder, Delete & Extract Pages | DailyPDFTask</title>
+  <meta name="description"
+    content="Organize your PDF pages visually. Drag to reorder, click to delete, or select specific pages to extract. 100% private and browser-based PDF management." />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+    rel="stylesheet" />
+  
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "DailyPDFTask Page Organizer",
+      "operatingSystem": "Web",
+      "applicationCategory": "MultimediaApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Visual page thumbnails",
+        "Drag and drop reordering",
+        "Delete PDF pages visually",
+        "Extract selected pages",
+        "Rotate and manage PDF structure"
+      ]
+    }
+  </script>
+
+  <style>
+    :root {
+      --v: #0D9B6B;
+      --vl: #34D399;
+      --vd: #047857;
+      --grad: linear-gradient(135deg, #0D9B6B 0%, #F59E0B 100%);
+      --font-d: 'Syne', sans-serif;
+      --font-b: 'DM Sans', sans-serif;
+      --r-md: 10px;
+      --r-lg: 16px;
+    }
+
+    [data-theme=dark] {
+      --bg: #080E0A;
+      --sf: #111A13;
+      --sf2: #172019;
+      --sf3: #1C2820;
+      --bd: rgba(255, 255, 255, .07);
+      --t1c: #E8F5EF;
+      --t2c: #9BB8A8;
+      --shmd: 0 4px 18px rgba(0, 0, 0, .5);
+      --gl: rgba(8, 14, 10, .84);
+      --glb: rgba(13, 155, 107, .18);
+    }
+
+    body {
+      font-family: var(--font-b);
+      background: var(--bg);
+      color: var(--t1c);
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    /* Navbar */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      height: 60px;
+      background: var(--gl);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glb);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .brand-name {
+      font-family: var(--font-d);
+      font-weight: 800;
+      font-size: 1.2rem;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Organizer Layout */
+    .organizer-container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+
+    .org-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .org-header h1 {
+      font-family: var(--font-d);
+      font-size: 2rem;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    /* Grid */
+    #page-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 24px;
+    }
+
+    .page-card {
+      background: var(--sf);
+      border-radius: 12px;
+      border: 2px solid var(--bd);
+      padding: 12px;
+      position: relative;
+      transition: all 0.2s;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .page-card:hover {
+      border-color: var(--v);
+      transform: translateY(-4px);
+      box-shadow: var(--shmd);
+    }
+
+    .page-card.selected {
+      border-color: var(--v);
+      background: rgba(13, 155, 107, 0.1);
+    }
+
+    .page-thumb {
+      width: 100%;
+      height: 200px;
+      background: var(--sf2);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .page-thumb canvas {
+      max-width: 100%;
+      max-height: 100%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .page-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--t2c);
+    }
+
+    /* Actions */
+    .page-actions {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      display: flex;
+      gap: 4px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .page-card:hover .page-actions { opacity: 1; }
+
+    .action-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--sf);
+      border: 1px solid var(--bd);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      cursor: pointer;
+      color: var(--t1c);
+    }
+
+    .action-btn:hover { background: var(--v); color: white; border-color: var(--v); }
+    .action-btn.delete:hover { background: #EF4444; border-color: #EF4444; }
+
+    .select-check {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 20px;
+      height: 20px;
+      accent-color: var(--v);
+      cursor: pointer;
+    }
+
+    /* Upload Screen */
+    .upload-screen {
+      position: fixed;
+      inset: 0;
+      top: 60px;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+    }
+
+    .drop-zone {
+      width: 400px;
+      height: 250px;
+      border: 2px dashed var(--bd);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      cursor: pointer;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn-primary { background: var(--grad); color: white; }
+    .btn-secondary { background: var(--sf3); color: var(--t1c); border: 1px solid var(--bd); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .seo-content {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 0 24px;
+      line-height: 1.6;
+    }
+
+    .seo-content h2 {
+      font-family: var(--font-d);
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .faq-section { margin-top: 40px; }
+
+    .faq-item {
+      background: var(--sf);
+      border: 1px solid var(--bd);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+
+    .faq-item h3 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      color: var(--v);
+    }
+
+    /* Sortable Placeholder */
+    .sortable-ghost { opacity: 0.4; border: 2px dashed var(--v); }
+  </style>
+</head>
+
+<body>
+  <nav class="nav">
+    <a href="index.html" class="brand">
+      <svg width="24" height="24" viewBox="0 0 26 26" fill="none">
+        <rect width="26" height="26" rx="7" fill="url(#lg)" />
+        <path d="M6 7h8l5 5v7H6V7z" fill="white" opacity=".9" />
+        <path d="M14 7l5 5h-5V7z" fill="white" opacity=".45" />
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="26" y2="26">
+            <stop stop-color="#0D9B6B" />
+            <stop offset="1" stop-color="#F59E0B" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="brand-name">DailyPDFTask</span>
+    </a>
+  </nav>
+
+  <main class="organizer-container">
+    <div class="org-header">
+      <h1>Page Organizer</h1>
+      <div class="btn-group">
+        <button class="btn btn-secondary" id="btn-select-all">Select All</button>
+        <button class="btn btn-primary" id="btn-save-changes">Apply & Download</button>
+        <button class="btn btn-secondary" id="btn-extract">Extract Selected</button>
+      </div>
+    </div>
+
+    <div id="page-grid">
+      <!-- Thumbnails will be injected here -->
+    </div>
+
+    <section class="seo-content">
+      <h2>Visual PDF Page Management and Organization</h2>
+      <p>DailyPDFTask's Visual Page Organizer simplifies the way you manage multi-page documents. Instead of guessing page numbers in a list, our tool provides a high-fidelity grid of thumbnails, allowing you to restructure your PDF through intuitive drag-and-drop actions.</p>
+      
+      <div style="margin: 30px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div>
+          <h3>Effortless Reordering</h3>
+          <p>Instantly move pages to their correct position. Perfect for combining merged documents or correcting scanning errors where pages might be out of sequence.</p>
+        </div>
+        <div>
+          <h3>Visual Deletion and Extraction</h3>
+          <p>Clean up your documents by visually selecting and removing unnecessary pages. Or, select specific high-value pages to extract into a separate, lightweight PDF.</p>
+        </div>
+      </div>
+
+      <div class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <h3>Does reordering affect page quality?</h3>
+          <p>No. We perform a "low-level" copy of the PDF page objects, ensuring that all text, images, and formatting remain identical to the original.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can I organize very large PDFs?</h3>
+          <p>Yes. Our tool is optimized to handle large documents. Thumbnails are rendered at a resolution that balances visual clarity with browser performance.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Is there a limit to the number of pages?</h3>
+          <p>There is no hard limit, though performance may vary depending on your device's memory. We recommend processing documents up to 500 pages for the best experience.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer style="margin-top: 80px; padding: 40px 24px; background: var(--sf); border-top: 1px solid var(--bd); text-align: center;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <p style="font-family: var(--font-d); font-weight: 800; font-size: 1.5rem; margin-bottom: 20px;">DailyPDFTask</p>
+        <div style="display: flex; justify-content: center; gap: 40px; margin-bottom: 30px; font-size: 0.9rem;">
+          <a href="index.html" style="color: var(--t1c); text-decoration: none;">Home</a>
+          <a href="advanced-editor.html" style="color: var(--t1c); text-decoration: none;">Advanced Editor</a>
+          <a href="watermark-pdf.html" style="color: var(--t1c); text-decoration: none;">Watermark Tool</a>
+        </div>
+        <p style="color: var(--t2c); font-size: 0.8rem;">© 2026 DailyPDFTask. Visual & Secure PDF Page Management.</p>
+      </div>
+    </footer>
+  </main>
+
+  <div class="upload-screen" id="upload-screen">
+    <div class="drop-zone" id="drop-zone">
+      <div style="font-size: 40px;">📂</div>
+      <p>Drag & Drop PDF to Organize Pages</p>
+      <input type="file" id="file-input" accept=".pdf" style="display: none;">
+    </div>
+  </div>
+
+  <script src="js/organizer-tools.js"></script>
+</body>
+
+</html>

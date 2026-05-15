@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="public/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="public/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="64x64" href="public/favicon-64.png" />
+  <meta name="theme-color" content="#0D9B6B" />
+  <title>Fill & Sign PDF — Sign Documents & Fill Forms Online | DailyPDFTask</title>
+  <meta name="description"
+    content="Fill PDF forms and sign documents online for free. Draw your signature, upload an image, or add text. 100% private and secure browser-based signing." />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+    rel="stylesheet" />
+  
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "DailyPDFTask Fill & Sign",
+      "operatingSystem": "Web",
+      "applicationCategory": "MultimediaApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Fill PDF forms online",
+        "Draw digital signatures",
+        "Upload signature images",
+        "Add date and name",
+        "100% private signing"
+      ]
+    }
+  </script>
+
+  <style>
+    :root {
+      --v: #0D9B6B;
+      --vl: #34D399;
+      --vd: #047857;
+      --grad: linear-gradient(135deg, #0D9B6B 0%, #F59E0B 100%);
+      --font-d: 'Syne', sans-serif;
+      --font-b: 'DM Sans', sans-serif;
+      --r-md: 10px;
+      --r-lg: 16px;
+      --t2: 220ms ease;
+    }
+
+    [data-theme=dark] {
+      --bg: #080E0A;
+      --sf: #111A13;
+      --sf2: #172019;
+      --sf3: #1C2820;
+      --bd: rgba(255, 255, 255, .07);
+      --t1c: #E8F5EF;
+      --t2c: #9BB8A8;
+      --shmd: 0 4px 18px rgba(0, 0, 0, .5);
+      --gl: rgba(8, 14, 10, .84);
+      --glb: rgba(13, 155, 107, .18);
+    }
+
+    body {
+      font-family: var(--font-b);
+      background: var(--bg);
+      color: var(--t1c);
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      height: 60px;
+      background: var(--gl);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glb);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .brand-name {
+      font-family: var(--font-d);
+      font-weight: 800;
+      font-size: 1.2rem;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .editor-container {
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 60px);
+    }
+
+    .toolbar {
+      height: 60px;
+      background: var(--sf);
+      border-bottom: 1px solid var(--bd);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 12px;
+      overflow-x: auto;
+    }
+
+    .tool-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-right: 1px solid var(--bd);
+      padding-right: 12px;
+    }
+
+    .tool-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: var(--sf2);
+      color: var(--t1c);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .tool-btn:hover {
+      background: var(--sf3);
+      border-color: var(--v);
+    }
+
+    .tool-btn.active {
+      background: var(--v);
+      color: white;
+    }
+
+    .main-workspace {
+      flex: 1;
+      overflow: auto;
+      background: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    #pdf-render-container {
+      position: relative;
+    }
+
+    .page-wrapper {
+      position: relative;
+      margin-bottom: 30px;
+      background: white;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .interaction-layer {
+      position: absolute;
+      inset: 0;
+    }
+
+    .form-field {
+      position: absolute;
+      background: rgba(13, 155, 107, 0.1);
+      border: 1px solid rgba(13, 155, 107, 0.3);
+      padding: 2px;
+      font-size: 12px;
+    }
+
+    .form-field:focus {
+      background: white;
+      border-color: var(--v);
+      outline: none;
+    }
+
+    .sign-item {
+      position: absolute;
+      cursor: move;
+      border: 1px dashed transparent;
+      user-select: none;
+      padding: 2px;
+    }
+
+    .sign-item:hover, .sign-item.selected {
+      border-color: var(--v);
+      background: rgba(13, 155, 107, 0.05);
+    }
+
+    .sign-item img {
+      max-width: 150px;
+      pointer-events: none;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: var(--sf);
+      border-radius: 20px;
+      padding: 30px;
+      width: 500px;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    #sig-canvas {
+      background: white;
+      border: 1px solid var(--bd);
+      border-radius: 8px;
+      cursor: crosshair;
+      margin-bottom: 20px;
+    }
+
+    .upload-screen {
+      position: fixed;
+      inset: 0;
+      top: 60px;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+    }
+
+    .drop-zone {
+      width: 400px;
+      height: 250px;
+      border: 2px dashed var(--bd);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--grad);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+    }
+
+    .seo-content {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 0 24px;
+      line-height: 1.6;
+    }
+
+    .seo-content h2 {
+      font-family: var(--font-d);
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .faq-section { margin-top: 40px; }
+
+    .faq-item {
+      background: var(--sf);
+      border: 1px solid var(--bd);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+
+    .faq-item h3 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      color: var(--v);
+    }
+
+    body.placing-item {
+      cursor: crosshair !important;
+    }
+
+    body.placing-item .interaction-layer {
+      cursor: crosshair !important;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav">
+    <a href="index.html" class="brand">
+      <svg width="24" height="24" viewBox="0 0 26 26" fill="none">
+        <rect width="26" height="26" rx="7" fill="url(#lg)" />
+        <path d="M6 7h8l5 5v7H6V7z" fill="white" opacity=".9" />
+        <path d="M14 7l5 5h-5V7z" fill="white" opacity=".45" />
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="26" y2="26">
+            <stop stop-color="#0D9B6B" />
+            <stop offset="1" stop-color="#F59E0B" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="brand-name">DailyPDFTask</span>
+    </a>
+    <div style="flex: 1"></div>
+    <button class="btn btn-primary" id="export-pdf-top">Download PDF</button>
+  </nav>
+
+  <div class="editor-container">
+    <div class="toolbar">
+      <div class="tool-group">
+        <button class="tool-btn" id="btn-draw-sign">🖋️ Sign</button>
+        <button class="tool-btn" id="btn-upload-sign">📤 Upload</button>
+      </div>
+      <div class="tool-group">
+        <button class="tool-btn" id="btn-add-name" draggable="true">👤 Name</button>
+        <button class="tool-btn" id="btn-add-date" draggable="true">📅 Date</button>
+        <button class="tool-btn" id="btn-add-text" draggable="true">➕ Text</button>
+      </div>
+      <div class="tool-group">
+        <button class="tool-btn" id="btn-detect-fields">🔍 Detect Fields</button>
+      </div>
+      <div class="tool-group" style="border: none;">
+        <span style="font-size: 0.7rem; color: var(--t2c); margin-right: 5px;">Align:</span>
+        <button class="tool-btn" id="btn-align-left" title="Align Left">⬅️</button>
+        <button class="tool-btn" id="btn-align-center" title="Center">↔️</button>
+        <button class="tool-btn" id="btn-align-right" title="Align Right">➡️</button>
+      </div>
+    </div>
+
+    <div class="main-workspace">
+      <div id="pdf-render-container"></div>
+      <div style="text-align: center; margin-top: 20px;">
+        <button class="btn btn-primary" id="export-pdf">Download Signed PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="sign-modal">
+    <div class="modal-content">
+      <h3>Draw Your Signature</h3>
+      <canvas id="sig-canvas" width="440" height="200"></canvas>
+      <div style="display: flex; gap: 10px; justify-content: center;">
+        <button class="tool-btn" id="sig-clear">Clear</button>
+        <button class="btn btn-primary" id="sig-save">Use</button>
+        <button class="tool-btn" id="sig-cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="upload-screen" id="upload-screen">
+    <div class="drop-zone" id="drop-zone">
+      <div style="font-size: 40px;">🖋️</div>
+      <p>Drag & Drop PDF to Sign</p>
+      <input type="file" id="file-input" accept=".pdf" style="display: none;">
+    </div>
+  </div>
+
+  <input type="file" id="sign-img-input" accept="image/*" style="display: none;">
+
+  <div id="context-menu" style="display: none; position: fixed; z-index: 6000; background: var(--sf); border: 1px solid var(--bd); border-radius: 8px; box-shadow: var(--shmd); padding: 8px 0; min-width: 160px;">
+    <div class="menu-item" id="menu-add-sign" style="padding: 8px 16px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: background 0.2s;">
+      <span>🖋️</span> Add Signature
+    </div>
+    <div class="menu-item" id="menu-add-name" style="padding: 8px 16px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: background 0.2s;">
+      <span>👤</span> Add Name
+    </div>
+    <div class="menu-item" id="menu-add-date" style="padding: 8px 16px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: background 0.2s;">
+      <span>📅</span> Add Date
+    </div>
+  </div>
+
+  <style>
+    .menu-item:hover { background: var(--sf3); color: var(--v); }
+  </style>
+
+  <section class="seo-content">
+    <h2>Secure Online PDF Filling and Signing</h2>
+    <p>DailyPDFTask's Fill & Sign tool is designed for fast, professional document completion. Whether you're signing a contract, filling out a tax form, or authorizing a document, our browser-based suite provides the security you need without any server uploads.</p>
+    
+    <div style="margin: 30px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div>
+        <h3>Electronic Signatures Made Easy</h3>
+        <p>Draw your signature directly using your mouse or touch screen, or upload a clean image of your physical signature. Place it anywhere on the page with pixel-perfect precision.</p>
+      </div>
+      <div>
+        <h3>Smart Form Filling</h3>
+        <p>Automatically detect and fill interactive PDF form fields. Add your name, the current date, or custom text blocks to any document in seconds.</p>
+      </div>
+    </div>
+
+    <div class="faq-section">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>Are my digital signatures legally binding?</h3>
+        <p>Electronic signatures are legally recognized in many jurisdictions (like E-SIGN in the US). However, for high-stakes legal documents, always consult local laws.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How is my privacy protected?</h3>
+        <p>We use local WebAssembly processing. Your document and your signature never leave your device. We do not store or see any of your personal information.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I add multiple signatures?</h3>
+        <p>Yes, you can draw and place as many signatures or initials as needed on any page of the document.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer style="margin-top: 80px; padding: 40px 24px; background: var(--sf); border-top: 1px solid var(--bd); text-align: center;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <p style="font-family: var(--font-d); font-weight: 800; font-size: 1.5rem; margin-bottom: 20px;">DailyPDFTask</p>
+      <div style="display: flex; justify-content: center; gap: 40px; margin-bottom: 30px; font-size: 0.9rem;">
+        <a href="index.html" style="color: var(--t1c); text-decoration: none;">Home</a>
+        <a href="advanced-editor.html" style="color: var(--t1c); text-decoration: none;">Advanced Editor</a>
+        <a href="ocr-reader.html" style="color: var(--t1c); text-decoration: none;">OCR Tool</a>
+      </div>
+      <p style="color: var(--t2c); font-size: 0.8rem;">© 2026 DailyPDFTask. Secure & Private Document Signing.</p>
+    </div>
+  </footer>
+
+  <script src="js/sign-tools.js"></script>
+</body>
+
+</html>
