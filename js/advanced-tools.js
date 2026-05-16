@@ -205,6 +205,21 @@ function setupItemInteractions(div) {
       registerChange(div);
     }
   });
+
+  div.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && div.contentEditable === 'true') {
+      div.contentEditable = 'false';
+      div.blur();
+      registerChange(div);
+      e.preventDefault();
+    }
+    if (e.key === 'Enter' && !e.shiftKey && div.contentEditable === 'true') {
+        div.contentEditable = 'false';
+        div.blur();
+        registerChange(div);
+        e.preventDefault();
+    }
+  });
 }
 
 function selectItem(div) {
@@ -284,9 +299,9 @@ function registerChange(div, isDeleted = false) {
     x: parseFloat(div.style.left),
     y: parseFloat(div.style.top),
     fontSize: parseFloat(div.style.fontSize),
-    color: div.style.color || elements.textColor.value,
+    color: div.style.color || '', 
     bgColor: div.style.backgroundColor || 'transparent',
-    font: div.style.fontFamily.replace(/['"]/g, '') || elements.fontFamily.value,
+    font: div.style.fontFamily.replace(/['"]/g, '') || '',
     deleted: isDeleted,
     highlight: div.dataset.highlight === 'true',
     isNew: div.dataset.isNew === 'true',
@@ -326,17 +341,27 @@ function handleWorkspaceMouseDown(e, wrapper) {
   }
 }
 
-  if (state.isDrawing) {
-    const rect = wrapper.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const ctx = wrapper.drawCtx;
+function handleWorkspaceMouseMove(e, wrapper) {
+  if (!state.isDrawing) return;
+  
+  const rect = wrapper.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  const ctx = wrapper.drawCtx;
 
-    if (state.currentMode === 'shape' || state.currentMode === 'arrow') {
-        state.currentPath[1] = { x, y };
-        // Redraw all previous annotations and the current one
-        redrawAnnotations(wrapper);
-    }
+  if (state.currentMode === 'draw') {
+    state.currentPath.push({ x, y });
+    ctx.strokeStyle = state.drawingColor;
+    ctx.lineWidth = state.drawingSize;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    const prev = state.currentPath[state.currentPath.length - 2];
+    ctx.moveTo(prev.x, prev.y);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+  } else if (state.currentMode === 'shape' || state.currentMode === 'arrow') {
+    state.currentPath[1] = { x, y };
+    redrawAnnotations(wrapper);
   }
 }
 
@@ -564,6 +589,9 @@ function addTextAt(content, x, y, pageIdx) {
   div.style.left = `${x}px`;
   div.style.top = `${y}px`;
   div.style.fontSize = '20px';
+  div.style.color = elements.textColor.value;
+  div.style.fontFamily = elements.fontFamily.value;
+  div.style.backgroundColor = 'transparent';
   div.dataset.pageIdx = pageIdx;
   div.dataset.itemIdx = Date.now();
   div.dataset.isNew = 'true';
@@ -587,6 +615,8 @@ function addSignatureAt(dataUrl, x, y, pageIdx) {
   div.appendChild(img);
   div.style.left = `${x}px`;
   div.style.top = `${y}px`;
+  div.style.backgroundColor = 'transparent';
+  div.style.border = '1px dashed #ccc'; // Added dashed border for visibility while editing
   
   div.dataset.pageIdx = pageIdx;
   div.dataset.itemIdx = Date.now();
@@ -747,68 +777,45 @@ elements.saveBtn.addEventListener('click', async () => {
         });
     }
 
-    // 3. Draw new text / Note (if not deleted)
+    // 3. Draw new text / Note / Signature (if not deleted)
     if (!change.deleted) {
-        const newX = change.x / state.scale;
-        const newY = height - ((change.y + change.fontSize) / state.scale);
-        const font = standardFonts[change.font] || standardFonts['Helvetica'];
-        const color = hexToRgb(change.color);
+        if (change.isSignature) {
+            const sigX = change.x / state.scale;
+            const sigY = height - ((change.y + 70) / state.scale);
+            const sigImg = await pdfDoc.embedPng(change.sigContent);
+            page.drawImage(sigImg, {
+                x: sigX,
+                y: sigY,
+                width: 150 / state.scale,
+                height: 70 / state.scale
+            });
+        } else {
+            const newX = change.x / state.scale;
+            const newY = height - ((change.y + change.fontSize) / state.scale);
+            const font = standardFonts[change.font] || standardFonts['Helvetica'];
+            const colorStr = change.color || (change.isNew ? elements.textColor.value : '#000000');
+            const color = hexToRgb(colorStr);
+            const bgColor = change.bgColor !== 'transparent' ? hexToRgb(change.bgColor) : (change.isNote ? {r:255, g:245, b:157} : null);
 
-        if (change.isNote) {
-            // Draw note background
-            page.drawRectangle({
-                x: newX - 2,
-                y: newY - 2,
-                width: 100, // Fixed width for notes
-                height: change.fontSize / state.scale + 4,
-                color: rgb(1, 0.96, 0.6),
+            if (bgColor) {
+                const textWidth = font.widthOfTextAtSize(change.text || " ", change.fontSize / state.scale);
+                page.drawRectangle({
+                    x: newX - 2,
+                    y: newY - 2,
+                    width: (change.isNote ? 100 : textWidth + 4),
+                    height: change.fontSize / state.scale + 4,
+                    color: rgb(bgColor.r/255, bgColor.g/255, bgColor.b/255),
+                });
+            }
+
+            page.drawText(change.text || "", {
+                x: newX,
+                y: newY,
+                size: change.fontSize / state.scale,
+                font: font,
+                color: rgb(color.r/255, color.g/255, color.b/255),
             });
         }
-
-        page.drawText(change.text, {
-            x: newX,
-            y: newY,
-            size: change.fontSize / state.scale,
-            font: font,
-            color: rgb(color.r/255, color.g/255, color.b/255),
-        });
-    } else if (change.isSignature && !change.deleted) {
-        const sigX = change.x / state.scale;
-        const sigY = height - ((change.y + 70) / state.scale);
-        const sigImg = await pdfDoc.embedPng(change.sigContent);
-        page.drawImage(sigImg, {
-            x: sigX,
-            y: sigY,
-            width: 150 / state.scale,
-            height: 70 / state.scale
-        });
-    } else if (change.isNew && !change.deleted) {
-        // Handle background color for new text items
-        const color = hexToRgb(change.color);
-        const bgColor = change.bgColor !== 'transparent' ? hexToRgb(change.bgColor) : null;
-        const font = standardFonts[change.font] || standardFonts['Helvetica'];
-        const newX = change.x / state.scale;
-        const newY = height - ((change.y + change.fontSize) / state.scale);
-
-        if (bgColor) {
-            // Rough estimation of text dimensions for background
-            const textWidth = font.widthOfTextAtSize(change.text, change.fontSize / state.scale);
-            page.drawRectangle({
-                x: newX - 2,
-                y: newY - 2,
-                width: textWidth + 4,
-                height: change.fontSize / state.scale + 4,
-                color: rgb(bgColor.r/255, bgColor.g/255, bgColor.b/255),
-            });
-        }
-
-        page.drawText(change.text, {
-            x: newX,
-            y: newY,
-            size: change.fontSize / state.scale,
-            font: font,
-            color: rgb(color.r/255, color.g/255, color.b/255),
-        });
     }
   }
 
