@@ -65,18 +65,16 @@ async function handleFile(file) {
 
 async function processImage(file) {
   updateProgress('Scanning Image...', 20);
-  const { data } = await state.worker.recognize(file);
-  state.extractedText = data.text;
-  
-  // For Searchable PDF, we use the Tesseract scheduler/recognize flow which supports PDF output
-  // Tesseract.js v4+ supports PDF output directly in recognize
-  // But since we already have a worker, we might need to use a different approach or a separate call
-  // For now, let's just use the direct recognize for the searchable PDF too
-  const { data: pdfData } = await Tesseract.recognize(file, 'eng', {
+  // Configure recognition to also return PDF data
+  const { data } = await state.worker.recognize(file, {
     pdfTitle: 'Searchable PDF',
     pdfFolderName: 'pdf'
-  });
-  state.pdfBlob = new Blob([new Uint8Array(pdfData.pdf)], { type: 'application/pdf' });
+  }, { pdf: true });
+  
+  state.extractedText = data.text;
+  if (data.pdf) {
+    state.pdfBlob = new Blob([new Uint8Array(data.pdf)], { type: 'application/pdf' });
+  }
 }
 
 async function processPdf(file) {
@@ -100,6 +98,7 @@ async function processPdf(file) {
     fullText += `--- Page ${i} ---\n${data.text}\n\n`;
   }
   state.extractedText = fullText;
+  state.pdfBlob = null; // We generate this on demand for PDFs
 }
 
 function updateProgress(text, percent) {
@@ -128,11 +127,53 @@ elements.downloadTxt.addEventListener('click', () => {
   saveAs(blob, 'extracted_text.txt');
 });
 
-elements.downloadPdf.addEventListener('click', () => {
+elements.downloadPdf.addEventListener('click', async () => {
   if (state.pdfBlob) {
     saveAs(state.pdfBlob, 'searchable_document.pdf');
+  } else if (state.extractedText) {
+    try {
+      const { PDFDocument, rgb, StandardFonts } = PDFLib;
+      const pdfDoc = await PDFDocument.create();
+      const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+      
+      const lines = state.extractedText.split('\n');
+      let page = pdfDoc.addPage();
+      const { width, height } = page.getSize();
+      let y = height - 50;
+      const fontSize = 10;
+      const margin = 50;
+
+      for (const line of lines) {
+        if (y < margin + 20) {
+          page = pdfDoc.addPage();
+          y = height - margin;
+        }
+        // Simple text wrapping by length
+        const chunks = line.match(/.{1,90}/g) || [line];
+        for (const chunk of chunks) {
+            if (y < margin) {
+                page = pdfDoc.addPage();
+                y = height - margin;
+            }
+            page.drawText(chunk, {
+                x: margin,
+                y: y,
+                size: fontSize,
+                font: font,
+                color: rgb(0, 0, 0),
+            });
+            y -= fontSize + 5;
+        }
+      }
+
+      const pdfBytes = await pdfDoc.save();
+      saveAs(new Blob([pdfBytes]), 'extracted_text.pdf');
+    } catch (e) {
+      console.error(e);
+      alert('Error generating PDF: ' + e.message);
+    }
   } else {
-    alert('Searchable PDF generation is only supported for single image uploads in this version.');
+    alert('No text extracted yet.');
   }
 });
 

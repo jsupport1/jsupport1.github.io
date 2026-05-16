@@ -30,6 +30,8 @@ const elements = {
   fontFamily: document.getElementById('font-family'),
   fontSize: document.getElementById('font-size'),
   textColor: document.getElementById('text-color'),
+  bgColor: document.getElementById('bg-color'),
+  btnNoBg: document.getElementById('btn-no-bg'),
   saveBtn: document.getElementById('save-pdf'),
   modes: {
     edit: document.getElementById('mode-edit'),
@@ -211,9 +213,21 @@ function selectItem(div) {
   div.classList.add('selected');
   
   elements.propertyBar.classList.add('active');
-  elements.fontSize.value = Math.round(parseFloat(div.style.fontSize));
+  elements.fontSize.value = Math.round(parseFloat(div.style.fontSize)) || 12;
   
   div.contentEditable = 'true';
+  
+  // Sync property bar
+  elements.fontFamily.value = div.style.fontFamily.replace(/['"]/g, '') || 'Helvetica';
+  elements.textColor.value = rgbToHex(div.style.color);
+  elements.bgColor.value = div.style.backgroundColor === 'transparent' ? '#ffffff' : rgbToHex(div.style.backgroundColor);
+}
+
+function rgbToHex(rgbStr) {
+  if (!rgbStr || rgbStr === 'transparent') return '#ffffff';
+  const rgb = rgbStr.match(/\d+/g);
+  if (!rgb) return '#ffffff';
+  return "#" + ((1 << 24) + (parseInt(rgb[0]) << 16) + (parseInt(rgb[1]) << 8) + parseInt(rgb[2])).toString(16).slice(1);
 }
 
 function startMoving(e, div) {
@@ -271,7 +285,8 @@ function registerChange(div, isDeleted = false) {
     y: parseFloat(div.style.top),
     fontSize: parseFloat(div.style.fontSize),
     color: div.style.color || elements.textColor.value,
-    font: elements.fontFamily.value,
+    bgColor: div.style.backgroundColor || 'transparent',
+    font: div.style.fontFamily.replace(/['"]/g, '') || elements.fontFamily.value,
     deleted: isDeleted,
     highlight: div.dataset.highlight === 'true',
     isNew: div.dataset.isNew === 'true',
@@ -311,39 +326,68 @@ function handleWorkspaceMouseDown(e, wrapper) {
   }
 }
 
-function handleWorkspaceMouseMove(e, wrapper) {
-  if (!state.isDrawing) return;
-  
-  const rect = wrapper.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  const ctx = wrapper.drawCtx;
+  if (state.isDrawing) {
+    const rect = wrapper.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const ctx = wrapper.drawCtx;
 
-  if (state.currentMode === 'draw') {
-    state.currentPath.push({ x, y });
-    ctx.strokeStyle = state.drawingColor;
-    ctx.lineWidth = state.drawingSize;
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    const prev = state.currentPath[state.currentPath.length - 2];
-    ctx.moveTo(prev.x, prev.y);
-    ctx.lineTo(x, y);
-    ctx.stroke();
-  } else if (state.currentMode === 'shape' || state.currentMode === 'arrow') {
-    state.currentPath[1] = { x, y }; // End point
-    // Clear and redraw is needed for preview. 
-    // For simplicity, we just draw the final on mouseup, but let's do a basic XOR or overlay if possible.
-    // Actually, let's just use a second 'preview' canvas.
+    if (state.currentMode === 'shape' || state.currentMode === 'arrow') {
+        state.currentPath[1] = { x, y };
+        // Redraw all previous annotations and the current one
+        redrawAnnotations(wrapper);
+    }
   }
+}
+
+function redrawAnnotations(wrapper) {
+    const ctx = wrapper.drawCtx;
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    
+    // Draw existing annotations
+    state.annotations.forEach(annot => {
+        if (annot.pageIdx !== parseInt(wrapper.dataset.pageIndex)) return;
+        drawAnnotation(ctx, annot);
+    });
+    
+    // Draw current drag
+    if (state.isDrawing) {
+        if (state.currentMode === 'shape') {
+            const start = state.currentPath[0];
+            const end = state.currentPath[1] || start;
+            ctx.strokeStyle = state.drawingColor;
+            ctx.strokeRect(Math.min(start.x, end.x), Math.min(start.y, end.y), Math.abs(start.x - end.x), Math.abs(start.y - end.y));
+        } else if (state.currentMode === 'arrow') {
+            const start = state.currentPath[0];
+            const end = state.currentPath[1] || start;
+            drawArrow(ctx, start.x, start.y, end.x, end.y, state.drawingColor);
+        }
+    }
+}
+
+function drawAnnotation(ctx, annot) {
+    ctx.strokeStyle = annot.color;
+    ctx.lineWidth = annot.size || 2;
+    if (annot.type === 'draw') {
+        ctx.beginPath();
+        ctx.moveTo(annot.path[0].x, annot.path[0].y);
+        annot.path.forEach(p => ctx.lineTo(p.x, p.y));
+        ctx.stroke();
+    } else if (annot.type === 'shape') {
+        ctx.strokeRect(annot.x, annot.y, annot.w, annot.h);
+    } else if (annot.type === 'arrow') {
+        drawArrow(ctx, annot.x1, annot.y1, annot.x2, annot.y2, annot.color);
+    }
 }
 
 function handleWorkspaceMouseUp(e, wrapper) {
   if (state.isDrawing) {
     state.isDrawing = false;
+    const pageIdx = parseInt(wrapper.dataset.pageIndex);
     if (state.currentMode === 'draw') {
         state.annotations.push({
             type: 'draw',
-            pageIdx: parseInt(wrapper.dataset.pageIndex),
+            pageIdx: pageIdx,
             path: [...state.currentPath],
             color: state.drawingColor,
             size: state.drawingSize
@@ -353,27 +397,24 @@ function handleWorkspaceMouseUp(e, wrapper) {
         const end = state.currentPath[1] || start;
         state.annotations.push({
             type: 'shape',
-            pageIdx: parseInt(wrapper.dataset.pageIndex),
+            pageIdx: pageIdx,
             x: Math.min(start.x, end.x),
             y: Math.min(start.y, end.y),
             w: Math.abs(start.x - end.x),
             h: Math.abs(start.y - end.y),
             color: state.drawingColor
         });
-        const ctx = wrapper.drawCtx;
-        ctx.strokeStyle = state.drawingColor;
-        ctx.strokeRect(Math.min(start.x, end.x), Math.min(start.y, end.y), Math.abs(start.x - end.x), Math.abs(start.y - end.y));
     } else if (state.currentMode === 'arrow') {
         const start = state.currentPath[0];
         const end = state.currentPath[1] || start;
         state.annotations.push({
             type: 'arrow',
-            pageIdx: parseInt(wrapper.dataset.pageIndex),
+            pageIdx: pageIdx,
             x1: start.x, y1: start.y, x2: end.x, y2: end.y,
             color: state.drawingColor
         });
-        drawArrow(wrapper.drawCtx, start.x, start.y, end.x, end.y, state.drawingColor);
     }
+    redrawAnnotations(wrapper);
   }
 }
 
@@ -432,6 +473,13 @@ Object.keys(elements.modes).forEach(mode => {
   });
 });
 
+elements.fontFamily.addEventListener('change', () => {
+  if (state.selectedElement) {
+    state.selectedElement.style.fontFamily = elements.fontFamily.value;
+    registerChange(state.selectedElement);
+  }
+});
+
 elements.fontSize.addEventListener('input', () => {
   if (state.selectedElement) {
     state.selectedElement.style.fontSize = `${elements.fontSize.value}px`;
@@ -442,6 +490,20 @@ elements.fontSize.addEventListener('input', () => {
 elements.textColor.addEventListener('input', () => {
   if (state.selectedElement) {
     state.selectedElement.style.color = elements.textColor.value;
+    registerChange(state.selectedElement);
+  }
+});
+
+elements.bgColor.addEventListener('input', () => {
+  if (state.selectedElement) {
+    state.selectedElement.style.backgroundColor = elements.bgColor.value;
+    registerChange(state.selectedElement);
+  }
+});
+
+elements.btnNoBg.addEventListener('click', () => {
+  if (state.selectedElement) {
+    state.selectedElement.style.backgroundColor = 'transparent';
     registerChange(state.selectedElement);
   }
 });
@@ -719,6 +781,33 @@ elements.saveBtn.addEventListener('click', async () => {
             y: sigY,
             width: 150 / state.scale,
             height: 70 / state.scale
+        });
+    } else if (change.isNew && !change.deleted) {
+        // Handle background color for new text items
+        const color = hexToRgb(change.color);
+        const bgColor = change.bgColor !== 'transparent' ? hexToRgb(change.bgColor) : null;
+        const font = standardFonts[change.font] || standardFonts['Helvetica'];
+        const newX = change.x / state.scale;
+        const newY = height - ((change.y + change.fontSize) / state.scale);
+
+        if (bgColor) {
+            // Rough estimation of text dimensions for background
+            const textWidth = font.widthOfTextAtSize(change.text, change.fontSize / state.scale);
+            page.drawRectangle({
+                x: newX - 2,
+                y: newY - 2,
+                width: textWidth + 4,
+                height: change.fontSize / state.scale + 4,
+                color: rgb(bgColor.r/255, bgColor.g/255, bgColor.b/255),
+            });
+        }
+
+        page.drawText(change.text, {
+            x: newX,
+            y: newY,
+            size: change.fontSize / state.scale,
+            font: font,
+            color: rgb(color.r/255, color.g/255, color.b/255),
         });
     }
   }

@@ -7,7 +7,7 @@ const state = {
   wmText: 'CONFIDENTIAL',
   wmImage: null,
   wmOpacity: 0.3,
-  wmRotate: -45,
+  wmRotate: 0,
   wmPosition: 'center'
 };
 
@@ -154,29 +154,38 @@ elements.applyBtn.addEventListener('click', async () => {
   for (const page of pages) {
     const { width, height } = page.getSize();
     
-    let x = width / 2;
-    let y = height / 2;
-    
-    if (state.wmPosition === 'top') y = height - 100;
-    if (state.wmPosition === 'bottom') y = 100;
-
     if (state.wmType === 'text') {
+      const fontSize = 60;
+      const textWidth = font.widthOfTextAtSize(state.wmText, fontSize);
+      const textHeight = font.heightAtSize(fontSize);
+      
+      let x = (width - textWidth) / 2;
+      let y = (height - textHeight) / 2;
+      
+      if (state.wmPosition === 'top') y = height - textHeight - 20; 
+      if (state.wmPosition === 'bottom') y = 20;
+
       page.drawText(state.wmText, {
-        x,
-        y,
-        size: 60,
+        x: x,
+        y: y,
+        size: fontSize,
         font,
         color: rgb(0, 0, 0),
         opacity: state.wmOpacity,
         rotate: degrees(state.wmRotate),
-        pivot: [0, 0]
       });
     } else if (wmImg) {
       const iw = 200;
       const ih = (wmImg.height / wmImg.width) * iw;
+      let x = width / 2;
+      let y = height / 2;
+      
+      if (state.wmPosition === 'top') y = height - (ih / 2) - 20;
+      if (state.wmPosition === 'bottom') y = (ih / 2) + 20;
+
       page.drawImage(wmImg, {
-        x: x - iw/2,
-        y: y - ih/2,
+        x: x - iw / 2,
+        y: y - ih / 2,
         width: iw,
         height: ih,
         opacity: state.wmOpacity,

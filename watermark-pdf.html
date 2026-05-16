@@ -213,13 +213,15 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      padding: 20px;
+      box-sizing: border-box;
     }
 
     .watermark-text {
       font-size: 60px;
       font-weight: 800;
       color: rgba(0,0,0,0.3);
-      transform: rotate(-45deg);
+      transform: rotate(0deg);
       white-space: nowrap;
       user-select: none;
     }
@@ -347,8 +349,8 @@
       </div>
 
       <div class="control-group">
-        <label class="control-label">Rotation (<span id="rotate-val">-45</span>°)</label>
-        <input type="range" class="slider" id="wm-rotate" min="-180" max="180" value="-45">
+        <label class="control-label">Rotation (<span id="rotate-val">0</span>°)</label>
+        <input type="range" class="slider" id="wm-rotate" min="-180" max="180" value="0">
       </div>
 
       <div class="control-group">
@@ -357,7 +359,6 @@
           <option value="center">Center</option>
           <option value="top">Top</option>
           <option value="bottom">Bottom</option>
-          <option value="tile">Tile (Repeat)</option>
         </select>
       </div>
 
